@@ -1,2 +1,13 @@
 <h1>This is our temporary skeleton view<h1>
 <p>The controller says: <%= @message %></p>
+ 
+<p>
+<% (0..@result["items"].length-1).each do |x| %>
+  <%= @result["items"][x]["volumeInfo"]["title"] %><br>
+  <img src="
+  <%= @result["items"][x]["volumeInfo"]["imageLinks"]["thumbnail"] %><br>
+  ">
+<% end %>
+
+</p>
+
