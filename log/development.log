@@ -2408,3 +2408,82 @@ Started GET "/assets/users.js?body=1" for 10.0.2.2 at 2013-10-11 03:51:40 +0000
 
 
 Started GET "/assets/application.js?body=1" for 10.0.2.2 at 2013-10-11 03:51:40 +0000
+
+
+Started GET "/" for 10.0.2.2 at 2013-10-11 07:11:02 +0000
+  [1m[36mActiveRecord::SchemaMigration Load (1.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by GreetingsController#hello as HTML
+  Rendered greetings/hello.html.erb within layouts/application (5.0ms)
+Completed 200 OK in 819ms (Views: 298.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/scaffolds.css?body=1" for 10.0.2.2 at 2013-10-11 07:11:04 +0000
+
+
+Started GET "/assets/application.css?body=1" for 10.0.2.2 at 2013-10-11 07:11:04 +0000
+
+
+Started GET "/assets/users.css?body=1" for 10.0.2.2 at 2013-10-11 07:11:04 +0000
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 10.0.2.2 at 2013-10-11 07:11:04 +0000
+
+
+Started GET "/assets/jquery.js?body=1" for 10.0.2.2 at 2013-10-11 07:11:04 +0000
+
+
+Started GET "/assets/greetings.css?body=1" for 10.0.2.2 at 2013-10-11 07:11:04 +0000
+
+
+Started GET "/assets/turbolinks.js?body=1" for 10.0.2.2 at 2013-10-11 07:11:04 +0000
+
+
+Started GET "/assets/greetings.js?body=1" for 10.0.2.2 at 2013-10-11 07:11:04 +0000
+
+
+Started GET "/assets/users.js?body=1" for 10.0.2.2 at 2013-10-11 07:11:04 +0000
+
+
+Started GET "/assets/application.js?body=1" for 10.0.2.2 at 2013-10-11 07:11:04 +0000
+
+
+Started GET "/" for 10.0.2.2 at 2013-10-11 07:12:26 +0000
+Processing by GreetingsController#hello as HTML
+  Rendered greetings/hello.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 425ms (Views: 105.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 10.0.2.2 at 2013-10-11 07:12:29 +0000
+Processing by GreetingsController#hello as HTML
+  Rendered greetings/hello.html.erb within layouts/application (0.4ms)
+Completed 200 OK in 341ms (Views: 109.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/greetings.css?body=1" for 10.0.2.2 at 2013-10-11 07:12:30 +0000
+
+
+Started GET "/assets/users.css?body=1" for 10.0.2.2 at 2013-10-11 07:12:30 +0000
+
+
+Started GET "/assets/scaffolds.css?body=1" for 10.0.2.2 at 2013-10-11 07:12:30 +0000
+
+
+Started GET "/assets/application.css?body=1" for 10.0.2.2 at 2013-10-11 07:12:30 +0000
+
+
+Started GET "/assets/jquery.js?body=1" for 10.0.2.2 at 2013-10-11 07:12:30 +0000
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 10.0.2.2 at 2013-10-11 07:12:30 +0000
+
+
+Started GET "/assets/turbolinks.js?body=1" for 10.0.2.2 at 2013-10-11 07:12:30 +0000
+
+
+Started GET "/assets/greetings.js?body=1" for 10.0.2.2 at 2013-10-11 07:12:30 +0000
+
+
+Started GET "/assets/users.js?body=1" for 10.0.2.2 at 2013-10-11 07:12:30 +0000
+
+
+Started GET "/assets/application.js?body=1" for 10.0.2.2 at 2013-10-11 07:12:30 +0000
