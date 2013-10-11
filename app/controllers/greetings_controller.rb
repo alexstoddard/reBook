@@ -5,7 +5,11 @@ require 'net/http'
 class GreetingsController < ApplicationController
   def hello
     @message = "Hello, from reBook!"
-    @result = search_google("Stewart Calculus")
+    if(@params.nil?)
+      @result = search_google("Stewart Calculus")
+    else
+      @result = search_google(params[:search])
+    end
   end
 
   def search_google(terms)
