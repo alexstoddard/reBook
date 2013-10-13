@@ -10,13 +10,14 @@ class SearchApi
   def search_google(terms)
     domain = "www.googleapis.com"
     path = "books/v1/volumes"
-    key = "AIzaSyBiCf7WbyUGR8kFOD3fwTAOjWGSMOGx4fk"
+    key = "AIzaSyC5I4Bbh3Zy6jB1-HfHEijeoFelZ8Ir-uQ"
+    referer = "rebook.herokuapp.com/"
 
     search_string = "https://#{domain}/#{path}?q=#{terms}&key=#{key}"
     search_string = search_string.gsub(" ", "%20")
 
     begin
-      stream = open(search_string)
+      stream = open(search_string, "Referer" => referer)
       raise 'web service error' if (stream.status.first != '200')
       json =  JSON.parse(stream.read)
 
