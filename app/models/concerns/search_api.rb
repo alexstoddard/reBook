@@ -22,7 +22,7 @@ class SearchApi
       json =  JSON.parse(stream.read)
     rescue OpenURI::HTTPError => oe
       puts "OpenURI error"
-      puts oe.message
+      puts oe.to_json
       response = BookResponse.new
       response.status = "Unable to recieve json"
       return response
