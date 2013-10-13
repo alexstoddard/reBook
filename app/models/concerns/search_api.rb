@@ -20,7 +20,7 @@ class SearchApi
       stream = open(search_string, "Referer" => referer)
       raise 'web service error' if (stream.status.first != '200')
       json =  JSON.parse(stream.read)
-    rescue OpenURI::Error => oe
+    rescue OpenURI::HTTPError => oe
       puts "OpenURI error"
       puts e.message
       response = BookResponse.new
