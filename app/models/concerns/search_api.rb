@@ -13,7 +13,7 @@ class SearchApi
     key = "AIzaSyC5I4Bbh3Zy6jB1-HfHEijeoFelZ8Ir-uQ"
     referer = "rebook.herokuapp.com/"
 
-    search_string = "https://#{domain}/#{path}?q=#{terms}&key=#{key}"
+    search_string = "https://#{domain}/#{path}?q=#{terms}&key=#{key}&country=US"
     search_string = search_string.gsub(" ", "%20")
 
     begin
