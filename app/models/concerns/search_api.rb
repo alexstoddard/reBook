@@ -23,6 +23,7 @@ class SearchApi
 
     rescue Exception => e
       puts e
+      puts stream.read
       response = BookResponse.new
       response.status = "Unable to recieve json"
       return response
