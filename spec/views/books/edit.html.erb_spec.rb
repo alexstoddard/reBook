@@ -4,11 +4,11 @@ describe "books/edit" do
   before(:each) do
     @book = assign(:book, stub_model(Book,
       :name => "MyString",
-      :subject => "",
-      :author => "",
-      :edition => "",
-      :price => "",
-      :googleId => "",
+      :subject => "MyString",
+      :author => "MyString",
+      :edition => "MyString",
+      :price => "9.99",
+      :googleId => "MyString",
       :thumbnail => "MyString"
     ))
   end

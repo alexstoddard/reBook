@@ -1,4 +1,8 @@
 Rebook::Application.routes.draw do
+  resources :users
+
+  resources :books
+
   resources :feedbacks
 
   resources :trade_notes
@@ -17,11 +21,7 @@ Rebook::Application.routes.draw do
 
   resources :user_locations
 
-  resources :books
-
   resources :locations
-
-  resources :users
 
   root 'greetings#hello'
   get "greetings/hello"
