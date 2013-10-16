@@ -1,4 +1,26 @@
 Rebook::Application.routes.draw do
+  resources :feedbacks
+
+  resources :trade_notes
+
+  resources :user_feedbacks
+
+  resources :trade_lines
+
+  resources :trades
+
+  resources :conditions
+
+  resources :inventory_haves
+
+  resources :inventory_needs
+
+  resources :user_locations
+
+  resources :books
+
+  resources :locations
+
   resources :users
 
   root 'greetings#hello'

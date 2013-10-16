@@ -1,0 +1,33 @@
+<%= form_for(@trade_line) do |f| %>
+  <% if @trade_line.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@trade_line.errors.count, "error") %> prohibited this trade_line from being saved:</h2>
+
+      <ul>
+      <% @trade_line.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :user_from_id %><br>
+    <%= f.number_field :user_from_id %>
+  </div>
+  <div class="field">
+    <%= f.label :book_id %><br>
+    <%= f.number_field :book_id %>
+  </div>
+  <div class="field">
+    <%= f.label :user_to_id %><br>
+    <%= f.number_field :user_to_id %>
+  </div>
+  <div class="field">
+    <%= f.label :user_from_accepted %><br>
+    <%= f.check_box :user_from_accepted %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

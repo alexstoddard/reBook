@@ -1,0 +1,37 @@
+<%= form_for(@trade_note) do |f| %>
+  <% if @trade_note.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@trade_note.errors.count, "error") %> prohibited this trade_note from being saved:</h2>
+
+      <ul>
+      <% @trade_note.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :trade_id %><br>
+    <%= f.number_field :trade_id %>
+  </div>
+  <div class="field">
+    <%= f.label :meet_time %><br>
+    <%= f.datetime_select :meet_time %>
+  </div>
+  <div class="field">
+    <%= f.label :place %><br>
+    <%= f.text_field :place %>
+  </div>
+  <div class="field">
+    <%= f.label :comment %><br>
+    <%= f.text_area :comment %>
+  </div>
+  <div class="field">
+    <%= f.label :user_id %><br>
+    <%= f.number_field :user_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

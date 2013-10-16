@@ -1,0 +1,33 @@
+<h1>Listing user_feedbacks</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User from</th>
+      <th>User to</th>
+      <th>Feedback</th>
+      <th>Comment</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @user_feedbacks.each do |user_feedback| %>
+      <tr>
+        <td><%= user_feedback.user_from_id %></td>
+        <td><%= user_feedback.user_to_id %></td>
+        <td><%= user_feedback.feedback_id %></td>
+        <td><%= user_feedback.comment %></td>
+        <td><%= link_to 'Show', user_feedback %></td>
+        <td><%= link_to 'Edit', edit_user_feedback_path(user_feedback) %></td>
+        <td><%= link_to 'Destroy', user_feedback, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New User feedback', new_user_feedback_path %>

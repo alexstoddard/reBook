@@ -1,0 +1,35 @@
+<h1>Listing trade_notes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Trade</th>
+      <th>Meet time</th>
+      <th>Place</th>
+      <th>Comment</th>
+      <th>User</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @trade_notes.each do |trade_note| %>
+      <tr>
+        <td><%= trade_note.trade_id %></td>
+        <td><%= trade_note.meet_time %></td>
+        <td><%= trade_note.place %></td>
+        <td><%= trade_note.comment %></td>
+        <td><%= trade_note.user_id %></td>
+        <td><%= link_to 'Show', trade_note %></td>
+        <td><%= link_to 'Edit', edit_trade_note_path(trade_note) %></td>
+        <td><%= link_to 'Destroy', trade_note, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Trade note', new_trade_note_path %>
