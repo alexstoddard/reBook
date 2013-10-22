@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Trade:</strong>
+  <%= @trade_note.trade_id %>
+</p>
+
+<p>
+  <strong>Meet time:</strong>
+  <%= @trade_note.meet_time %>
+</p>
+
+<p>
+  <strong>Place:</strong>
+  <%= @trade_note.place %>
+</p>
+
+<p>
+  <strong>Comment:</strong>
+  <%= @trade_note.comment %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @trade_note.user_id %>
+</p>
+
+<%= link_to 'Edit', edit_trade_note_path(@trade_note) %> |
+<%= link_to 'Back', trade_notes_path %>

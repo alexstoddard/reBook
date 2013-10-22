@@ -5,5 +5,6 @@ FactoryGirl.define do
     username "MyString"
     email "MyString"
     passhash "MyString"
+    image "MyString"
   end
 end

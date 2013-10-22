@@ -1,0 +1,39 @@
+<h1>Listing books</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Subject</th>
+      <th>Author</th>
+      <th>Edition</th>
+      <th>Price</th>
+      <th>Googleid</th>
+      <th>Thumbnail</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @books.each do |book| %>
+      <tr>
+        <td><%= book.name %></td>
+        <td><%= book.subject %></td>
+        <td><%= book.author %></td>
+        <td><%= book.edition %></td>
+        <td><%= book.price %></td>
+        <td><%= book.googleId %></td>
+        <td><%= book.thumbnail %></td>
+        <td><%= link_to 'Show', book %></td>
+        <td><%= link_to 'Edit', edit_book_path(book) %></td>
+        <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Book', new_book_path %>

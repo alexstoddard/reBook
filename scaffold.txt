@@ -1,0 +1,12 @@
+rails generate scaffold Book name:string subject:string author:string edition:string price:decimal googleId:string thumbnail:string
+rails generate scaffold Feedback type:string image:string
+rails generate scaffold TradeNote trade_id:integer meet_time:datetime place:string comment:text user_id:integer
+rails generate scaffold UserFeedback user_from_id:integer user_to_id:integer feedback_id:integer comment:text
+rails generate scaffold TradeLine user_from_id:integer book_id:integer user_to_id:integer user_from_accepted:boolean
+rails generate scaffold Trade status:string
+rails generate scaffold Condition description:string image:string
+rails generate scaffold InventoryHave book_id:integer user_id:integer condition_id:string
+rails generate scaffold InventoryNeed book_id:integer user_id:integer
+rails generate scaffold UserLocation user_id:integer location_id:integer description:string
+rails generate scaffold Location name:string address:string city:string state:string zip:string image:string icon:string description:text
+rails generate scaffold User username:string email:string passhash:string image:string

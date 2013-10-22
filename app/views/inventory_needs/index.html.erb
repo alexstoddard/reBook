@@ -1,0 +1,29 @@
+<h1>Listing inventory_needs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Book</th>
+      <th>User</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @inventory_needs.each do |inventory_need| %>
+      <tr>
+        <td><%= inventory_need.book_id %></td>
+        <td><%= inventory_need.user_id %></td>
+        <td><%= link_to 'Show', inventory_need %></td>
+        <td><%= link_to 'Edit', edit_inventory_need_path(inventory_need) %></td>
+        <td><%= link_to 'Destroy', inventory_need, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Inventory need', new_inventory_need_path %>

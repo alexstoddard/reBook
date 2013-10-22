@@ -6,12 +6,14 @@ describe "users/index" do
       stub_model(User,
         :username => "Username",
         :email => "Email",
-        :passhash => "Passhash"
+        :passhash => "Passhash",
+        :image => "Image"
       ),
       stub_model(User,
         :username => "Username",
         :email => "Email",
-        :passhash => "Passhash"
+        :passhash => "Passhash",
+        :image => "Image"
       )
     ])
   end
@@ -22,5 +24,6 @@ describe "users/index" do
     assert_select "tr>td", :text => "Username".to_s, :count => 2
     assert_select "tr>td", :text => "Email".to_s, :count => 2
     assert_select "tr>td", :text => "Passhash".to_s, :count => 2
+    assert_select "tr>td", :text => "Image".to_s, :count => 2
   end
 end

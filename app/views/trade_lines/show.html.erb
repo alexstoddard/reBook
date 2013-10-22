@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User from:</strong>
+  <%= @trade_line.user_from_id %>
+</p>
+
+<p>
+  <strong>Book:</strong>
+  <%= @trade_line.book_id %>
+</p>
+
+<p>
+  <strong>User to:</strong>
+  <%= @trade_line.user_to_id %>
+</p>
+
+<p>
+  <strong>User from accepted:</strong>
+  <%= @trade_line.user_from_accepted %>
+</p>
+
+<%= link_to 'Edit', edit_trade_line_path(@trade_line) %> |
+<%= link_to 'Back', trade_lines_path %>

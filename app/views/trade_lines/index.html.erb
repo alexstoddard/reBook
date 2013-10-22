@@ -1,0 +1,33 @@
+<h1>Listing trade_lines</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User from</th>
+      <th>Book</th>
+      <th>User to</th>
+      <th>User from accepted</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @trade_lines.each do |trade_line| %>
+      <tr>
+        <td><%= trade_line.user_from_id %></td>
+        <td><%= trade_line.book_id %></td>
+        <td><%= trade_line.user_to_id %></td>
+        <td><%= trade_line.user_from_accepted %></td>
+        <td><%= link_to 'Show', trade_line %></td>
+        <td><%= link_to 'Edit', edit_trade_line_path(trade_line) %></td>
+        <td><%= link_to 'Destroy', trade_line, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Trade line', new_trade_line_path %>

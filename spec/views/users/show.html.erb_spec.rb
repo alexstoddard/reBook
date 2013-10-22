@@ -5,7 +5,8 @@ describe "users/show" do
     @user = assign(:user, stub_model(User,
       :username => "Username",
       :email => "Email",
-      :passhash => "Passhash"
+      :passhash => "Passhash",
+      :image => "Image"
     ))
   end
 
@@ -15,5 +16,6 @@ describe "users/show" do
     rendered.should match(/Username/)
     rendered.should match(/Email/)
     rendered.should match(/Passhash/)
+    rendered.should match(/Image/)
   end
 end

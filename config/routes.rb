@@ -1,6 +1,28 @@
 Rebook::Application.routes.draw do
   resources :users
 
+  resources :books
+
+  resources :feedbacks
+
+  resources :trade_notes
+
+  resources :user_feedbacks
+
+  resources :trade_lines
+
+  resources :trades
+
+  resources :conditions
+
+  resources :inventory_haves
+
+  resources :inventory_needs
+
+  resources :user_locations
+
+  resources :locations
+
   root 'greetings#hello'
   get "greetings/hello"
   # The priority is based upon order of creation: first created -> highest priority.
