@@ -11,3 +11,18 @@
  *= require_self
  *= require_tree .
  */
+
+
+body {
+	margin: 0 auto;
+	max-width:960px;
+}
+
+
+ /***************** header styles ***********/
+
+header h1 {
+	color: #155DAC;
+	font-family: 'Georgia';
+	font-size: 4em;
+}
