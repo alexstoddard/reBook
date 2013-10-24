@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe "inventory_haves/show" do
+describe "inventory_owns/show" do
   before(:each) do
-    @inventory_have = assign(:inventory_have, stub_model(InventoryHave,
+    @inventory_own = assign(:inventory_own, stub_model(InventoryOwn,
       :book_id => 1,
       :user_id => 2,
-      :condition_id => "Condition"
+      :condition => "Condition"
     ))
   end
 
