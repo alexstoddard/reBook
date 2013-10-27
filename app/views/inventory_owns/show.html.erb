@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Book:</strong>
+  <%= @inventory_own.book_id %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @inventory_own.user_id %>
+</p>
+
+<p>
+  <strong>Condition:</strong>
+  <%= @inventory_own.condition %>
+</p>
+
+<%= link_to 'Edit', edit_inventory_own_path(@inventory_own) %> |
+<%= link_to 'Back', inventory_owns_path %>

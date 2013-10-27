@@ -1,4 +1,6 @@
 Rebook::Application.routes.draw do
+  resources :inventory_owns
+
   resources :users
 
   resources :books
@@ -14,8 +16,6 @@ Rebook::Application.routes.draw do
   resources :trades
 
   resources :conditions
-
-  resources :inventory_haves
 
   resources :inventory_needs
 

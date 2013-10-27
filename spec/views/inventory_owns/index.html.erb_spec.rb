@@ -1,22 +1,22 @@
 require 'spec_helper'
 
-describe "inventory_haves/index" do
+describe "inventory_owns/index" do
   before(:each) do
-    assign(:inventory_haves, [
-      stub_model(InventoryHave,
+    assign(:inventory_owns, [
+      stub_model(InventoryOwn,
         :book_id => 1,
         :user_id => 2,
-        :condition_id => "Condition"
+        :condition => "Condition"
       ),
-      stub_model(InventoryHave,
+      stub_model(InventoryOwn,
         :book_id => 1,
         :user_id => 2,
-        :condition_id => "Condition"
+        :condition => "Condition"
       )
     ])
   end
 
-  it "renders a list of inventory_haves" do
+  it "renders a list of inventory_owns" do
     render
     # Run the generator again with the --webrat flag if you want to use webrat matchers
     assert_select "tr>td", :text => 1.to_s, :count => 2

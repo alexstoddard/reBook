@@ -1,0 +1,31 @@
+<h1>Listing inventory_owns</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Book</th>
+      <th>User</th>
+      <th>Condition</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @inventory_owns.each do |inventory_own| %>
+      <tr>
+        <td><%= inventory_own.book_id %></td>
+        <td><%= inventory_own.user_id %></td>
+        <td><%= inventory_own.condition %></td>
+        <td><%= link_to 'Show', inventory_own %></td>
+        <td><%= link_to 'Edit', edit_inventory_own_path(inventory_own) %></td>
+        <td><%= link_to 'Destroy', inventory_own, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Inventory own', new_inventory_own_path %>

@@ -6,8 +6,8 @@
 <a href="/users">Users scaffolding</a><br>
 <a href="/locations">Locations scaffolding</a><br>
 <a href="/user_locations">UserLocations scaffolding</a><br>
-<a href="/books">Books scaffolding</a><br>
-<a href="/inventory_owns">InventoryOwns scaffolding</a><br>
+<a href="/books">Books scaffolding</a>br>
+<a href="/inventory_haves">InventoryHav scaffolding</a><br>
 <a href="/inventory_needs">InventoryNeeds scaffolding</a><br>
 <a href="/conditions">Conditions scaffolding</a><br>
 <a href="/trades">Trades scaffolding</a><br>
