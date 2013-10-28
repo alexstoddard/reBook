@@ -35,11 +35,6 @@ class InventoryNeedsController < ApplicationController
     @inventory_need.book_id = @book.id
     @inventory_need.user_id = session[:user_id]
 	
-	if InventoryNeed.find_by_book_id_and_user_id(@book.id,session[:user_id])
-		flash[:add_error] = "You already have that book in your list"
-		redirect_to root_path
-		return
-	end
     respond_to do |format|
       if @inventory_need.save
         format.html { redirect_to inventory_needs_path, notice: 'Inventory need was successfully created.' }

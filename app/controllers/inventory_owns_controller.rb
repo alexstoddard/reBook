@@ -35,12 +35,6 @@ class InventoryOwnsController < ApplicationController
     @inventory_own.user_id = session[:user_id]
     @inventory_own.condition = "Ok"
 	
-	if InventoryOwn.find_by_user_id_and_book_id(session[:user_id], @book.id)
-		flash[:add_error] = "You already have that book in your list"
-		redirect_to root_path
-		return
-	end
-	
     respond_to do |format|
       if @inventory_own.save
         format.html { redirect_to inventory_owns_path, notice: 'Inventory own was successfully created.' }

@@ -8,11 +8,6 @@
    Welcome <%= session[:user_name] %>, <a href="/logout">Logout</a>
 <% end %>
 
-<% if flash[:add_error] %>
-<h1><%= flash[:add_error] %></h1>
-<% end %>
-
-
 <p><strong>For reference, here are skeletal implementations for various views.</strong></p>
 
 <p>
@@ -54,21 +49,19 @@ Search for something with the API:
          <% if x.hide_own %>
 			You already own this book!
 			<br/>
+		<% elsif x.hide_need %>
+			You already need this book!
+			<br />
 		 <% else %>
 			<%= form_tag "/inventory_owns/?" + x.id, :method => 'post' do %>
 				<%= submit_tag "Add to owned", :name => nil %>
 				<%= hidden_field_tag :api_id, x.id %>
 			 <% end %>
-         <% end %>
-		 <% if x.hide_need %>
-			You already need this book!
-			<br/>
-		 <% else %>
 			 <%= form_tag "/inventory_needs", :method => 'post' do %>
 				<%= submit_tag "Add to needed", :name => nil %>
 				<%= hidden_field_tag :api_id, x.id %>
 			 <% end %>
-		<% end %>	 
+         <% end %> 
       <% end %>
     <br>
   </div>
