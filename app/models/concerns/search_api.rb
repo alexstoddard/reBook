@@ -161,7 +161,7 @@ class SearchApi
 end
 
 class ApiBook
-  attr_accessor :title, :thumbnail, :link, :id, :authors, :isbn
+  attr_accessor :title, :thumbnail, :link, :id, :authors, :isbn, :hide_own, :hide_need
 end
 
 class BookResponse      
