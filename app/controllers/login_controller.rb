@@ -2,6 +2,7 @@ class LoginController < ApplicationController
 
   def logout 
     session[:user_id] = nil
+    session[:user_name] = nil
       redirect_to root_path
   end
 
