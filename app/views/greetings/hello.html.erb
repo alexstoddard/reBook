@@ -1,7 +1,7 @@
 <%= render "layouts/header" %>
 
-<h1>This is our temporary skeleton view<h1>
-<p>The controller says: <%= @message %></p>
+<h1>This is our Zero Feature Release</h1><br>
+<p><strong>For reference, here are skeletal implementations for various views.</strong></p>
 <p>
 <a href="/users">Users scaffolding</a><br>
 <a href="/locations">Locations scaffolding</a><br>
@@ -16,19 +16,27 @@
 <a href="/trade_notes">TradeNotes scaffolding</a><br>
 <a href="/feedbacks">Feedbacks scaffolding</a><br>
 </p>
+<br>
 <p>
-Some basic API book results from GoogleBooks:
-<a href="/?search=cats">Search for cats</a><br>
+Search for something with the API:
 
-Status: <%= @result.status %> <br>
-Results: <%= @result.books.length %> <br>
+<%= form_tag "/", :method => 'get' do %>
+    <%= text_field_tag :search, params[:search] || "cats" %>
+    <%= submit_tag "Search", :name => nil %>
+<% end %>
+</p>
+<p>
+
+<br>
+
+<strong>Results: <%= @result.books.length %></strong><br><br>
 
 <% @result.books.each do |x| %>
-  <img src="
-  <%= x.thumbnail %>
-  "><br>
-  <%= x.title %><br>
+  <div>
+    <img src="<%= x.thumbnail %>"><br>
+    <strong><%= x.title %></strong><br>
+    <a href="<%= x.link %>"><%= x.id %><br><br>
+  </div>
 <% end %>
-
 </p>
 

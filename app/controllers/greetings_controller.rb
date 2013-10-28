@@ -8,7 +8,7 @@ class GreetingsController < ApplicationController
 
     @message = "Hello, from reBook!"
     query = params[:search] || "Stewart Calculus" 
-    @result = searcher.search(query)
+    @result = searcher.search(query, 40)
 
   end
 end
