@@ -4,7 +4,11 @@ class InventoryNeedsController < ApplicationController
   # GET /inventory_needs
   # GET /inventory_needs.json
   def index
-    @inventory_needs = InventoryNeed.all
+    if session[:user_id].nil?
+      @inventory_needs = InventoryNeed.all
+    else
+      @inventory_needs = InventoryNeed.find_all_by_user_id(session[:user_id])
+    end
   end
 
   # GET /inventory_needs/1
@@ -24,12 +28,17 @@ class InventoryNeedsController < ApplicationController
   # POST /inventory_needs
   # POST /inventory_needs.json
   def create
-    @inventory_need = InventoryNeed.new(inventory_need_params)
+
+    @book = BooksController.add_if_nonexistant(params[:api_id])
+    @inventory_need = InventoryNeed.new
+    
+    @inventory_need.book_id = @book.id
+    @inventory_need.user_id = session[:user_id]
 
     respond_to do |format|
       if @inventory_need.save
-        format.html { redirect_to @inventory_need, notice: 'Inventory need was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @inventory_need }
+        format.html { redirect_to inventory_needs_path, notice: 'Inventory need was successfully created.' }
+        format.json { render action: 'index', status: :created, location: @inventory_need }
       else
         format.html { render action: 'new' }
         format.json { render json: @inventory_need.errors, status: :unprocessable_entity }

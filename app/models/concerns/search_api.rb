@@ -9,11 +9,19 @@ class SearchApi
   def search(terms, limit)
     search = prepare_search_string(terms, limit)
     json = connect(search)
-    books = parse(json)
+    books = parse(json, false)
 
     return books
   end
   
+  def search_book(id)
+    search = prepare_book_string(id)
+    json = connect(search)
+    books = parse(json, true)
+
+    return books
+  end
+
   def connect(search_string)
     referer = Rebook::Application.config.google_referer
 
@@ -52,33 +60,57 @@ class SearchApi
     return search_string
   end
 
-  def parse(json)
+  def prepare_book_string(id)
+
+    domain = Rebook::Application.config.google_domain
+    path = Rebook::Application.config.google_path
+    key = Rebook::Application.config.google_key
+
+    search_string = "https://#{domain}/#{path}/#{id}?key=#{key}&country=US"
+    search_string = search_string.gsub(" ", "%20")
+
+    return search_string
+  end
+
+  def parse(json, single)
 
     response = BookResponse.new
     response.status = :response_ok
 
-    items = get_items(json)
+    if single
+      book = parse_result(get_item(json))
+      response.book = book
+    else
+      items = get_items(json)
 
-    if(items.nil?)
-      return response
-    end
+      if items.nil?
+        return response
+      end
 
-    items.each do |x|
-      book = Book.new
-      begin
-        book.title = require_get(:get_title, x)
-        book.thumbnail = require_get(:get_thumbnail, x)
-        book.link = require_get(:get_link, x)
-        book.id = require_get(:get_id, x)
-        book.authors = optional_get(:get_authors, x)
-        book.isbn = optional_get(:get_isbn,x)
-
-        response.books = response.books << book
-      rescue
+      items.each do |x|
+        begin
+          book = parse_result(x)
+          response.books = response.books << book
+        rescue
+        end
       end
     end
 
     return response
+  end
+  
+  def parse_result(x)
+
+    book = ApiBook.new
+
+    book.title = require_get(:get_title, x)
+    book.thumbnail = require_get(:get_thumbnail, x)
+    book.link = require_get(:get_link, x)
+    book.id = require_get(:get_id, x)
+    book.authors = optional_get(:get_authors, x)
+    book.isbn = optional_get(:get_isbn,x)
+
+    return book
   end
 
   def require_get(method, x)
@@ -90,6 +122,10 @@ class SearchApi
       self.send method, x
     rescue
     end
+  end
+
+  def get_item(json)
+    return json
   end
 
   def get_items(json)
@@ -124,12 +160,12 @@ class SearchApi
 
 end
 
-class Book
+class ApiBook
   attr_accessor :title, :thumbnail, :link, :id, :authors, :isbn
 end
 
-class BookResponse
-  attr_accessor :status
+class BookResponse      
+  attr_accessor :status, :book
   attr_writer :books
 
   def books

@@ -31,9 +31,8 @@
 </p>
 
 <p>
-  <strong>Thumbnail:</strong>
-  <%= @book.thumbnail %>
+  <strong>Thumbnail:</strong><br>
+  <image src="<%= @book.thumbnail %>">
 </p>
 
-<%= link_to 'Edit', edit_book_path(@book) %> |
 <%= link_to 'Back', books_path %>

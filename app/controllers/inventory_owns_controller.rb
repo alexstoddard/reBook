@@ -4,7 +4,11 @@ class InventoryOwnsController < ApplicationController
   # GET /inventory_owns
   # GET /inventory_owns.json
   def index
-    @inventory_owns = InventoryOwn.all
+    if session[:user_id].nil?
+      @inventory_owns = InventoryOwn.all
+    else
+      @inventory_owns = InventoryOwn.find_all_by_user_id(session[:user_id])
+    end
   end
 
   # GET /inventory_owns/1
@@ -24,11 +28,16 @@ class InventoryOwnsController < ApplicationController
   # POST /inventory_owns
   # POST /inventory_owns.json
   def create
-    @inventory_own = InventoryOwn.new(inventory_own_params)
+    @book = BooksController.add_if_nonexistant(params[:api_id])
+    @inventory_own = InventoryOwn.new
+    
+    @inventory_own.book_id = @book.id
+    @inventory_own.user_id = session[:user_id]
+    @inventory_own.condition = "Ok"
 
     respond_to do |format|
       if @inventory_own.save
-        format.html { redirect_to @inventory_own, notice: 'Inventory own was successfully created.' }
+        format.html { redirect_to inventory_owns_path, notice: 'Inventory own was successfully created.' }
         format.json { render action: 'show', status: :created, location: @inventory_own }
       else
         format.html { render action: 'new' }

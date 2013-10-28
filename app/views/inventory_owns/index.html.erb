@@ -1,31 +1,30 @@
-<h1>Listing inventory_owns</h1>
-
+<% if session[:user_name].nil? %>
+<h1>Listing all owned books</h1>
+<% else %>
+<h1>Listing all of <%=session[:user_name] %>'s owned books</h1>
+<% end %>
+<br><br>
 <table>
   <thead>
     <tr>
-      <th>Book</th>
       <th>User</th>
+      <th>Book</th>
       <th>Condition</th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>Image</th>
+      <th>Action</th>
     </tr>
   </thead>
 
   <tbody>
     <% @inventory_owns.each do |inventory_own| %>
       <tr>
-        <td><%= inventory_own.book_id %></td>
-        <td><%= inventory_own.user_id %></td>
+        <td><%= inventory_own.user.username %></td>
+        <td><%= inventory_own.book.name %></td>
         <td><%= inventory_own.condition %></td>
-        <td><%= link_to 'Show', inventory_own %></td>
-        <td><%= link_to 'Edit', edit_inventory_own_path(inventory_own) %></td>
-        <td><%= link_to 'Destroy', inventory_own, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><img src="<%= inventory_own.book.thumbnail %>"></td>
+        <td><%= link_to 'Remove', inventory_own, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
 <br>
-
-<%= link_to 'New Inventory own', new_inventory_own_path %>

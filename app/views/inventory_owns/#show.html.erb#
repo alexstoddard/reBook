@@ -15,5 +15,4 @@
   <%= @inventory_own.condition %>
 </p>
 
-<%= link_to 'Edit', edit_inventory_own_path(@inventory_own) %> |
 <%= link_to 'Back', inventory_owns_path %>

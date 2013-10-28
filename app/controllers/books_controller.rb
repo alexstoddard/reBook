@@ -37,6 +37,31 @@ class BooksController < ApplicationController
     end
   end
 
+  def self.add_if_nonexistant(api_id)
+    book = Book.find_by_googleId(api_id)
+    
+    if book 
+      return book
+    end
+
+    api = SearchApi.new
+    result = api.search_book(api_id)
+    
+    if result.status == :response_ok
+      book = Book.new
+
+      book.name = result.book.title
+      book.thumbnail = result.book.thumbnail
+      book.googleId = result.book.id
+
+      if book.save
+        return book
+      end
+    end
+    
+    return false
+  end
+
   # PATCH/PUT /books/1
   # PATCH/PUT /books/1.json
   def update
