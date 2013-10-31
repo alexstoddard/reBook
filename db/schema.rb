@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131031183952) do
+ActiveRecord::Schema.define(version: 20131031184553) do
 
   create_table "books", force: true do |t|
     t.string   "name"
@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(version: 20131031183952) do
   create_table "inventory_owns", force: true do |t|
     t.integer  "book_id"
     t.integer  "user_id"
-    t.string   "condition"
+    t.integer  "condition",  limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
