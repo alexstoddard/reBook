@@ -5,7 +5,7 @@ class CreateUserFeedbacks < ActiveRecord::Migration
       t.integer :user_to_id
       t.integer :feedback_id
       t.text :comment
-
+      t.integer: trade_id
       t.timestamps
     end
   end
