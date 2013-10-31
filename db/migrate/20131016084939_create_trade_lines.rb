@@ -5,7 +5,7 @@ class CreateTradeLines < ActiveRecord::Migration
       t.integer :book_id
       t.integer :user_to_id
       t.boolean :user_from_accepted
-
+	  t.integer :trade_id
       t.timestamps
     end
   end
