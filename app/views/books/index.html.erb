@@ -1,5 +1,5 @@
-<h1>Listing books</h1>
-
+<h1>All books that users have</h1>
+<br><br>
 <table>
   <thead>
     <tr>
@@ -10,8 +10,6 @@
       <th>Price</th>
       <th>Googleid</th>
       <th>Thumbnail</th>
-      <th></th>
-      <th></th>
       <th></th>
     </tr>
   </thead>
@@ -25,15 +23,11 @@
         <td><%= book.edition %></td>
         <td><%= book.price %></td>
         <td><%= book.googleId %></td>
-        <td><%= book.thumbnail %></td>
+        <td><image src="<%= book.thumbnail %>"></td>
         <td><%= link_to 'Show', book %></td>
-        <td><%= link_to 'Edit', edit_book_path(book) %></td>
-        <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New Book', new_book_path %>

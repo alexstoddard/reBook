@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131016090536) do
+ActiveRecord::Schema.define(version: 20131028034157) do
 
   create_table "books", force: true do |t|
     t.string   "name"
@@ -50,6 +50,14 @@ ActiveRecord::Schema.define(version: 20131016090536) do
   create_table "inventory_needs", force: true do |t|
     t.integer  "book_id"
     t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "inventory_owns", force: true do |t|
+    t.integer  "book_id"
+    t.integer  "user_id"
+    t.string   "condition"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -116,6 +124,8 @@ ActiveRecord::Schema.define(version: 20131016090536) do
     t.string   "image"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "activated"
+    t.string   "salt"
   end
 
 end

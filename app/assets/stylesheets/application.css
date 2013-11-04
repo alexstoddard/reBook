@@ -28,3 +28,7 @@ header h1 {
 	font-size: 4em;
 	text-align:center;
 }
+
+body h1 {
+	text-align:center;
+}

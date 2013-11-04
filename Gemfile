@@ -63,3 +63,7 @@ end
 
 gem 'oauth'
 gem 'oauth2'
+
+gem 'debugger'
+
+gem 'bcrypt-ruby', :require =>'bcrypt'

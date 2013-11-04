@@ -1,6 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>ID:</strong>
+  <%= @user.id %>
+</p>
+
+<p>
   <strong>Username:</strong>
   <%= @user.username %>
 </p>
@@ -18,6 +23,11 @@
 <p>
   <strong>Image:</strong>
   <%= @user.image %>
+</p>
+
+<p>
+  <strong>Activated:</strong>
+  <%= @user.activated %>
 </p>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |

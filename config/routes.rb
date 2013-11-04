@@ -1,4 +1,6 @@
 Rebook::Application.routes.draw do
+  resources :inventory_owns
+
   resources :users
 
   resources :books
@@ -15,16 +17,25 @@ Rebook::Application.routes.draw do
 
   resources :conditions
 
-  resources :inventory_haves
-
   resources :inventory_needs
 
   resources :user_locations
 
   resources :locations
-
+  
   root 'greetings#hello'
+
   get "greetings/hello"
+
+  get '/login_failed', to: 'login#failed'
+  get '/login_succeeded', to: 'login#succeeded'
+  get '/login', to: 'login#show'
+  get '/logout', to: 'login#logout'
+  post '/login_try', to: 'login#attempt'
+
+  post '/inventory_owns', to: 'inventory_owns#create'
+  post '/inventory_needs', to: 'inventory_needs#create'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

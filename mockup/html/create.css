@@ -69,8 +69,7 @@ header > h4 {
 	color: #CCCCFF;
 	float: right;
 	clear:right;
-	margin-right: 8%;
-	
+	margin-right: 8%;	
 }
 
 /********************Create account section***************************/
@@ -80,4 +79,8 @@ header > h4 {
 }
 #wrappermain {
 	background-color: #EBEBEB;
+}
+
+h3 {
+	margin-top: 10px;
 }
