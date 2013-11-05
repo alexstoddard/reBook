@@ -15,6 +15,7 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
+	@locations = Location.all
   end
 
   # GET /users/1/edit
@@ -29,6 +30,11 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
+		@user_location = UserLocation.new
+		@user_location.user_id = @user.id
+		@user_location.location_id = @user.location
+		@user_location.description = @user.location_description
+		@user_location.save
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render action: 'show', status: :created, location: @user }
       else
@@ -70,6 +76,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:username, :email, :passhash, :image, :activated, :passhash_confirmation)
+      params.require(:user).permit(:username, :email, :passhash, :image, :activated, :passhash_confirmation, :location)
     end
 end
