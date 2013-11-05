@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-
   # GET /users
   # GET /users.json
   def index
@@ -35,6 +34,7 @@ class UsersController < ApplicationController
 		@user_location.location_id = @user.location
 		@user_location.description = @user.location_description
 		@user_location.save
+		UserMailer.welcome_email(@user).deliver
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render action: 'show', status: :created, location: @user }
       else
@@ -76,6 +76,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:username, :email, :passhash, :image, :activated, :passhash_confirmation, :location)
+      params.require(:user).permit(:username, :email, :passhash, :image, :activated, :passhash_confirmation, :location, :location_description)
     end
 end
