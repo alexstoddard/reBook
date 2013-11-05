@@ -23,9 +23,9 @@ Rebook::Application.routes.draw do
 
   resources :locations
   
-  root 'greetings#homepage'
+  root 'greetings#hello'
 
-  get "greetings/homepage"
+  get "greetings/hello"
 
   get '/login_failed', to: 'login#failed'
   get '/login_succeeded', to: 'login#succeeded'

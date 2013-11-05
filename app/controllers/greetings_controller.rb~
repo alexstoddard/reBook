@@ -3,7 +3,7 @@ require 'json'
 require 'net/http'
 
 class GreetingsController < ApplicationController
-  def homepage
+  def hello
     searcher = SearchApi.new
 
     @message = "Hello, from reBook!"
