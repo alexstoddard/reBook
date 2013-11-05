@@ -9,26 +9,123 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require_tree .
  */
 
 
+* {
+	margin: 0;
+	padding: 0;
+	font-family: "Trebuchet MS";
+	font-weight: 600;
+}
+
+a {
+	text-decoration: none;
+}
+
 body {
-	margin: 0 auto;
-	max-width:960px;
-	background-color:#b0c4de;
+	min-width: 980px;
 }
 
 
- /***************** header styles ***********/
+header, #info, #howitworks, #create, #search, footer{
+	width: 980px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+
+/*****************Button and Text Box Styling**********************/
+/******************************************************************/
+.button {
+	background-color: #CCCCFF;
+	border-radius: 5px;
+	color: white;
+	padding: 8px;
+	font-size: 100%;
+	font-weight: bold;
+	border: none;
+	cursor: pointer;
+	margin-bottom:10px;	
+}
+
+.text {
+	padding: 5px;
+	font-size: 100%;
+	color: #CCCCFF;
+}
+
+/*****************ReBook Header Section with login********************/
+/*********************************************************************/
+header {
+	
+}
+
+#wrapperheader{
+	background-color: white;
+	width: 100%;
+}
 
 header h1 {
-	color: #155DAC;
-	font-family: 'Georgia';
-	font-size: 4em;
-	text-align:center;
+	float: right;
+	margin-top: 3%;
+	color: #CCCCFF;
 }
 
-body h1 {
-	text-align:center;
+header > img, footer img {
+	margin-top: 1%;
+	margin-bottom: 1%;
+}
+
+header > input {
+	float: right;
+}
+
+header > .text {
+	margin-top: 2%;
+	width: 12%;
+	margin-right: 2%;
+}
+
+header > .button {
+	margin-right: 2%;
+	margin-top: 2%;	
+}
+
+header > h4 {
+	color: #CCCCFF;
+	float: right;
+	clear:right;
+	margin-right: 8%;
+	
+}
+
+/********************Navigation bar***********************************/
+/*********************************************************************/
+
+#navbar {
+	text-align: center;
+	color: rgb(63, 72, 204);
+	padding: 8px;
+}
+#wrappernavbar {
+	background-color: #EBEBEB;
+}
+
+
+
+/**************************Footer Section**************************/
+/******************************************************************/
+footer {
+	
+}
+
+#wrapperfooter {
+	color: #CCCCFF;
+}
+
+footer span {
+	float: right;
+	margin-top: 80px;
+	margin-right: 20px;
 }

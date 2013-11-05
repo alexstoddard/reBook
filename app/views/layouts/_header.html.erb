@@ -1,3 +1,13 @@
-<header>
-	<h1>ReBook</h1>
-</header>
+<div id="wrapperheader">
+	<header>
+		<%= link_to image_tag("rebooklogosmall.png", :alt => "ReBook"), root_path %>
+
+		<%= form_tag("/login_try") do %>
+			<%= submit_tag("Login", id: nil, class: "button") %>
+			<%= password_field_tag("login_passhash", nil, id: nil, class: "text", placeholder: "Password") %>
+			<%= text_field_tag("login_username", nil, id: nil, class: "text", placeholder: "Username") %>
+		<% end %>
+		<h4> Forgot Password? </h4> 
+
+	</header>
+</div>

@@ -1,3 +1,5 @@
+require 'rubygems'
+
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
 
@@ -73,6 +75,16 @@ class BooksController < ApplicationController
         format.html { render action: 'edit' }
         format.json { render json: @book.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  # Show search results
+  def search
+    searcher = SearchApi.new
+
+    query = params[:search]
+    if query 
+      @result = searcher.search(query, 40)
     end
   end
 

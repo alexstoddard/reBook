@@ -1,0 +1,51 @@
+<div id="wrapperinfo">
+  <div id="info">
+    
+    <div id="search">
+    
+      <h2>Search for Books!</h2>
+    
+      <%= form_tag("/search", method: "get") do %>
+        <%= text_field_tag('search', nil, id: nil, placeholder: "Title, ISBN, Author", class: "text") %>
+        <%= submit_tag("Search", id: nil, class: "button") %>
+      <% end %>
+      
+    </div>
+    
+    <div id="signup">
+      <h2>Never spend money on books again! Sign up and start saving!</h2>
+      <input class="button" type="submit" name="createaccount" value="Create An Account"/>
+    </div>
+    
+  </div>
+</div>
+
+
+<div id="wrapperhowitworks">
+  <div id="howitworks">
+    <h1>How <%= image_tag("rebooklogoextrasm.png", :id=> "logo", :alt => "ReBook") %> Works</h1>
+    
+    <div id="step1" >
+      <%= image_tag("step1.png") %>  
+    </div>
+    
+    <div id="step2">
+      <%= image_tag("step2.png") %>  
+    </div>
+    
+    <div id="step3" >
+      <%= image_tag("step3.png") %>  
+    </div>
+    
+    <div id="step4" >
+      <%= image_tag("step4.png") %>  
+    </div>
+  </div>
+</div>
+
+<div id="wrappercreate">
+  <div id="create">
+    <h1>Never buy books again. Use ReBook and save $$$</h1><input class="button" type="submit" name="createaccount" value="Create An Account"/>
+  </div>
+</div>
+
