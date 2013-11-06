@@ -7,7 +7,13 @@ class LoginController < ApplicationController
   end
 
   def show
-
+	if params[:user_id] != nil
+		user = User.find(params[:user_id])
+		user.activated = true;
+		user.save
+		flash[:notice] = "You have successfully validated your account!"
+	end
+	
   end
 
   def attempt
