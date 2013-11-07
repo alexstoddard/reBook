@@ -66,79 +66,78 @@ header h1 {
 	background-color: #EBEBEB;
 }
 
-/************************User's Want book*****************************/
+/********************Message Area*************************************/
 /*********************************************************************/
-#wantbook {
-	width: 100%;
-	overflow: hidden;
-}
-#wantbook img{
-	display: inline;
-	float: left;
-}
-
-#wantbook .bookinfo {
-	float: left;
+#messagearea {
+	width: 45%;
+	float:left;
+	border: #CCCCFF solid 1px;
+	height: 400px;
+	padding: 2%;
+	margin-top: 25px;
 }
 
-/************************Offers Section*******************************/
+#messagearea h1 {
+	color: rgb(63, 72, 204);
+	margin-bottom: 2%;
+}
+
+#messagearea h3 {
+	color: #CCCCFF;
+}
+
+textarea {
+	margin-top: 5%;
+	color: rgb(63, 72, 204);
+	font-family: cursive;	
+}
+
+input {
+	margin-top: 25px;
+}
+/**********************Trade info*************************************/
 /*********************************************************************/
-#offers{
-	background-color: rgb(230, 251, 236);
+
+#tradeinfo {
+	width: 50%;
+	float: right;	
+	color: rgb(63, 72, 204);
+}
+
+.book {
 	overflow: hidden;
+	background-color: #EBEBEB;
+	padding: 2%;
+	border-radius: 5px;
 }
-
-#offers .book {
-	float: left;
-	width: 100%;
-	margin: 3%;
-}
-
-.book img {
+.book  img {
 	float: left;
 	display: inline;
+
 }
+
 .bookinfo {
 	float: left;
+	margin-left: 10px;
 }
 
-.tradeinfo {
-	width: 25%;
-	float: right;
-	margin-right: 10%;	
-
+#yourbook, #otherbook {
+	margin-top: 25px;
 }
 
-.tradeinfo p {
-	font-family: cursive;
+.condition {
+	clear: left;
+	margin-left: 8px;
 }
 
-#offers .tradebuttons {
-	float: right;
-	width: 20%;
+.condition img {
+	display: inline;
+	width: 35px;
+	float: none;
+	vertical-align: middle; 
+	margin-top: 4px;
+	
 }
 
-#offers .button {
-	background-color: rgb(71, 220, 116);
-}
-
-#possible .book {
-	width: 25%;	
-}
-
-#possible .bookinfo {
-	margin-left: 8%;
-}
-
-#possible .button {
-	margin-left: 6%;
-}
-
-#possible .book {
-	margin: 2%;
-	float: left;
-	padding: 2%;
-	background-color: rgb(228, 230, 248);
-}
 
 
