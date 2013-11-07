@@ -9,9 +9,11 @@ class LoginController < ApplicationController
   def show
 	if params[:user_id] != nil
 		user = User.find_by_passhash(params[:user_id])
-		user.activated = true;
-		user.save
-		flash.now[:notice] = "You have successfully validated your account!"
+		if(not user.nil?)
+			user.activated = true;
+			user.save
+			flash.now[:notice] = "You have successfully validated your account!"
+		end
 	end
 	
   end
