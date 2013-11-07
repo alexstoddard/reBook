@@ -1,13 +1,16 @@
 <div id="wrapperheader">
 	<header>
-		<%= link_to image_tag("rebooklogosmall.png", :alt => "ReBook"), root_path %>
+		<%= link_to(image_tag("rebooklogosmall.png", alt: "ReBook", id: 'logo'), root_path) %>
 
-		<%= form_tag("/login_try") do %>
-			<%= submit_tag("Login", id: nil, class: "button") %>
-			<%= password_field_tag("login_passhash", nil, id: nil, class: "text", placeholder: "Password") %>
-			<%= text_field_tag("login_username", nil, id: nil, class: "text", placeholder: "Username") %>
-		<% end %>
-		<h4> Forgot Password? </h4> 
+		<div id="login">
+			<%= form_tag("/login_try", method: 'post') do %>
+				<%= text_field_tag("login_username", nil, id: nil, placeholder: "Username") %>
+				<%= password_field_tag("login_passhash", nil, id: nil, placeholder: "Password") %>
+				<%= submit_tag("Login", class: "button") %>
+			<% end %>
+			<a href="/users/new" class="create">Create an Account</a>
+			<a href="#" class="forgot">Forgot Password? </a>
+		</div> 
 
 	</header>
 </div>
