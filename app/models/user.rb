@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   before_save :encrypt_passhash
 
   def encrypt_passhash
-    if passhash.present?
+    if passhash_changed?
       self.salt = BCrypt::Engine.generate_salt
       self.passhash = BCrypt::Engine.hash_secret(passhash, salt)
     end
