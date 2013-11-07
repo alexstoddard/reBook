@@ -11,7 +11,7 @@ class LoginController < ApplicationController
 		user = User.find(params[:user_id])
 		user.activated = true;
 		user.save
-		flash[:notice] = "You have successfully validated your account!"
+		flash.now[:notice] = "You have successfully validated your account!"
 	end
 	
   end
