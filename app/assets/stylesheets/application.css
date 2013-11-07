@@ -15,20 +15,33 @@
 * {
 	margin: 0;
 	padding: 0;
-	font-family: "Trebuchet MS";
-	font-weight: 600;
+	font-family: 'Open Sans';
+	font-weight: 300;
 }
 
 a {
 	text-decoration: none;
 }
 
+a:hover {
+	text-decoration: underline;
+}
+
+h1, h2, h3, b {
+	font-weight:400;
+}
+
+h2 {
+	margin-bottom:6px;
+}
+
 body {
 	min-width: 980px;
+	font-size:12.5px;
 }
 
 
-header, #info, #howitworks, #create, #search, footer{
+header, #info, #howitworks, #create, #search, #main, footer{
 	width: 980px;
 	margin-left: auto;
 	margin-right: auto;
@@ -42,28 +55,58 @@ header, #info, #howitworks, #create, #search, footer{
 	border-radius: 5px;
 	color: white;
 	padding: 8px;
-	font-size: 100%;
 	font-weight: bold;
 	border: none;
 	cursor: pointer;
 	margin-bottom:10px;	
 }
 
-.text {
-	padding: 5px;
-	font-size: 100%;
+.button:hover {
+	background-color:#A3A3EC;
+}
+
+input[type="text"],
+input[type="password"] {
+	padding: 2px 5px;
 	color: #CCCCFF;
 }
 
 /*****************ReBook Header Section with login********************/
 /*********************************************************************/
+
 header {
-	
+	padding: 10px 0;
 }
 
-#wrapperheader{
-	background-color: white;
-	width: 100%;
+/* header login form */
+#login {
+	float: right;
+	margin-top: 20px;
+	text-align:right;
+}
+
+#login input[type="text"], 
+#login input[type="password"] {
+	width: 100px;
+}
+
+#login input[type="submit"] {
+	margin-bottom:0;
+	padding:4px 10px;
+}
+
+#login a {
+	font-size:0.9em;
+}
+
+#login .create {
+	position:relative;
+	right:105px;
+}
+
+#login .forgot {
+	position:relative;
+	right:82px;
 }
 
 header h1 {
