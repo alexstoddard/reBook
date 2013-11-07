@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-
   # GET /users
   # GET /users.json
   def index
@@ -15,10 +14,13 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
+	@locations = Location.all
   end
 
   # GET /users/1/edit
   def edit
+	@locations = Location.all
+	@location_id = UserLocation.find_by_user_id(session[:id])
   end
 
   # POST /users
@@ -29,6 +31,12 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
+		@user_location = UserLocation.new
+		@user_location.user_id = @user.id
+		@user_location.location_id = @user.location
+		@user_location.description = @user.location_description
+		@user_location.save
+		UserMailer.welcome_email(@user).deliver
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render action: 'show', status: :created, location: @user }
       else
@@ -41,6 +49,8 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
+	@locations = Location.all
+	
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
@@ -70,6 +80,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:username, :email, :passhash, :image, :activated, :passhash_confirmation)
+      params.require(:user).permit(:username, :email, :passhash, :image, :activated, :passhash_confirmation, :location, :location_description)
     end
 end
