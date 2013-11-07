@@ -72,15 +72,19 @@ header h1 {
 
 /**********************Book Styling******************/
 
+.offer, .pending, .possible {
+	color: rgb(63, 72, 204);
+}
 
 .offer {
-	background-color: rgb(205, 245, 217);
+	/*background-color: rgb(205, 245, 217);*/
+	background-color: rgb(230, 251, 236);
 	overflow: hidden;
 	height: 250px;	
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 1%;
-	color: rgb(71, 220, 116);
+	/*color: rgb(71, 220, 116);*/
 }
 
 .offer img {
@@ -90,7 +94,6 @@ header h1 {
 
 .bookinfo {
 	margin-top: 3%;
-
 }
 .viewtrade {
 	float: right;
@@ -99,18 +102,28 @@ header h1 {
 	text-align: center;
 }
 
+.canceltrade {
+	float: right;
+	text-align: center;
+	margin-top: 8%;
+	margin-right: 5%;
+}
+
 .offer .button{
 	background-color: rgb(71, 220, 116);
 }
 
 .possible {
-background-color: rgb(213, 213, 255);
-color: rgb(147, 147, 255);
+background-color: rgb(221, 221, 255);
+/*background-color: rgb(213, 213, 255);
+color: rgb(147, 147, 255);*/
 }
 
 .pending {
-background-color: rgb(252, 209, 211);
-color: rgb(245, 126, 133);
+background-color: rgb(255, 223, 223);
+/*background-color: rgb(252, 209, 211);
+color: rgb(245, 126, 133);*/
+
 }
 
 .possible, .pending {
