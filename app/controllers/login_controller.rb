@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 class LoginController < ApplicationController
 
   def logout 
@@ -80,4 +79,4 @@ class LoginController < ApplicationController
   end
 
 end
->>>>>>> 2b62c701546e8d2e1f7b6841363f2f79a7fb087e
+
