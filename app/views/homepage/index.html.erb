@@ -1,0 +1,63 @@
+<div id="wrapperinfo">
+  <div id="info">
+    
+    <div id="search">
+    
+      <h2>Search for Books!</h2>
+    
+      <%= form_tag("/search", method: "get") do %>
+        <%= text_field_tag('search', nil, id: nil, placeholder: "Title, ISBN, Author", class: "text") %>
+        <%= submit_tag("Search", id: nil, class: "button") %>
+      <% end %>
+      
+    </div>
+    
+    <div id="signup">
+      <h2>Never spend money on books again!<br />Sign up and start saving!</h2>
+      <a class="button" href="/users/new">Create an Account</a>
+    </div>
+    
+  </div>
+</div>
+
+
+<div id="wrapperhowitworks">
+  <div id="howitworks">
+    <h1>How <%= image_tag("rebooklogoextrasm.png", :id=> "logo", :alt => "ReBook") %> Works</h1>
+    
+    <div id="step1" class="step">
+      <div class="thumb">
+        <%= image_tag("step1.png") %>
+      </div>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque dui quam, euismod a diam eget, tristique lobortis urna. Morbi ultricies dictum lacus, eu pellentesque est semper vitae.</p>
+    </div>
+    
+    <div id="step2" class="step">
+      <div class="thumb">
+        <%= image_tag("step2.png") %>
+      </div>
+      <p>Donec ullamcorper dui ante, in mollis tortor pretium quis. Ut placerat mattis leo, non dapibus nisi iaculis sed. Cras malesuada risus elit. Phasellus eleifend ornare tellus eu imperdiet. </p>
+    </div>
+    
+    <div id="step3" class="step">
+      <div class="thumb">
+        <%= image_tag("step3.png") %>
+      </div>  
+      <p>Duis fringilla ut purus a viverra. Fusce fringilla bibendum purus quis ullamcorper. Praesent tempor arcu velit, eu dictum urna gravida at. Curabitur sem neque, feugiat vel blandit id, placerat vitae velit.</p>
+    </div>
+    
+    <div id="step4" class="step">
+      <div class="thumb">
+        <%= image_tag("step4.png") %>
+      </div> 
+      <p>Sed ac massa ut augue fringilla imperdiet vitae quis nulla. Donec blandit leo quis accumsan tincidunt. Donec vel auctor leo. Nunc convallis scelerisque tellus sit amet pharetra. Aliquam consequat sed felis id molestie.</p>
+    </div>
+  </div>
+</div>
+
+<div id="wrappercreate">
+  <div id="create">
+    <h1>Never buy books again. Use ReBook and save $$$</h1><a href="/users/new" class="button">Create an Account</a>
+  </div>
+</div>
+

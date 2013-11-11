@@ -1,0 +1,134 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-family: "Trebuchet MS";
+	font-weight: 600;
+}
+
+body {
+	min-width: 980px;
+}
+
+header, #main, footer, #navbar, #search {
+	width: 980px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/*****************Button and Text Box Styling**********************/
+/******************************************************************/
+.button {
+	background-color: #CCCCFF;
+	border-radius: 5px;
+	color: white;
+	padding: 8px;
+	font-size: 100%;
+	font-weight: bold;
+	border: none;
+	
+}
+
+.text {
+	padding: 5px;
+	font-size: 100%;
+	color: #CCCCFF;
+}
+
+/*****************ReBook Header Section ********************/
+/*********************************************************************/
+
+
+header {
+	
+}
+
+header h1 {
+	float: right;
+	margin-top: 3%;
+	color: #CCCCFF;
+}
+
+#wrapperheader {
+	background-color: white;
+	width: 100%;
+}
+
+/********************Navigation bar***********************************/
+/*********************************************************************/
+
+#navbar {
+	text-align: center;
+	color: rgb(63, 72, 204);
+	padding: 8px;
+}
+
+#wrappernavbar {
+	background-color: #EBEBEB;
+}
+
+/***************Main info section/list/search*************************/
+/*********************************************************************/
+
+#main {
+	color: rgb(63, 72, 204);	
+}
+
+#main h1 {
+	font-family: cursive; 
+}
+/******Book Styling********/
+
+.book {
+	clear: left;
+	margin-bottom: 5px;	
+	border-bottom: 1px #CCCCFF solid;
+	padding: 10px;
+	overflow: hidden;
+}
+.book img {
+	display: inline;
+	float: left;	
+	border: solid rgb(63, 72, 204) 1px;
+}
+
+.bookinfo {
+	float: left;
+	padding-left: 10px;
+	padding-top: 10px;
+}
+
+hr {
+	clear: left;
+	color: #CCCCFF;
+}
+
+.book h4 {
+	color: #CCCCFF;
+}
+
+
+
+/****Book Search Box*****/
+#search {
+	background-color: rgb(63, 72, 204);
+	color: white;
+	position: absolute;
+	top: 20%;
+	right: 20%;
+	width: 23%;
+	height: 25%;
+	border-radius: 5px;
+	text-align: center;
+	border: solid white;
+}
+
+#search > input {
+	margin-top: 10%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#search  h2 {
+	text-align: center;
+	margin-top: 10%;
+}

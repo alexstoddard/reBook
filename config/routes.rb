@@ -23,16 +23,21 @@ Rebook::Application.routes.draw do
 
   resources :locations
   
-  root 'greetings#hello'
+  root 'homepage#index'
 
-  get "greetings/hello"
+  get "homepage/index"
 
+  #login/logout routes
   get '/login_failed', to: 'login#failed'
   get '/login_succeeded', to: 'login#succeeded'
   get '/login', to: 'login#show'
   get '/logout', to: 'login#logout'
   post '/login_try', to: 'login#attempt'
 
+  #book search page routes
+  get '/search', to: 'books#search'
+
+  #inventory routes
   post '/inventory_owns', to: 'inventory_owns#create'
   post '/inventory_needs', to: 'inventory_needs#create'
 

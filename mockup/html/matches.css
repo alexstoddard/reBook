@@ -1,0 +1,168 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-family: "Trebuchet MS";
+	font-weight: 600;
+}
+
+body {
+	min-width: 980px;
+}
+
+header, #main {
+	width: 980px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/*****************Button and Text Box Styling**********************/
+/******************************************************************/
+.button {
+	background-color: #CCCCFF;
+	border-radius: 5px;
+	color: white;
+	padding: 8px;
+	font-size: 100%;
+	font-weight: bold;
+	border: none;
+	
+}
+
+.text {
+	padding: 5px;
+	font-size: 100%;
+	color: #CCCCFF;
+}
+
+/*****************ReBook Header Section ********************/
+/*********************************************************************/
+
+
+header {
+	
+}
+
+header h1 {
+	float: right;
+	margin-top: 3%;
+	color: #CCCCFF;
+}
+
+#wrapperheader {
+	background-color: white;
+	width: 100%;
+}
+
+/********************Navigation bar***********************************/
+/*********************************************************************/
+
+#navbar {
+	text-align: center;
+	color: rgb(63, 72, 204);
+	padding: 8px;
+}
+
+#wrappernavbar {
+	background-color: #EBEBEB;
+}
+
+/**********************Main Content***********************************/
+/*********************************************************************/
+
+
+/**********************Book Styling******************/
+
+.offer, .pending, .possible {
+	color: rgb(63, 72, 204);
+}
+
+.offer {
+	/*background-color: rgb(205, 245, 217);*/
+	background-color: rgb(230, 251, 236);
+	overflow: hidden;
+	height: 250px;	
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 1%;
+	/*color: rgb(71, 220, 116);*/
+}
+
+.offer img {
+	float: left;
+	margin: 3%;
+}
+
+.bookinfo {
+	margin-top: 3%;
+}
+.viewtrade {
+	float: right;
+	margin-top: 8%;
+	margin-right: 13%;
+	text-align: center;
+}
+
+.canceltrade {
+	float: right;
+	text-align: center;
+	margin-top: 8%;
+	margin-right: 5%;
+}
+
+.offer .button{
+	background-color: rgb(71, 220, 116);
+}
+
+.possible {
+background-color: rgb(221, 221, 255);
+/*background-color: rgb(213, 213, 255);
+color: rgb(147, 147, 255);*/
+}
+
+.pending {
+background-color: rgb(255, 223, 223);
+/*background-color: rgb(252, 209, 211);
+color: rgb(245, 126, 133);*/
+
+}
+
+.possible, .pending {
+	
+	overflow: hidden;
+	height: 250px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 1%;
+	
+}
+
+.tradebuttons {
+	clear: left;
+}
+
+.possible  input{
+	background-color: rgb(147, 147, 255);
+	margin-right: 12%;
+}
+
+.pending input {
+	background-color: rgb(245, 126, 133);
+	margin-right: 12%;
+}
+
+.possible img, .pending img {
+	float: left;
+	margin: 3%;
+}
+
+.options {
+	float: right; 
+	width: 65%;
+}
+
+.book {
+	float: left;
+	width: 25%;
+	margin: 3%;
+}
+

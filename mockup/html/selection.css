@@ -1,0 +1,144 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-family: "Trebuchet MS";
+	font-weight: 600;
+}
+
+body {
+	min-width: 980px;
+}
+
+header, #main {
+	width: 980px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/*****************Button and Text Box Styling**********************/
+/******************************************************************/
+.button {
+	background-color: #CCCCFF;
+	border-radius: 5px;
+	color: white;
+	padding: 8px;
+	font-size: 100%;
+	font-weight: bold;
+	border: none;
+	
+}
+
+.text {
+	padding: 5px;
+	font-size: 100%;
+	color: #CCCCFF;
+}
+
+/*****************ReBook Header Section ******************************/
+/*********************************************************************/
+
+
+header {
+	
+}
+
+header h1 {
+	float: right;
+	margin-top: 3%;
+	color: #CCCCFF;
+}
+
+#wrapperheader {
+	background-color: white;
+	width: 100%;
+}
+
+/********************Navigation bar***********************************/
+/*********************************************************************/
+
+#navbar {
+	text-align: center;
+	color: rgb(63, 72, 204);
+	padding: 8px;
+}
+
+#wrappernavbar {
+	background-color: #EBEBEB;
+}
+
+/************************User's Want book*****************************/
+/*********************************************************************/
+#wantbook {
+	width: 100%;
+	overflow: hidden;
+}
+#wantbook img{
+	display: inline;
+	float: left;
+}
+
+#wantbook .bookinfo {
+	float: left;
+}
+
+/************************Offers Section*******************************/
+/*********************************************************************/
+#offers{
+	background-color: rgb(230, 251, 236);
+	overflow: hidden;
+}
+
+#offers .book {
+	float: left;
+	width: 100%;
+	margin: 3%;
+}
+
+.book img {
+	float: left;
+	display: inline;
+}
+.bookinfo {
+	float: left;
+}
+
+.tradeinfo {
+	width: 25%;
+	float: right;
+	margin-right: 10%;	
+
+}
+
+.tradeinfo p {
+	font-family: cursive;
+}
+
+#offers .tradebuttons {
+	float: right;
+	width: 20%;
+}
+
+#offers .button {
+	background-color: rgb(71, 220, 116);
+}
+
+#possible .book {
+	width: 25%;	
+}
+
+#possible .bookinfo {
+	margin-left: 8%;
+}
+
+#possible .button {
+	margin-left: 6%;
+}
+
+#possible .book {
+	margin: 2%;
+	float: left;
+	padding: 2%;
+	background-color: rgb(228, 230, 248);
+}
+
+

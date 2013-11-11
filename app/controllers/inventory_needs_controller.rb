@@ -34,7 +34,7 @@ class InventoryNeedsController < ApplicationController
     
     @inventory_need.book_id = @book.id
     @inventory_need.user_id = session[:user_id]
-
+	
     respond_to do |format|
       if @inventory_need.save
         format.html { redirect_to inventory_needs_path, notice: 'Inventory need was successfully created.' }

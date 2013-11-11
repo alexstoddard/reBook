@@ -1,3 +1,39 @@
 // Place all the styles related to the Books controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+/***********************Search Area***********************************/
+/*********************************************************************/
+
+
+#search {
+	color: rgb(63, 72, 204);
+}
+
+#search h4 {
+	width: 80%;
+	margin-top: 2%;
+}
+
+#search .text {
+	width: 70%;
+	margin-top: 5%;
+}
+
+#search div{
+	text-align: center;
+}
+
+/************************search results *********************************/
+
+article {
+	clear: both;
+	overflow: hidden;
+	margin-bottom: 20px;
+}
+
+article img {
+	float:left;
+	margin-right:15px;
+}

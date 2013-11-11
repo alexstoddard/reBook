@@ -1,3 +1,5 @@
+require 'rubygems'
+
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
 
@@ -75,6 +77,34 @@ class BooksController < ApplicationController
       end
     end
   end
+
+  # Show search results
+	def search
+		searcher = SearchApi.new
+
+		query = params[:search]
+		if query 
+		  @result = searcher.search(query, 40)
+		end
+		if session[:user_id]
+			user_owns = InventoryOwn.find_all_by_user_id(session[:user_id])
+			user_needs = InventoryNeed.find_all_by_user_id(session[:user_id])
+			@result.books.each do |x|
+
+				user_owns.each do |y|
+					if y.book.googleId == x.id
+						x.hide_own = true
+					end        
+				end
+
+				user_needs.each do |y|
+					if y.book.googleId == x.id
+						x.hide_need = true
+					end        
+				end
+			end
+		end
+	end
 
   # DELETE /books/1
   # DELETE /books/1.json

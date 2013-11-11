@@ -1,0 +1,112 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-family: "Trebuchet MS";
+	font-weight: 600;
+}
+
+body {
+	min-width: 980px;
+}
+
+header, #main, footer, #navbar {
+	width: 980px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/*****************Button and Text Box Styling**********************/
+/******************************************************************/
+.button {
+	background-color: #CCCCFF;
+	border-radius: 5px;
+	color: white;
+	padding: 8px;
+	font-size: 100%;
+	font-weight: bold;
+	border: none;
+	
+}
+
+/*****************ReBook Header Section ********************/
+/*********************************************************************/
+
+
+header {
+	
+}
+
+header h1 {
+	float: right;
+	margin-top: 3%;
+	color: #CCCCFF;
+}
+
+#wrapperheader {
+	background-color: white;
+	width: 100%;
+}
+
+/********************Navigation bar***********************************/
+/*********************************************************************/
+
+#navbar {
+	text-align: center;
+	color: rgb(63, 72, 204);
+	padding: 8px;
+}
+#wrappernavbar {
+	background-color: #EBEBEB;
+}
+
+
+
+/*****************Main Content Page***********************************/
+/*********************************************************************/
+
+#main {
+	height: 700px;
+	color: #CCCCFF;
+}
+
+#wrappermain {
+	background-color: white;
+}
+
+/********TradeStyling**********/
+.trade {
+	margin-left: auto;
+	margin-right: auto;
+	width: 80%;
+	height: 10%;
+	padding: 8px;
+	background-color: white;
+}
+
+.trade  img {
+	display: inline;
+	border: 1px solid;
+	vertical-align: middle;
+}
+
+.trade input {
+	float: right;
+	clear: right;
+	
+}
+
+/**************************Footer Section**************************/
+/******************************************************************/
+footer {
+	
+}
+
+#wrapperfooter {
+	color: #CCCCFF;
+}
+
+footer span {
+	float: right;
+	margin-top: 80px;
+	margin-right: 20px;
+}

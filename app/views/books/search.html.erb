@@ -1,0 +1,45 @@
+<div id="wrappersearch">
+	<div id="search">
+		<h1>Search for Books!</h1>
+		<h4>Add books to your have or want list so we can work our magic and find matches for you!
+		In the search box, type the title, author, subject, or ISBN number. To add to you Want or 
+		Have book list, just click the appropriate button next to the book you want to add, simple as that!</h4>
+		
+		<%= form_tag("/search", method: "get") do %>
+	        <%= text_field_tag('search', nil, id: nil, placeholder: "Title, ISBN, Author", class: "text") %>
+	        <%= submit_tag("Search", id: nil, class: "button") %>
+	    <% end %>
+
+	    <% if !@result.nil? %>
+			<strong>Results: <%= @result.books.length %></strong><br><br>
+
+			<% @result.books.each do |x| %>
+			  <article>
+			    <img src="<%= x.thumbnail %>">
+			    <h2><%= x.title %></h2>
+			    <a href="<%= x.link %>"><%= x.id %></a><br>
+			      <% unless session[:user_id].nil? %>
+					<% if x.hide_own %>
+						You already own this book!
+						<br/>
+					<% elsif x.hide_need %>
+						You already need this book!
+						<br/>
+					<% else%>
+						 <%= form_tag "/inventory_owns/?" + x.id, :method => 'post' do %>
+							<%= submit_tag "Add to owned", :name => nil, :class => 'button' %>
+							<%= hidden_field_tag :api_id, x.id %>
+						 <% end %>
+						 <%= form_tag "/inventory_needs", :method => 'post' do %>
+							<%= submit_tag "Add to needed", :name => nil, :class => 'button' %>
+							<%= hidden_field_tag :api_id, x.id %>
+						 <% end %>
+					<% end %>
+			      <% end %>
+			    <br>
+			  </article>
+			<% end %> 
+
+		<% end %>
+	</div>
+</div>

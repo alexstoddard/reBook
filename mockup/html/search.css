@@ -1,0 +1,91 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-family: "Trebuchet MS";
+	font-weight: 600;
+}
+
+body {
+	min-width: 980px;
+}
+
+header, #search {
+	width: 980px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/*****************Button and Text Box Styling**********************/
+/******************************************************************/
+.button {
+	background-color: #CCCCFF;
+	border-radius: 5px;
+	color: white;
+	padding: 8px;
+	font-size: 100%;
+	font-weight: bold;
+	border: none;
+	
+}
+
+.text {
+	padding: 5px;
+	font-size: 100%;
+	color: #CCCCFF;
+}
+
+
+/*****************ReBook Header Section ********************/
+/*********************************************************************/
+
+
+header {
+	
+}
+
+header h1 {
+	float: right;
+	margin-top: 3%;
+	color: #CCCCFF;
+}
+
+#wrapperheader {
+	background-color: white;
+	width: 100%;
+}
+
+/********************Navigation bar***********************************/
+/*********************************************************************/
+
+#navbar {
+	text-align: center;
+	color: rgb(63, 72, 204);
+	padding: 8px;
+}
+
+#wrappernavbar {
+	background-color: #EBEBEB;
+}
+
+
+/***********************Search Area***********************************/
+/*********************************************************************/
+
+
+#search {
+	color: rgb(63, 72, 204);
+}
+
+#search h4 {
+	width: 80%;
+	margin-top: 2%;
+}
+
+#search .text {
+	width: 70%;
+	margin-top: 5%;
+}
+
+#search div{
+	text-align: center;
+}
