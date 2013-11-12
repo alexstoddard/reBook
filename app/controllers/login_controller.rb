@@ -9,9 +9,11 @@ class LoginController < ApplicationController
   def show
 	if params[:user_id] != nil
 		user = User.find_by_passhash(params[:user_id])
-		user.activated = true;
-		user.save
-		flash.now[:notice] = "You have successfully validated your account!"
+		if(not user.nil?)
+			user.activated = true;
+			user.save
+			flash.now[:notice] = "You have successfully validated your account!"
+		end
 	end
 	
   end
@@ -31,8 +33,8 @@ class LoginController < ApplicationController
       session[:user_name] = user.username
       redirect_to root_path
     else
-      flash[:notice] = "Password or username does not match any user"
-      flash[:color] = "invalid"
+      flash.now[:notice] = "Password or username does not match any user"
+      flash.now[:color] = "invalid"
       redirect_to login_path
     end
   end

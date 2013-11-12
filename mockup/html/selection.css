@@ -34,7 +34,7 @@ header, #main {
 	color: #CCCCFF;
 }
 
-/*****************ReBook Header Section ********************/
+/*****************ReBook Header Section ******************************/
 /*********************************************************************/
 
 
@@ -65,3 +65,80 @@ header h1 {
 #wrappernavbar {
 	background-color: #EBEBEB;
 }
+
+/************************User's Want book*****************************/
+/*********************************************************************/
+#wantbook {
+	width: 100%;
+	overflow: hidden;
+}
+#wantbook img{
+	display: inline;
+	float: left;
+}
+
+#wantbook .bookinfo {
+	float: left;
+}
+
+/************************Offers Section*******************************/
+/*********************************************************************/
+#offers{
+	background-color: rgb(230, 251, 236);
+	overflow: hidden;
+}
+
+#offers .book {
+	float: left;
+	width: 100%;
+	margin: 3%;
+}
+
+.book img {
+	float: left;
+	display: inline;
+}
+.bookinfo {
+	float: left;
+}
+
+.tradeinfo {
+	width: 25%;
+	float: right;
+	margin-right: 10%;	
+
+}
+
+.tradeinfo p {
+	font-family: cursive;
+}
+
+#offers .tradebuttons {
+	float: right;
+	width: 20%;
+}
+
+#offers .button {
+	background-color: rgb(71, 220, 116);
+}
+
+#possible .book {
+	width: 25%;	
+}
+
+#possible .bookinfo {
+	margin-left: 8%;
+}
+
+#possible .button {
+	margin-left: 6%;
+}
+
+#possible .book {
+	margin: 2%;
+	float: left;
+	padding: 2%;
+	background-color: rgb(228, 230, 248);
+}
+
+

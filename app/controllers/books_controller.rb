@@ -30,7 +30,7 @@ class BooksController < ApplicationController
 
     respond_to do |format|
       if @book.save
-        format.html { redirect_to @book, notice: 'Book was successfully created.' }
+        format.html { redirect_to @book }
         format.json { render action: 'show', status: :created, location: @book }
       else
         format.html { render action: 'new' }
@@ -69,7 +69,7 @@ class BooksController < ApplicationController
   def update
     respond_to do |format|
       if @book.update(book_params)
-        format.html { redirect_to @book, notice: 'Book was successfully updated.' }
+        format.html { redirect_to @book }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -79,14 +79,33 @@ class BooksController < ApplicationController
   end
 
   # Show search results
-  def search
-    searcher = SearchApi.new
+	def search
+		searcher = SearchApi.new
 
-    query = params[:search]
-    if query 
-      @result = searcher.search(query, 40)
-    end
-  end
+		query = params[:search] || ""
+
+		if query 
+		  @result = searcher.search(query, 40)
+		end
+		if session[:user_id]
+			user_owns = InventoryOwn.find_all_by_user_id(session[:user_id])
+			user_needs = InventoryNeed.find_all_by_user_id(session[:user_id])
+			@result.books.each do |x|
+
+				user_owns.each do |y|
+					if y.book.googleId == x.id
+						x.hide_own = true
+					end        
+				end
+
+				user_needs.each do |y|
+					if y.book.googleId == x.id
+						x.hide_need = true
+					end        
+				end
+			end
+		end
+	end
 
   # DELETE /books/1
   # DELETE /books/1.json

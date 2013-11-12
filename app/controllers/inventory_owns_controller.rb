@@ -29,20 +29,24 @@ class InventoryOwnsController < ApplicationController
   # POST /inventory_owns.json
   def create
     @book = BooksController.add_if_nonexistant(params[:api_id])
-    @inventory_own = InventoryOwn.new
     
-    @inventory_own.book_id = @book.id
-    @inventory_own.user_id = session[:user_id]
-    @inventory_own.condition = "Ok"
-	
-    respond_to do |format|
-      if @inventory_own.save
-        format.html { redirect_to inventory_owns_path, notice: 'Inventory own was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @inventory_own }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @inventory_own.errors, status: :unprocessable_entity }
+    unless InventoryOwn.find_by_book_id_and_user_id(@book.id, session[:user_id]) or InventoryNeed.find_by_book_id_and_user_id(@book.id, session[:user_id])
+      @inventory_own = InventoryOwn.new
+      @inventory_own.book_id = @book.id
+      @inventory_own.user_id = session[:user_id]
+      @inventory_own.condition_id = Condition.all[0].id
+      
+      respond_to do |format|
+        if @inventory_own.save
+          format.html { redirect_to search_path + "?search=" + params[:search] }
+          format.json { render action: 'show', status: :created, location: @inventory_own }
+        else
+          format.html { render action: 'new' }
+          format.json { render json: @inventory_own.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      redirect_to search_path + "?search=" + params[:search]
     end
   end
  
@@ -51,7 +55,7 @@ class InventoryOwnsController < ApplicationController
   def update
     respond_to do |format|
       if @inventory_own.update(inventory_own_params)
-        format.html { redirect_to @inventory_own, notice: 'Inventory own was successfully updated.' }
+        format.html { redirect_to @inventory_own }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

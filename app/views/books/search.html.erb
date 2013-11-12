@@ -17,16 +17,25 @@
 			  <article>
 			    <img src="<%= x.thumbnail %>">
 			    <h2><%= x.title %></h2>
-			    <a href="<%= x.link %>"><%= x.id %></a><br>
 			      <% unless session[:user_id].nil? %>
-			         <%= form_tag "/inventory_owns/?" + x.id, :method => 'post' do %>
-			            <%= submit_tag "Add to owned", :name => nil, :class => 'button' %>
-			            <%= hidden_field_tag :api_id, x.id %>
-			         <% end %>
-			         <%= form_tag "/inventory_needs", :method => 'post' do %>
-			            <%= submit_tag "Add to needed", :name => nil, :class => 'button' %>
-			            <%= hidden_field_tag :api_id, x.id %>
-			         <% end %>
+					<% if x.hide_own %>
+						You already own this book!
+						<br/>
+					<% elsif x.hide_need %>
+						You already need this book!
+						<br/>
+					<% else%>
+						 <%= form_tag "/inventory_owns/?" + x.id, :method => 'post' do %>
+							<%= submit_tag "Add to owned", :name => nil, :class => 'button' %>
+							<%= hidden_field_tag :api_id, x.id %>
+							<%= hidden_field_tag :search, params[:search] %>
+						 <% end %>
+						 <%= form_tag "/inventory_needs", :method => 'post' do %>
+							<%= submit_tag "Add to needed", :name => nil, :class => 'button' %>
+							<%= hidden_field_tag :api_id, x.id %>
+							<%= hidden_field_tag :search, params[:search] %>
+						 <% end %>
+					<% end %>
 			      <% end %>
 			    <br>
 			  </article>

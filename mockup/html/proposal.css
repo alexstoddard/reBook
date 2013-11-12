@@ -1,0 +1,143 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-family: "Trebuchet MS";
+	font-weight: 600;
+}
+
+body {
+	min-width: 980px;
+}
+
+header, #main {
+	width: 980px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/*****************Button and Text Box Styling**********************/
+/******************************************************************/
+.button {
+	background-color: #CCCCFF;
+	border-radius: 5px;
+	color: white;
+	padding: 8px;
+	font-size: 100%;
+	font-weight: bold;
+	border: none;
+	
+}
+
+.text {
+	padding: 5px;
+	font-size: 100%;
+	color: #CCCCFF;
+}
+
+/*****************ReBook Header Section ******************************/
+/*********************************************************************/
+
+
+header {
+	
+}
+
+header h1 {
+	float: right;
+	margin-top: 3%;
+	color: #CCCCFF;
+}
+
+#wrapperheader {
+	background-color: white;
+	width: 100%;
+}
+
+/********************Navigation bar***********************************/
+/*********************************************************************/
+
+#navbar {
+	text-align: center;
+	color: rgb(63, 72, 204);
+	padding: 8px;
+}
+
+#wrappernavbar {
+	background-color: #EBEBEB;
+}
+
+/********************Message Area*************************************/
+/*********************************************************************/
+#messagearea {
+	width: 45%;
+	float:left;
+	border: #CCCCFF solid 1px;
+	height: 400px;
+	padding: 2%;
+	margin-top: 25px;
+}
+
+#messagearea h1 {
+	color: rgb(63, 72, 204);
+	margin-bottom: 2%;
+}
+
+#messagearea h3 {
+	color: #CCCCFF;
+}
+
+textarea {
+	margin-top: 5%;
+	color: rgb(63, 72, 204);
+	font-family: cursive;	
+}
+
+input {
+	margin-top: 25px;
+}
+/**********************Trade info*************************************/
+/*********************************************************************/
+
+#tradeinfo {
+	width: 50%;
+	float: right;	
+	color: rgb(63, 72, 204);
+}
+
+.book {
+	overflow: hidden;
+	background-color: #EBEBEB;
+	padding: 2%;
+	border-radius: 5px;
+}
+.book  img {
+	float: left;
+	display: inline;
+
+}
+
+.bookinfo {
+	float: left;
+	margin-left: 10px;
+}
+
+#yourbook, #otherbook {
+	margin-top: 25px;
+}
+
+.condition {
+	clear: left;
+	margin-left: 8px;
+}
+
+.condition img {
+	display: inline;
+	width: 35px;
+	float: none;
+	vertical-align: middle; 
+	margin-top: 4px;
+	
+}
+
+
+

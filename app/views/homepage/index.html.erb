@@ -14,7 +14,9 @@
     
     <div id="signup">
       <h2>Never spend money on books again!<br />Sign up and start saving!</h2>
+      <% unless session[:user_id] %>
       <a class="button" href="/users/new">Create an Account</a>
+      <% end %>
     </div>
     
   </div>
@@ -57,7 +59,7 @@
 
 <div id="wrappercreate" class="home">
   <div id="create">
-    <h1>Never buy books again. Use ReBook and save $$$</h1><a href="/users/new" class="button">Create an Account</a>
+    <h1>Never buy books again. Use ReBook and save $$$</h1><% unless session[:user_id] %><a href="/users/new" class="button">Create an Account</a><% end %>
   </div>
 </div>
 
