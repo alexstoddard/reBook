@@ -25,13 +25,13 @@
 						You already need this book!
 						<br/>
 					<% else%>
-						 <%= form_tag "/inventory_owns/?" + x.id, :method => 'post' do %>
-							<%= submit_tag "Add to owned", :name => nil, :class => 'button' %>
+						 <%= form_tag "/inventory_owns/?" + x.id, :method => 'post', :class => "add have" do %>
+							<%= submit_tag "Add to Have List", :name => nil, :class => 'button' %>
 							<%= hidden_field_tag :api_id, x.id %>
 							<%= hidden_field_tag :search, params[:search] %>
 						 <% end %>
-						 <%= form_tag "/inventory_needs", :method => 'post' do %>
-							<%= submit_tag "Add to needed", :name => nil, :class => 'button' %>
+						 <%= form_tag "/inventory_needs", :method => 'post', :class => "add want" do %>
+							<%= submit_tag "Add to Want List", :name => nil, :class => 'button' %>
 							<%= hidden_field_tag :api_id, x.id %>
 							<%= hidden_field_tag :search, params[:search] %>
 						 <% end %>
