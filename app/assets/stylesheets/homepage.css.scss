@@ -2,11 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-/*****************Info Section/Book Search Box ********************/
+/*****************Home page Info Section/Book Search Box ********************/
 /******************************************************************/
-#info {
-	
-	background-image: image-url("girlbook.png");
+#info {	
+	background-image: url("/assets/girlbook.png");
 	background-repeat: no-repeat;
 	position: relative;
 	/*width: 100%;*/
@@ -42,7 +41,6 @@
 	margin-left:2px;
 }
 
-
 /****Create Account Button****/
 #signup {
 	position: absolute;
@@ -67,7 +65,7 @@
 }
 
 
-/*********************How it Works Section*************************/
+/*********************Home Page How it Works Section*************************/
 /******************************************************************/
 
 #wrapperhowitworks {
@@ -98,8 +96,7 @@
 	margin: 0 auto;
 }
 
-
-/*****************Create an Account Section************************/
+/*****************Home Page Create an Account Section************************/
 /******************************************************************/
 #wrappercreate {
 	margin-bottom: 48px;
@@ -114,14 +111,4 @@
 
 #create h1 {
 	font-size:3em;
-}
-
-#create > input {
-	margin-top: 10px;
-}
-
-/*********footer ***************/
-
-footer {
-	background-color:#f8f8f8;
 }
