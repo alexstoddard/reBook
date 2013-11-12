@@ -25,7 +25,10 @@ Rebook::Application.routes.draw do
   
   root 'homepage#index'
 
-  get "homepage/index"
+  #homepage routes
+  get "/about", to: 'homepage#about'
+  get "/faq", to: 'homepage#faq'
+  get "/terms", to: 'homepage#terms'
 
   #login/logout routes
   get '/login_failed', to: 'login#failed'

@@ -30,19 +30,23 @@ class InventoryNeedsController < ApplicationController
   def create
 
     @book = BooksController.add_if_nonexistant(params[:api_id])
-    @inventory_need = InventoryNeed.new
-    
-    @inventory_need.book_id = @book.id
-    @inventory_need.user_id = session[:user_id]
-	
-    respond_to do |format|
-      if @inventory_need.save
-        format.html { redirect_to inventory_needs_path, notice: 'Inventory need was successfully created.' }
-        format.json { render action: 'index', status: :created, location: @inventory_need }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @inventory_need.errors, status: :unprocessable_entity }
+
+    unless InventoryNeed.find_by_book_id_and_user_id(@book.id, session[:user_id]) or InventoryOwn.find_by_book_id_and_user_id(@book.id, session[:user_id]) 
+      @inventory_need = InventoryNeed.new
+      @inventory_need.book_id = @book.id
+      @inventory_need.user_id = session[:user_id]
+      
+      respond_to do |format|
+        if @inventory_need.save
+          format.html { redirect_to search_path + "?search=" + params[:search]  }
+          format.json { render action: 'index', status: :created, location: @inventory_need }
+        else
+          format.html { render action: 'new' }
+          format.json { render json: @inventory_need.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      redirect_to search_path + "?search=" + params[:search]
     end
   end
 
@@ -51,7 +55,7 @@ class InventoryNeedsController < ApplicationController
   def update
     respond_to do |format|
       if @inventory_need.update(inventory_need_params)
-        format.html { redirect_to @inventory_need, notice: 'Inventory need was successfully updated.' }
+        format.html { redirect_to @inventory_need }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
