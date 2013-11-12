@@ -1,7 +1,9 @@
 <div id="wrapperheader">
 	<header>
 		<%= link_to(image_tag("rebooklogosmall.png", alt: "ReBook", id: 'logo'), root_path) %>
-
+    <% unless flash[:notice].nil? %>
+    <%= flash[:notice] %>
+    <% end %>
 		<div id="login">
 			<%= form_tag("/login_try", method: 'post') do %>
 				<%= text_field_tag("login_username", nil, id: nil, placeholder: "Username") %>

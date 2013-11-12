@@ -1,25 +1,11 @@
-<% if session[:user_name].nil? %>
-<h1>Listing all needed books</h1>
-<% else %>
-<h1>Listing all of <%=session[:user_name] %>'s needed books</h1>
-<% end %>
+<h1>Needed books</h1>
 <br><br>
 <table>
-  <thead>
-    <tr>
-      <th>User</th>
-      <th>Book</th>
-      <th>Image</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-
   <tbody>
     <% @inventory_needs.each do |inventory_need| %>
       <tr>
-        <td><%= inventory_need.user.username %></td>
-        <td><%= inventory_need.book.name %></td>
         <td><img src="<%= inventory_need.book.thumbnail %>"></td>
+        <td><%= inventory_need.book.name %></td>
         <td><%= link_to 'Remove', inventory_need, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>

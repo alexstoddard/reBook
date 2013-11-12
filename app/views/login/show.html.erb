@@ -1,9 +1,6 @@
 <% @page_title = "UserAuth | Login" -%>
 <div class= "Sign_Form">
 <h1>Log in</h1>
-<% unless flash[:notice].nil? %>
-   <%= flash[:notice] %>
-<% end %>
 <%= form_tag(:action => 'attempt') do %>
    <p>Username or Email:</br> <%= text_field_tag(:login_username) %></p>
    <p>Password:</br> <%= password_field_tag :login_passhash %></p>

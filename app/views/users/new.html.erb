@@ -4,8 +4,8 @@
 		
 		<%= form_tag("/users", method: "post") do %>
 	        <h3>Name</h3>
-	        <%= text_field_tag('first', nil, id: nil, placeholder: "First", class: "text") %>
-	       	<%= text_field_tag('last', nil, id: nil, placeholder: "Last", class: "text") %>
+	        <%= text_field_tag('user[first]', nil, id: nil, placeholder: "First", class: "text") %>
+	       	<%= text_field_tag('user[last]', nil, id: nil, placeholder: "Last", class: "text") %>
 
 	       	<h3>Choose your username</h3>
 	       	<%= text_field_tag('user[username]', nil, id: nil, class: "text") %>
@@ -20,13 +20,15 @@
 	       	<%= text_field_tag('user[email]', nil, id: nil, class: "text") %>
 
 	       	<h3>Location</h3>
-	       	<% #select_tag('user[location]', options_from_collection_for_select(@locations, 'id', 'name'), class: "text") %>
+	       	<%= select_tag('user[location]', options_from_collection_for_select(@locations, 'id', 'name'), class: "text") %>
+
+	       	<h3>Role at Location</h3>
+	       	<%= text_field_tag('user[location_description]', nil, id: nil, class: "text") %>
 
 			<br />
-			<%= check_box_tag('terms', 'accepted') %> I agree to the <a href="#">Rebook Terms of Service</a>
 			<br />
 
-	        <%= submit_tag("Sign me up!", id: nil, class: "button") %>
+	        <%= submit_tag("Save changes!", id: nil, class: "button") %>
 	    <% end %>
 	</div>
 </div>

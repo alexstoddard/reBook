@@ -37,7 +37,7 @@ class InventoryNeedsController < ApplicationController
 	
     respond_to do |format|
       if @inventory_need.save
-        format.html { redirect_to inventory_needs_path, notice: 'Inventory need was successfully created.' }
+        format.html { redirect_to inventory_needs_path }
         format.json { render action: 'index', status: :created, location: @inventory_need }
       else
         format.html { render action: 'new' }
@@ -51,7 +51,7 @@ class InventoryNeedsController < ApplicationController
   def update
     respond_to do |format|
       if @inventory_need.update(inventory_need_params)
-        format.html { redirect_to @inventory_need, notice: 'Inventory need was successfully updated.' }
+        format.html { redirect_to @inventory_need }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

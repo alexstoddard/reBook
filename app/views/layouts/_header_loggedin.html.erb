@@ -4,12 +4,15 @@
 		<%= link_to image_tag("rebooklogosmall.png", :alt => "ReBook"), root_path %>
 		<h1>Hi <%= session[:user_name] %>!</h1>
 		<a href="/logout">Logout</a>
-		
+		</br>
+    <% unless flash[:notice].nil? %>
+    <%= flash[:notice] %>
+    <% end %>
 	</header>
 </div>
 
 <div id="wrappernavbar">
 	<div id="navbar">
-		<h2>My Matches  |  My Trades  |  Want List  |  Have List </h2>
+		<h2> <%= link_to "Search", search_path %> | My Matches  |  My Trades  |  <%= link_to "Want List", inventory_needs_path %>  |  <%= link_to "Have List", inventory_owns_path %></h2>
 	</div>
 </div>

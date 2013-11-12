@@ -33,8 +33,8 @@ class LoginController < ApplicationController
       session[:user_name] = user.username
       redirect_to root_path
     else
-      flash[:notice] = "Password or username does not match any user"
-      flash[:color] = "invalid"
+      flash.now[:notice] = "Password or username does not match any user"
+      flash.now[:color] = "invalid"
       redirect_to login_path
     end
   end

@@ -33,11 +33,11 @@ class InventoryOwnsController < ApplicationController
     
     @inventory_own.book_id = @book.id
     @inventory_own.user_id = session[:user_id]
-    @inventory_own.condition = "Ok"
+    @inventory_own.condition_id = Condition.all[0].id
 	
     respond_to do |format|
       if @inventory_own.save
-        format.html { redirect_to inventory_owns_path, notice: 'Inventory own was successfully created.' }
+        format.html { redirect_to inventory_owns_path }
         format.json { render action: 'show', status: :created, location: @inventory_own }
       else
         format.html { render action: 'new' }
@@ -51,7 +51,7 @@ class InventoryOwnsController < ApplicationController
   def update
     respond_to do |format|
       if @inventory_own.update(inventory_own_params)
-        format.html { redirect_to @inventory_own, notice: 'Inventory own was successfully updated.' }
+        format.html { redirect_to @inventory_own }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

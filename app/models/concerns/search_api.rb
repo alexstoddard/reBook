@@ -129,7 +129,11 @@ class SearchApi
   end
 
   def get_items(json)
-    return json["items"]
+    begin
+      return json["items"]
+    rescue
+      return []
+    end
   end
 
   def get_isbn(x)
