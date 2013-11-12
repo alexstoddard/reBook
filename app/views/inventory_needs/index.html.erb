@@ -1,29 +1,42 @@
-<% if session[:user_name].nil? %>
-<h1>Listing all needed books</h1>
-<% else %>
-<h1>Listing all of <%=session[:user_name] %>'s needed books</h1>
-<% end %>
-<br><br>
-<table>
-  <thead>
-    <tr>
-      <th>User</th>
-      <th>Book</th>
-      <th>Image</th>
-      <th>Action</th>
-    </tr>
-  </thead>
+<div id="main" class="inventory">
+  <% if @inventory_needs.empty? %>
+    <div id="search">
+        
+          <h2>Your Want List is empty. Search for books to add:</h2>
+          
+          <%= form_tag("/search", method: "get") do %>
+            <%= text_field_tag('search', nil, id: nil, placeholder: "Title, ISBN, Author", class: "text") %>
+            <%= submit_tag("Search", id: nil, class: "button") %>
+          <% end %> 
+    </div>
+  <% else %>
+    <div id="search">
+        
+          <h2>Add more books to your Want List:</h2>
+          
+          <%= form_tag("/search", method: "get") do %>
+            <%= text_field_tag('search', nil, id: nil, placeholder: "Title, ISBN, Author", class: "text") %>
+            <%= submit_tag("Search", id: nil, class: "button") %>
+          <% end %> 
+    </div>
 
-  <tbody>
+    <h1>My Want List</h1>
+
     <% @inventory_needs.each do |inventory_need| %>
-      <tr>
-        <td><%= inventory_need.user.username %></td>
-        <td><%= inventory_need.book.name %></td>
-        <td><img src="<%= inventory_need.book.thumbnail %>"></td>
-        <td><%= link_to 'Remove', inventory_need, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+      <div class="book">
+      
+        <img src="<%= inventory_need.book.thumbnail %>" alt="<%= inventory_need.book.name %>" />
+        
+        <div class="bookinfo">
+          <h3><%= inventory_need.book.name %></h3>
+          <h4>Author First Last <h4>
+          <h4>Edition, ISBN #</h4>
+          <%= link_to 'Remove', inventory_need, class: "remove", method: :delete, data: { confirm: 'Are you sure?' } %>        
+        </div>
+        
+      </div>
     <% end %>
-  </tbody>
-</table>
+    
+  <% end %>
 
-<br>
+</div>

@@ -11,12 +11,8 @@
 	position: relative;
 	/*width: 100%;*/
 	height: 390px;
-}
-
-#wrapperinfo {
-	background-color: #EBEBEB;	
-	width: 100%;
-	background-size: 100%;
+	width:980px;
+	margin: 0 auto;
 }
 
 /****Book Search Box*****/
@@ -31,6 +27,10 @@
 	border: solid 1px white;
 	padding: 35px;
 	box-shadow: 3px 3px 10px -2px #525252;
+}
+
+#search h2 {
+	color:#fff;
 }
 
 #search input[type="text"] {
@@ -50,35 +50,41 @@
 	top: 230px;
 	right: 90px;
 	width: 420px;
-	color: rgb(63, 72, 204);
 }
 
 #signup h2 {
 	margin-bottom:20px;
+	color: rgb(63, 72, 204);
 }
 
 #signup a.button {
-	background-color:#404099;
+	background-color:#2A33B8;
 }
 
 #signup a.button:hover {
 	text-decoration:none;
-	background-color:#2A33B8;
+	background-color:#202797;
 }
 
 
 /*********************How it Works Section*************************/
 /******************************************************************/
 
-#howitworks {
-	height: 500px;
-	text-align: center;
-	padding-top: 50px;
-	font-weight: bold;
+#wrapperhowitworks {
+	background-color:#fff;
 }
 
-#wrapperhowitworks {
-	color: rgb(63, 72, 204);
+#howitworks {
+	text-align: center;
+	padding: 50px 0;
+	width:980px;
+	margin: 0 auto;
+}
+
+#howitworks div {
+	display: inline-block;
+	width: 24%;
+	vertical-align: top;
 }
 
 #howitworks .step div.thumb {
@@ -87,31 +93,35 @@
 	text-align:center;
 }
 
-#logo {
-	margin: 0px;
-}
-#howitworks div {
-	display: inline-block;
-	width: 24%;
-	vertical-align: top;
+#howitworks .step p {
+	width: 90%;
+	margin: 0 auto;
 }
 
 
 /*****************Create an Account Section************************/
 /******************************************************************/
+#wrappercreate {
+	margin-bottom: 48px;
+}
+
 #create {
-	
 	width: 100%;
-	height: 100px;
 	color: rgb(63, 72, 204);
-	padding-top: 10px;
+	padding: 20px 0;
 	text-align: center;
 }
 
-#wrappercreate {
-	background-color: #EBEBEB;	
+#create h1 {
+	font-size:3em;
 }
 
 #create > input {
 	margin-top: 10px;
+}
+
+/*********footer ***************/
+
+footer {
+	background-color:#f8f8f8;
 }

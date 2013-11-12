@@ -1,30 +1,45 @@
-<% if session[:user_name].nil? %>
-<h1>Listing all owned books</h1>
-<% else %>
-<h1>Listing all of <%=session[:user_name] %>'s owned books</h1>
-<% end %>
-<br><br>
-<table>
-  <thead>
-    <tr>
-      <th>User</th>
-      <th>Book</th>
-      <th>Condition</th>
-      <th>Image</th>
-      <th>Action</th>
-    </tr>
-  </thead>
+<div id="main" class="inventory">
+  
+<% if @inventory_owns.empty? %>
+  <div id="search">
+      
+        <h2>Your Have List is empty. Search for books to add:</h2>
+        
+        <%= form_tag("/search", method: "get") do %>
+          <%= text_field_tag('search', nil, id: nil, placeholder: "Title, ISBN, Author", class: "text") %>
+          <%= submit_tag("Search", id: nil, class: "button") %>
+        <% end %> 
+  </div>
 
-  <tbody>
-    <% @inventory_owns.each do |inventory_own| %>
-      <tr>
-        <td><%= inventory_own.user.username %></td>
-        <td><%= inventory_own.book.name %></td>
-        <td><%= inventory_own.condition %></td>
-        <td><img src="<%= inventory_own.book.thumbnail %>"></td>
-        <td><%= link_to 'Remove', inventory_own, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<br>
+<% else %>
+
+  <div id="search">
+      
+        <h2>Add more books to your Have List List:</h2>
+        
+        <%= form_tag("/search", method: "get") do %>
+          <%= text_field_tag('search', nil, id: nil, placeholder: "Title, ISBN, Author", class: "text") %>
+          <%= submit_tag("Search", id: nil, class: "button") %>
+        <% end %> 
+  </div>
+  
+  <h1>My Have List</h1>
+
+  <% @inventory_owns.each do |inventory_own| %>
+    <div class="book">
+    
+      <img src="<%= inventory_own.book.thumbnail %>" alt="<%= inventory_own.book.name %>" />
+      
+      <div class="bookinfo">
+        <h3><%= inventory_own.book.name %></h3>
+        <h4>Author First Last <h4>
+        <h4>Edition, ISBN #</h4>
+        <%= link_to 'Remove', inventory_own, method: :delete, data: { confirm: 'Are you sure?' } %>        
+      </div>
+      
+    </div>
+  <% end %>
+
+  <% end %>
+
+</div>

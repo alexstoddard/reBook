@@ -11,13 +11,10 @@
  *= require_self
  */
 
-
-* {
-	margin: 0;
-	padding: 0;
-	font-family: 'Open Sans';
-	font-weight: 300;
-}
+ * {
+ 	padding:0;
+ 	margin: 0;
+ }
 
 a {
 	text-decoration: none;
@@ -27,12 +24,22 @@ a:hover {
 	text-decoration: underline;
 }
 
-h1, h2, h3, b {
+b {
 	font-weight:400;
 }
 
+p {
+	margin-bottom:15px;
+}
+
+h1, h2, h3 {
+	font-weight:400;
+	color:#3c3c3c;
+}
+
 h1 {
-	font-size:3.5em;
+	font-family: 'Alice';
+	font-size:3em;
 	margin-bottom:20px;
 }
 
@@ -40,17 +47,40 @@ h2 {
 	margin-bottom:6px;
 }
 
+label {
+	display:inline-block;
+}
+
+html, body {
+	height:100%;
+}
+
 body {
 	min-width: 980px;
 	font-size:12.5px;
+	color:#111;
+	font-family: 'Open Sans';
+	font-weight:300;
 }
 
+#wrapper {
+	min-height: 100%;
+	background-color: #f8f8f8;
+}
 
-header, #info, #howitworks, #create, #search, #main, footer{
+#main {
+	padding-top:20px;
+	padding-bottom:48px;
+	overflow:auto;
+}
+
+#wrapperheader, #main, #wrapperfooter{
+	display:block;
 	width: 980px;
-	margin-left: auto;
-	margin-right: auto;
+	margin: 0 auto !important;
+	position:static;
 }
+
 
 
 /*****************Button and Text Box Styling**********************/
@@ -63,11 +93,12 @@ header, #info, #howitworks, #create, #search, #main, footer{
 	font-weight: bold;
 	border: none;
 	cursor: pointer;
-	margin-bottom:10px;	
+	display:inline-block;
 }
 
 .button:hover {
 	background-color:#A3A3EC;
+	text-decoration: none;
 }
 
 input[type="text"],
@@ -81,35 +112,36 @@ input[type="password"] {
 
 header {
 	padding: 10px 0;
+	background-color:#fff;
 }
 
 /* header login form */
-#login {
+#login-form {
 	float: right;
 	margin-top: 20px;
 	text-align:right;
 }
 
-#login input[type="text"], 
-#login input[type="password"] {
+#login-form input[type="text"], 
+#login-form input[type="password"] {
 	width: 100px;
 }
 
-#login input[type="submit"] {
+#login-form input[type="submit"] {
 	margin-bottom:0;
 	padding:4px 10px;
 }
 
-#login a {
+#login-form a {
 	font-size:0.9em;
 }
 
-#login .create {
+#login-form .create {
 	position:relative;
 	right:105px;
 }
 
-#login .forgot {
+#login-form .forgot {
 	position:relative;
 	right:82px;
 }
@@ -148,32 +180,256 @@ header > h4 {
 	
 }
 
+/*********************Header, logged in ******************************/
+/*********************************************************************/
+
+#account-info {
+	float:right;
+	margin-top:17px;
+	font-size:0.9em;
+}
+
+#account-info h1 {
+	float:none;
+	font-size:3em;
+	margin-bottom:0;
+	text-align:right;
+}
+
 /********************Navigation bar***********************************/
 /*********************************************************************/
 
 #navbar {
 	text-align: center;
-	color: rgb(63, 72, 204);
-	padding: 8px;
-}
-#wrappernavbar {
-	background-color: #EBEBEB;
+	padding: 8px 8px 8px 20px;
+	display:inline-block;
+	width:400px;
+	vertical-align:bottom;
 }
 
+#navbar h2 {
+	font-size:1.3em;
+	margin-bottom:0;
+}
+
+
+/*****************Home page Info Section/Book Search Box ********************/
+/******************************************************************/
+.home #info {
+	
+	background-image: url("/assets/girlbook.png");
+	background-repeat: no-repeat;
+	position: relative;
+	/*width: 100%;*/
+	height: 390px;
+	width:980px;
+	margin: 0 auto;
+}
+
+/****Book Search Box*****/
+.home #search {
+	background-color: rgb(63, 72, 204);
+	color: white;
+	position: absolute;
+	top: 70px;
+	right: 90px;
+	width: 350px;
+	height: 60px;
+	border: solid 1px white;
+	padding: 35px;
+	box-shadow: 3px 3px 10px -2px #525252;
+}
+
+.home #search h2 {
+	color:#fff;
+}
+
+.home #search input[type="text"] {
+	width: 260px;
+}
+
+.home #search input[type="submit"] {
+	padding: 4px 10px;
+	margin-left:6px;
+}
+
+/****Create Account Button****/
+.home #signup {
+	position: absolute;
+	text-align: center;
+	top: 230px;
+	right: 90px;
+	width: 420px;
+}
+
+.home #signup h2 {
+	margin-bottom:20px;
+	color: rgb(63, 72, 204);
+}
+
+.home #signup a.button {
+	background-color:#2A33B8;
+}
+
+.home #signup a.button:hover {
+	text-decoration:none;
+	background-color:#202797;
+}
+
+
+/*********************Home Page How it Works Section*************************/
+/******************************************************************/
+
+#wrapperhowitworks {
+	background-color:#fff;
+}
+
+.home #howitworks {
+	text-align: center;
+	padding: 50px 0;
+	width:980px;
+	margin: 0 auto;
+}
+
+.home #howitworks div {
+	display: inline-block;
+	width: 24%;
+	vertical-align: top;
+}
+
+.home #howitworks .step div.thumb {
+	width:100%;
+	height:180px;
+	text-align:center;
+}
+
+.home #howitworks .step p {
+	width: 90%;
+	margin: 0 auto;
+}
+
+/*****************Home Page Create an Account Section************************/
+/******************************************************************/
+#wrappercreate {
+	margin-bottom: 48px;
+}
+
+.home #create {
+	width: 100%;
+	color: rgb(63, 72, 204);
+	padding: 20px 0;
+	text-align: center;
+}
+
+.home #create h1 {
+	font-size:3em;
+}
+
+
+/***********************Search Area***********************************/
+/*********************************************************************/
+
+
+#search {
+	color: rgb(63, 72, 204);
+}
+
+#search h4 {
+	width: 80%;
+	margin-top: 2%;
+}
+
+#search .text {
+	width: 70%;
+}
+
+#search div{
+	text-align: center;
+}
+
+/************************search results *********************************/
+
+#search article {
+	clear: both;
+	overflow: hidden;
+	margin-bottom: 20px;
+}
+
+#search article img {
+	float:left;
+	margin-right:15px;
+}
+
+/***************Have/Want list pages*************************/
+/*********************************************************************/
+
+/******Book Styling********/
+
+.inventory .book {
+	clear: left;
+	margin-bottom: 5px;	
+	padding: 10px;
+	overflow: hidden;
+	border-bottom: 1px #CCCCFF solid;
+	position:relative;
+}
+
+.inventory .book img {
+	float: left;	
+	border: solid #949494 1px;
+	box-shadow: 2px 2px 6px -1px #919191;
+	margin-right:15px;
+}
+
+.inventory .bookinfo {
+	padding-top: 10px;
+}
+
+.inventory .book h3 {
+	font-size:1.5em;
+}
+
+
+.inventory .bookinfo .remove {
+	position:absolute;
+	bottom:10px;
+}
+
+/****Have/Want List Book Search Box*****/
+.inventory #search {
+	background-color: #9CB0E2;
+	margin:20px 0;
+}
+
+.inventory #search h2 {
+	padding: 10px 10px 0px 15px;
+	font-size:1.1em;
+}
+
+.inventory #search form {
+	padding: 0 10px 10px 15px;
+}
+
+.inventory #search input[type="text"] {
+	width:80%;
+}
+
+.inventory #search input[type="submit"] {
+	padding: 3px 10px;
+	margin-left: 6px;
+}
 
 
 /**************************Footer Section**************************/
 /******************************************************************/
 footer {
-	
+	position: relative;
+	margin-top: -48px;
+	height: 18px;
+	clear: both;
+	padding:15px 0;
 }
 
-#wrapperfooter {
-	color: #CCCCFF;
-}
-
-footer span {
-	float: right;
-	margin-top: 80px;
-	margin-right: 20px;
+footer a {
+	color:#585858;
 }
