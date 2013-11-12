@@ -1,19 +1,19 @@
 class HomepageController < ApplicationController
   
-  #homepage/index
-  def show
+  #root
+  def index
     @message = "Hello, from reBook!"
   end
 
-  #homepage/terms
+  #/terms
   def terms
   end
 
-  #homepage/about
+  #/about
   def about
   end
 
-  #homepage/faq
+  #/faq
   def faq
   end
 

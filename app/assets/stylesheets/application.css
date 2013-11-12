@@ -360,6 +360,11 @@ header > h4 {
 	margin-right:15px;
 }
 
+#search article .add input[type="submit"] {
+	padding: 5px 10px;
+	background-color: #5668B3;
+}
+
 /***************Have/Want list pages*************************/
 /*********************************************************************/
 
@@ -388,7 +393,6 @@ header > h4 {
 .inventory .book h3 {
 	font-size:1.5em;
 }
-
 
 .inventory .bookinfo .remove {
 	position:absolute;
