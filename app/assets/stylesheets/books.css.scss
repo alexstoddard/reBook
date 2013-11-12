@@ -18,7 +18,6 @@
 
 #search .text {
 	width: 70%;
-	margin-top: 5%;
 }
 
 #search div{
@@ -27,13 +26,18 @@
 
 /************************search results *********************************/
 
-article {
+#search article {
 	clear: both;
 	overflow: hidden;
 	margin-bottom: 20px;
 }
 
-article img {
+#search article img {
 	float:left;
 	margin-right:15px;
+}
+
+#search article .add input[type="submit"] {
+	padding: 5px 10px;
+	background-color: #5668B3;
 }

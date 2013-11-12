@@ -3,60 +3,60 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
-/***************Main info section/list/search*************************/
+/***************Have/Want list pages*************************/
 /*********************************************************************/
 
 /******Book Styling********/
 
-.book {
+.inventory .book {
 	clear: left;
 	margin-bottom: 5px;	
 	padding: 10px;
 	overflow: hidden;
 	border-bottom: 1px #CCCCFF solid;
+	position:relative;
 }
 
-.book img {
+.inventory .book img {
 	float: left;	
 	border: solid #949494 1px;
 	box-shadow: 2px 2px 6px -1px #919191;
 	margin-right:15px;
 }
 
-.bookinfo {
+.inventory .bookinfo {
 	padding-top: 10px;
 }
 
-hr {
-	clear: left;
-	color: #CCCCFF;
-}
-
-.book h3 {
+.inventory .book h3 {
 	font-size:1.5em;
 }
 
-
-/****Book Search Box*****/
-#search {
-	background-color: #9CB0E2;
-	margin-bottom:20px;
+.inventory .bookinfo .remove {
+	position:absolute;
+	bottom:10px;
 }
 
-#search h2 {
+/****Have/Want List Book Search Box*****/
+.inventory #search {
+	background-color: #9CB0E2;
+	margin:20px 0;
+}
+
+.inventory #search h2 {
 	padding: 10px 10px 0px 15px;
 	font-size:1.1em;
 }
 
-#search form {
+.inventory #search form {
 	padding: 0 10px 10px 15px;
 }
 
-#search input[type="text"] {
+.inventory #search input[type="text"] {
 	width:80%;
 }
 
-#search input[type="submit"] {
+.inventory #search input[type="submit"] {
 	padding: 3px 10px;
 	margin-left: 6px;
 }
