@@ -17,6 +17,10 @@
 			  <article>
 			    <img src="<%= x.thumbnail %>">
 			    <h2><%= x.title %></h2>
+          <b>ISBN:</b> <%= x.isbn %></br>
+          <b>Published:</b> <%= x.published %></br>
+          <b>Author:</b> <%= x.authors %></br></br>
+
 			      <% unless session[:user_id].nil? %>
 					<% if x.hide_own %>
 						You already own this book!
