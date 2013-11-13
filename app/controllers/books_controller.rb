@@ -52,9 +52,13 @@ class BooksController < ApplicationController
     if result.status == :response_ok
       book = Book.new
 
+      book.author = result.book.authors
       book.name = result.book.title
       book.thumbnail = result.book.thumbnail
       book.googleId = result.book.id
+      book.isbn = result.book.isbn
+      book.description = result.book.description
+      book.published = result.book.published
 
       if book.save
         return book
