@@ -32,7 +32,7 @@
           <b>ISBN:</b> <%= inventory_need.book.isbn %></br>
           <b>Published:</b> <%= inventory_need.book.published %></br>
           <b>Author:</b> <%= inventory_need.book.author %></br>
-          <%= unless inventory_need.book.description.nil? inventory_need.book.description.html_safe end %></br>
+          <%= unless inventory_need.book.description.nil? inventory_need.book.description.html_safe%></br>
           <%= link_to 'Remove', inventory_need, class: "remove", method: :delete, data: { confirm: 'Are you sure?' } %>        
         </div>
         
