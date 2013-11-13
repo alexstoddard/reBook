@@ -29,8 +29,10 @@
         
         <div class="bookinfo">
           <h3><%= inventory_need.book.name %></h3>
-          <h4>Author First Last <h4>
-          <h4>Edition, ISBN #</h4>
+          <b>ISBN:</b> <%= inventory_need.book.isbn %></br>
+          <b>Published:</b> <%= inventory_need.book.published %></br>
+          <b>Author:</b> <%= inventory_need.book.author %></br>
+          <%= inventory_need.book.description %></br>
           <%= link_to 'Remove', inventory_need, class: "remove", method: :delete, data: { confirm: 'Are you sure?' } %>        
         </div>
         
