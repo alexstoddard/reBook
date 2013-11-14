@@ -1,10 +1,16 @@
 <div id="main">
 	<div id="login">
 		<h1>Log in</h1>
-		
+		<% unless flash[:verified].nil? %>
+			<div class="verified">
+	   			<%= flash[:verified] %>
+				<% flash[:verified] = nil%>
+	   		</div>
+		<% end %>
 		<% unless flash[:notice].nil? %>
 			<div class="error">
 	   			<%= flash[:notice] %>
+				<% flash[:notice] = nil%>
 	   		</div>
 		<% end %>
 

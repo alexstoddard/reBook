@@ -52,7 +52,7 @@ class User < ActiveRecord::Base
       return user
     end
 
-    return false
+    return nil
   end
 
   # Returns whether a given password hashes to this user's password
