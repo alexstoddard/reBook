@@ -46,7 +46,7 @@ class User < ActiveRecord::Base
   # the provided password hashes identically to the database
   def self.authenticate(login_username, login_password)
     user = User.find_by_username(login_username)
-    if user && user.matches_password(login_password)
+    if user && user.matches_password(login_password) && user.activated
       return user
     end
 
