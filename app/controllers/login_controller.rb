@@ -12,7 +12,7 @@ class LoginController < ApplicationController
 		if(not user.nil?)
 			user.activated = true;
 			user.save
-			flash.now[:notice] = "You have successfully validated your account!"
+			flash[:verified] = "You have successfully validated your account!"
 		end
 	end
 	
@@ -27,15 +27,18 @@ class LoginController < ApplicationController
 
     username = nil
     password = nil
-
-    if user
-      session[:user_id] = user.id
+    if user.nil?
+	  flash[:notice] = "Password or username does not match any user"
+      flash[:color] = "invalid"
+      redirect_to login_path
+    elsif !user.activated
+	  flash[:notice] = "Please verify your email"
+      flash[:color] = "invalid"
+      redirect_to login_path
+	else
+	  session[:user_id] = user.id
       session[:user_name] = user.username
       redirect_to root_path
-    else
-      flash.now[:notice] = "Password or username does not match any user"
-      flash.now[:color] = "invalid"
-      redirect_to login_path
     end
   end
 

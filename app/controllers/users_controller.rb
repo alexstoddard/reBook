@@ -33,7 +33,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user
-        format.html { redirect_to root_path, notice: 'Account has been created. Check your email to activate.' }
+        format.html { redirect_to root_path, success: 'Account has been created. Check your email to activate.' }
         format.json { render action: 'show', status: :created, location: @user }
       else
         format.html { render action: 'new' }
