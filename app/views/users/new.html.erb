@@ -2,30 +2,80 @@
 	<div id="create-account">
 		<h1>Create your ReBook Account</h1>
 		
-		<% unless flash[:notice].nil? %>
-			<div class="error">
-	   			<%= flash[:notice] %>
-	   		</div>
-		<% end %>
-		
-		<%= form_tag("/users", method: "post") do %>
-	        <p><label for="first">First Name</label> <%= text_field_tag('first', nil, id: nil, class: "text") %></p>
+			<%= form_for @user do |f| %>
+				
+			<div>
+			  <%= f.label :first, "First Name" %><%= f.text_field :first %>
+			  	<% if @user.errors[:first].present? %>
+			  		<span class="error">
+					  	<% @user.errors[:first].each do |msg| %>
+					  		<%= "First Name " + msg + ". " %>
+					  	<% end %>
+				  	</span>
+			  	<% end %>
+			</div>
 
-	        <p><label for="last">Last Name</label> <%= text_field_tag('last', nil, id: nil, class: "text") %></p>
+			<div>
+			  <%= f.label :last, "Last Name" %><%= f.text_field :last %>
+			  	<% if @user.errors[:last].present? %>
+			  		<span class="error">
+					  	<% @user.errors[:last].each do |msg| %>
+					  		<%= "Last Name " + msg + ". " %>
+					  	<% end %>
+				  	</span>
+			  	<% end %>
+			</div>
 
-	       	<p><label for="user[username]">Username</label> <%= text_field_tag('user[username]', nil, id: nil, class: "text") %></p>
+			<div>
+			  <%= f.label :username, "Username" %><%= f.text_field :username %>
+			  	<% if @user.errors[:username].present? %>
+			  		<span class="error">
+					  	<% @user.errors[:username].each do |msg| %>
+					  		<%= "Username " + msg + ". " %>
+					  	<% end %>
+				  	</span>
+			  	<% end %>
+			</div>
 
-	       	<p><label for="user[passhash]">Password</label> <%=password_field_tag('user[passhash]', nil, id: nil, class: "text") %></p>
+			<div>
+			  <%= f.label :passhash, "Password" %><%= f.password_field :passhash %>
+			  	<% if @user.errors[:passhash].present? %>
+			  		<span class="error">
+					  	<% @user.errors[:passhash].each do |msg| %>
+					  		<%= "Password " + msg + ". " %>
+					  	<% end %>
+				  	</span>
+			  	<% end %>
+			</div>
 
-	       	<p><label for="user[passhash_confirmation">Confirm password</label> <%= password_field_tag('user[passhash_confirmation]', nil, id: nil, class: "text") %></p>
+			<div>
+			  <%= f.label :passhash_confirmation, "Confirm password" %><%= f.password_field :passhash_confirmation %>
+				<% if @user.errors[:passhash_confirmation].present? %>
+			  		<span class="error">Passwords don't match.</span>
+			  	<% end %>
+			</div>
 
-	       	<p><label for="user[email]">Email</label> <%= text_field_tag('user[email]', nil, id: nil, class: "text") %></p>
+			<div>
+			  <%= f.label :email, "Email" %><%= f.email_field :email %>
+			  	<% if @user.errors[:email].present? %>
+			  		<span class="error">
+					  	<% @user.errors[:email].each do |msg| %>
+					  		<%= "Email " + msg + ". " %>
+					  	<% end %>
+				  	</span>
+			  	<% end %>
+			</div>
 
-	       	<p><label for="user[location]">Location</label> <%= select_tag('user[location]', options_from_collection_for_select(@locations, "id", "name"), class: "text") %></p>
+			<div>
+			  <%= f.label :location, "Location" %><%= f.select :location, @locations.collect { |p| [p.name, p.id] } %></p>
+			</div>
 
-			<p><%= check_box_tag('terms', 'accepted') %> I agree to the <%= link_to 'Rebook Terms of Service' '/terms' %></p>
 
-	        <%= submit_tag("Sign me up!", id: nil, class: "button") %>
-	    <% end %>
+			  <p><%= check_box_tag :terms, :accepted %> I agree to the <%= link_to 'Rebook Terms of Service', terms_path %></p>
+
+			  <%= f.submit "Sign me up!", class: "button" %>
+			
+			<% end %>
+
 	</div>
 </div>

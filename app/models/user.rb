@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
   EMAIL_PATTERN = /\A[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\z/i
 
   # Validation requirements
+  validates :first, :presence => true
+  validates :last, :presence => true
   validates :username, :presence => true, :uniqueness => true, :length => { :in => 4..20 }
   validates :email, :presence => true, :uniqueness => true, :format => EMAIL_PATTERN
   validates :passhash, :confirmation => true, :presence => true
@@ -79,6 +81,8 @@ class User < ActiveRecord::Base
         raise ActiveRecord::Rollback
       end
     end
+
+    return @user
 
   end
 

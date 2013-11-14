@@ -32,7 +32,7 @@ class UsersController < ApplicationController
     @user = User.create_with_location(user_params, @location_params)
 
     respond_to do |format|
-      if @user
+      if @user.errors.size == 0
         format.html { redirect_to root_path, notice: 'Account has been created. Check your email to activate.' }
         format.json { render action: 'show', status: :created, location: @user }
       else
