@@ -35,7 +35,7 @@
         <b>ISBN:</b> <%= inventory_own.book.isbn %></br>
         <b>Published:</b> <%= inventory_own.book.published %></br>
         <b>Author:</b> <%= inventory_own.book.author %></br>
-        <%= inventory_own.book.description.html_safe %></br>
+        <%= inventory_own.book.description %></br>
         <%= link_to 'Remove', inventory_own, method: :delete, data: { confirm: 'Are you sure?' } %>        
       </div>
       
