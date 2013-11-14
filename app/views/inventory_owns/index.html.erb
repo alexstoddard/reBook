@@ -27,16 +27,18 @@
 
   <% @inventory_owns.each do |inventory_own| %>
     <div class="book">
-    
-      <img src="<%= inventory_own.book.thumbnail %>" alt="<%= inventory_own.book.name %>" />
-      
+
+      <div class="thumbnail">
+        <img src="<%= inventory_own.book.thumbnail %>" alt="<%= inventory_own.book.name %>" />
+        <p><%= link_to 'Remove', inventory_own, method: :delete, data: { confirm: 'Are you sure?' } %></p>  
+      </div>
+
       <div class="bookinfo">
         <h3><%= inventory_own.book.name %></h3>
-        <b>ISBN:</b> <%= inventory_own.book.isbn %></br>
-        <b>Published:</b> <%= inventory_own.book.published %></br>
-        <b>Author:</b> <%= inventory_own.book.author %></br>
-        <%= inventory_own.book.description %></br>
-        <%= link_to 'Remove', inventory_own, method: :delete, data: { confirm: 'Are you sure?' } %>        
+        <p><strong>Author:</strong> <%= inventory_own.book.author %><br />
+        <strong>ISBN:</strong> <%= inventory_own.book.isbn %><br />
+        <strong>Published:</strong> <%= inventory_own.book.published %></p>
+        <%= inventory_own.book.description.html_safe %></br>
       </div>
       
     </div>
