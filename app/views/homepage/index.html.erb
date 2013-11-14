@@ -3,17 +3,15 @@
     
     <div id="search">
     
-      <h2>Search for Books!</h2>
+      <h2 class="left">Search for Books!</h2>
     
       <%= form_tag("/search", method: "get") do %>
         <%= text_field_tag('search', nil, id: nil, placeholder: "Title, ISBN, Author", class: "text") %>
         <%= submit_tag("Search", id: nil, class: "button") %>
       <% end %>
+
+      <h2 class="tagline">Never spend money on books again!<br />Sign up and start saving!</h2>
       
-    </div>
-    
-    <div id="signup">
-      <h2>Never spend money on books again!<br />Sign up and start saving!</h2>
       <% unless session[:user_id] %>
       <a class="button" href="/users/new">Create an Account</a>
       <% end %>
@@ -31,49 +29,42 @@
       <div class="thumb">
         <%= image_tag("step1.png") %>
       </div>
-      <p><h3>Personalize your <br> Have and Want lists
-	  <br>____________________<br></h3> 
-	  <br> Search our library and build up you Have List with books you currently own and are looking to trade.
-	  Then, add any books you wish you had or need to your Want List.</p>
+      <h3>Personalize your <br> Have and Want lists</h3> 
+      <p>Search our library and build up you Have List with books you currently own and are looking to trade. Then, add any books you wish you had or need to your Want List.</p>
     </div>
     
     <div id="step2" class="step">
       <div class="thumb">
         <%= image_tag("step2.png") %>
       </div>
-      
-	  <p><br><h3>We find you matches
-	  <br>____________________<br></h3> 
-	  <br>Sit back and let our amazing ReBook team find you matches based on your Have and Want lists.</p>
+      <h3>We find you matches</h3> 
+      <p>Sit back and let our amazing ReBook team find you matches based on your Have and Want lists.</p>
     </div>
     
     <div id="step3" class="step">
       <div class="thumb">
         <%= image_tag("step3.png") %>
       </div>  
-     
-	  <p><br><h3>Pick your trades 
-	  <br>____________________<br></h3>
-	  <br> Look through the trades our team finds for you and pick any you want to make.
-	  We give you an easy way to set up a meeting time  and place for your trade.</p>
+      <h3>Pick your trades</h3>
+      <p>Look through the trades our team finds for you and pick any you want to make. We give you an easy way to set up a meeting time  and place for your trade.</p>
     </div>
     
     <div id="step4" class="step">
       <div class="thumb">
         <%= image_tag("step4.png") %>
       </div> 
-      
-	  <p><br><h3>Start saving!
-	  <br>____________________<br></h3>
-	  <br>Our unique system lets you continuously trade your unused books for books you desire, 
-	  no money involved. Whether you need a text book, comic book, quick read, etc. ReBook can help you save money.</p>
+      <h3>Start saving!</h3>
+      <p>Our unique system lets you continuously trade your unused books for books you desire, no money involved. Whether you need a text book, comic book, quick read, etc. ReBook can help you save money.</p>
     </div>
   </div>
 </div>
 
 <div id="wrappercreate">
   <div id="create">
-    <h1>Never buy books again. Use ReBook and save $$$</h1><% unless session[:user_id] %><a href="/users/new" class="button">Create an Account</a><% end %>
+    <h1>Never buy books again. Use ReBook and save $$$</h1>
+    <% unless session[:user_id] %>
+      <a href="/users/new" class="button">Create an Account</a>
+    <% end %>
   </div>
 </div>
 
