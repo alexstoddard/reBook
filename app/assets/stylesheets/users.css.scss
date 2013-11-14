@@ -21,10 +21,8 @@
 	width:120px;
 }
 
-#create-account input[type="text"],
-#create-account input[type="email"],
-#create-account input[type="password"] {
-margin-right:5px;
+#create-account div .error {
+	margin-left:5px
 }
 
 #create-account .field_with_errors {

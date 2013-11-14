@@ -70,8 +70,12 @@
 			  <%= f.label :location, "Location" %><%= f.select :location, @locations.collect { |p| [p.name, p.id] } %></p>
 			</div>
 
-
-			  <p><%= check_box_tag :terms, :accepted %> I agree to the <%= link_to 'Rebook Terms of Service', terms_path %></p>
+			<div>
+				<%= f.check_box :terms %> I agree to the <%= link_to 'Rebook Terms of Service', terms_path %>
+				<% if @user.errors[:terms].present? %>
+			  		<span class="error">You must accept the terms of service</span>
+			  	<% end %>
+			</div>
 
 			  <%= f.submit "Sign me up!", class: "button" %>
 			
