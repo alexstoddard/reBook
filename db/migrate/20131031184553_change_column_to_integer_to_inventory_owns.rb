@@ -1,9 +1,11 @@
 class ChangeColumnToIntegerToInventoryOwns < ActiveRecord::Migration
   def self.up
-	change_column :inventory_owns, :condition, :integer
+    remove_column :inventory_owns, :condition
+    add_column :inventory_owns, :condition, :integer
   end
   
   def self.down
-	change_column :inventory_owns, :condition, :string
+    remove_column :inventory_owns, :condition
+    add_column :inventory_owns, :condition, :string
   end
 end

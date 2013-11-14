@@ -109,6 +109,8 @@ class SearchApi
     book.id = require_get(:get_id, x)
     book.authors = optional_get(:get_authors, x)
     book.isbn = optional_get(:get_isbn,x)
+    book.description = optional_get(:get_description,x)
+    book.published = optional_get(:get_published,x)
 
     return book
   end
@@ -140,8 +142,16 @@ class SearchApi
     return x["volumeInfo"]["industryIdentifiers"].find { |y| y['type'] == "ISBN_10" }['identifier']
   end
 
+  def get_description(x)
+    return x["volumeInfo"]["description"]
+  end
+
+  def get_published(x)
+    return x["volumeInfo"]["publishedDate"]
+  end
+
   def get_authors(x)
-    return x["volumeInfo"]["authors"]
+    return x["volumeInfo"]["authors"].join(", ")
   end
 
   def get_id(x)
@@ -165,7 +175,7 @@ class SearchApi
 end
 
 class ApiBook
-  attr_accessor :title, :thumbnail, :link, :id, :authors, :isbn, :hide_own, :hide_need
+  attr_accessor :title, :thumbnail, :link, :id, :authors, :isbn, :hide_own, :hide_need, :description, :published
 end
 
 class BookResponse      

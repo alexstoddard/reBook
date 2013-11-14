@@ -5,39 +5,54 @@
 		In the search box, type the title, author, subject, or ISBN number. To add to you Want or 
 		Have book list, just click the appropriate button next to the book you want to add, simple as that!</p>
 		
-		<%= form_tag("/search", method: "get") do %>
+		<%= form_tag("/search", method: "get", class: "book-search") do %>
 	        <%= text_field_tag('search', nil, id: nil, placeholder: "Title, ISBN, Author", class: "text") %>
 	        <%= submit_tag("Search", id: nil, class: "button") %>
 	    <% end %>
 
 	    <% if !@result.nil? %>
-			<strong>Results: <%= @result.books.length %></strong><br><br>
+	    	<% if @result.books.length == 0 %>
+	    		<h3>Sorry, no results were found for "<%= params[:search] %>". Try again with a different search term.</h3>
+	    	<% else %>
+				<h3><%= @result.books.length %> Results for "<%= params[:search] %>"</h3>
+			<% end %>
 
 			<% @result.books.each do |x| %>
 			  <article>
-			    <img src="<%= x.thumbnail %>">
-			    <h2><%= x.title %></h2>
-			      <% unless session[:user_id].nil? %>
-					<% if x.hide_own %>
-						You already own this book!
-						<br/>
-					<% elsif x.hide_need %>
-						You already need this book!
-						<br/>
-					<% else%>
-						 <%= form_tag "/inventory_owns/?" + x.id, :method => 'post', :class => "add have" do %>
-							<%= submit_tag "Add to Have List", :name => nil, :class => 'button' %>
-							<%= hidden_field_tag :api_id, x.id %>
-							<%= hidden_field_tag :search, params[:search] %>
-						 <% end %>
-						 <%= form_tag "/inventory_needs", :method => 'post', :class => "add want" do %>
-							<%= submit_tag "Add to Want List", :name => nil, :class => 'button' %>
-							<%= hidden_field_tag :api_id, x.id %>
-							<%= hidden_field_tag :search, params[:search] %>
-						 <% end %>
-					<% end %>
-			      <% end %>
-			    <br>
+			  	<div class="thumbnail">
+			  	  <img src="<%= x.thumbnail %>">
+
+			  	  <% unless session[:user_id].nil? %>
+						<% if x.hide_own %>
+							This book is already in your <%= link_to "Have List", inventory_owns_path %>.
+							<br/>
+						<% elsif x.hide_need %>
+							This book is already in your <%= link_to "Want List", inventory_needs_path %>. 
+							<br/>
+						<% else%>
+							 <%= form_tag inventory_owns_path, :method => 'post', :class => "add have" do %>
+								<%= submit_tag "Add to Have List", :name => nil %>
+								<%= hidden_field_tag :api_id, x.id %>
+								<%= hidden_field_tag :search, params[:search] %>
+							 <% end %>
+							 <%= form_tag inventory_needs_path, :method => 'post', :class => "add want" do %>
+								<%= submit_tag "Add to Want List", :name => nil %>
+								<%= hidden_field_tag :api_id, x.id %>
+								<%= hidden_field_tag :search, params[:search] %>
+							 <% end %>
+						<% end %>
+				    <% end %>
+			  	</div>
+
+			  	<div class="details">
+				    <h2><%= x.title %></h2>
+				   	<p><strong>Author:</strong> <%= x.authors %><br />
+			        <strong>ISBN:</strong> <%= x.isbn %><br />
+			        <strong>Published:</strong> <%= x.published %><br /></p>
+              <% unless x.description.nil? %>
+			        <%= x.description.html_safe %>
+              <% end %>
+			      </div>
 			  </article>
 			<% end %> 
 
