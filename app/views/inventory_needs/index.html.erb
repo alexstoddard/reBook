@@ -35,7 +35,9 @@
           <p><strong>Author:</strong> <%= inventory_need.book.author %><br />
           <strong>ISBN:</strong> <%= inventory_need.book.isbn %><br />
           <strong>Published:</strong> <%= inventory_need.book.published %></p>
+          <% unless inventory_need.book.description.nil? %>
           <%= inventory_need.book.description.html_safe%>
+          <% end %>
         </div>
         
       </div>

@@ -49,8 +49,9 @@
 				   	<p><strong>Author:</strong> <%= x.authors %><br />
 			        <strong>ISBN:</strong> <%= x.isbn %><br />
 			        <strong>Published:</strong> <%= x.published %><br /></p>
-			        <%= x.description %>
-
+              <% unless x.description.nil? %>
+			        <%= x.description.html_safe %>
+              <% end %>
 			      </div>
 			  </article>
 			<% end %> 

@@ -38,7 +38,9 @@
         <p><strong>Author:</strong> <%= inventory_own.book.author %><br />
         <strong>ISBN:</strong> <%= inventory_own.book.isbn %><br />
         <strong>Published:</strong> <%= inventory_own.book.published %></p>
+        <% unless inventory_own.book.description.nil? %>
         <%= inventory_own.book.description.html_safe %></br>
+        <% end %>
       </div>
       
     </div>
