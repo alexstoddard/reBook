@@ -1,7 +1,9 @@
 <% @records.each do |x| %>
-From: <%= x["user_from"] %></br>
-To: <%= x["user_to"] %></br>
-Trade Book: <%= x["from_title"] %></br>
-Get Book: <%= x["to_title"] %></br>
+<b>From: </b><%= x["user_from"] %></br>
+<b>To: </b><%= x["user_to"] %></br>
+<b>Trade Book: </b><%= x["from_title"] %></br>
+<img src="<%= x['from_thumb']" %></br>
+<b>Get Book: </b><%= x["to_title"] %></br>
+<img src="<%= x['to_thumb']" %></br>
 </br>
 <% end %>
