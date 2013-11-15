@@ -26,6 +26,8 @@ Rebook::Application.routes.draw do
   root 'homepage#index'
 
   #homepage routes
+  get "/matches", to: 'users#matches'
+
   get "/about", to: 'homepage#about'
   get "/faq", to: 'homepage#faq'
   get "/terms", to: 'homepage#terms'

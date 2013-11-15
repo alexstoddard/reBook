@@ -9,7 +9,10 @@ class UsersController < ApplicationController
   def index
     @users = User.all
   end
-
+  def matches
+    sql = "select o1.user_id as user_from, o2.user_id as user_to, b1.name as from_title, b2.name as to_title from inventory_owns o1, inventory_needs n1, books b1, inventory_owns o2, inventory_needs n2, books b2 where o1.book_id = n1.book_id and b1.id = o1.book_id and o2.user_id = n1.user_id and n2.book_id = o2.book_id and b2.id = o2.book_id and n2.user_id = o1.user_id and o1.user_id =" + session[:user_id].to_s
+    @records = ActiveRecord::Base.connection.execute(sql)
+ end
   # GET /users/1
   # GET /users/1.json
   def show

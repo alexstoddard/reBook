@@ -2,12 +2,12 @@
 	<div id="wrapperheader">
 		<%= link_to image_tag("rebooklogosmall.png", :alt => "ReBook"), root_path %>
 		<div id="navbar">
-			<h2><a href="#">My Matches</a>  |  <a href="#">My Trades</a>  |  <%= link_to "Want List", inventory_needs_path %>  |  <%= link_to "Have List", inventory_owns_path %></h2>
+			<h2><%= link_to "My Matches", matches_path %>  |  <a href="#">My Trades</a>  |  <%= link_to "Want List", inventory_needs_path %>  |  <%= link_to "Have List", inventory_owns_path %></h2>
 		</div>
 
 		<div id="account-info">
 			<h1><%= session[:user_name] %></h1>
-			<a href="#">Account Preferences</a> | <a href="/logout">Logout</a>
+			<%= link_to "Account Preferences", user_path(session[:user_id]) %> | <a href="/logout">Logout</a>
 		</div>
 	</div>
 </header>
