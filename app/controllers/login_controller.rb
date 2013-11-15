@@ -11,6 +11,7 @@ class LoginController < ApplicationController
 		user = User.find_by_passhash(params[:user_id])
 		if(not user.nil?)
 			user.activated = true;
+                        user.passhash_confirmation = user.passhash
 			user.save
 			flash[:verified] = "You have successfully validated your account!"
 		end
