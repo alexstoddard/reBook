@@ -7,10 +7,14 @@ class User < ActiveRecord::Base
   EMAIL_PATTERN = /\A[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\z/i
 
   # Validation requirements
+  validates :first, :presence => true
+  validates :last, :presence => true
   validates :username, :presence => true, :uniqueness => true, :length => { :in => 4..20 }
   validates :email, :presence => true, :uniqueness => true, :format => EMAIL_PATTERN
   validates :passhash, :confirmation => true, :presence => true
+  validates :passhash_confirmation, :presence => true
   validates_length_of :passhash, :in => 8..20, :on => :create
+  validates :terms, :acceptance => true
   
   # Relationships
   has_many :inventory_needs, dependent: :destroy
@@ -46,11 +50,11 @@ class User < ActiveRecord::Base
   # the provided password hashes identically to the database
   def self.authenticate(login_username, login_password)
     user = User.find_by_username(login_username)
-    if user && user.matches_password(login_password) && user.activated
+    if user && user.matches_password(login_password)
       return user
     end
 
-    return false
+    return nil
   end
 
   # Returns whether a given password hashes to this user's password
@@ -79,6 +83,8 @@ class User < ActiveRecord::Base
         raise ActiveRecord::Rollback
       end
     end
+
+    return @user
 
   end
 

@@ -82,7 +82,6 @@ body {
 }
 
 
-
 /*****************Button and Text Box Styling**********************/
 /******************************************************************/
 .button {
@@ -102,7 +101,8 @@ body {
 }
 
 input[type="text"],
-input[type="password"] {
+input[type="password"],
+input[type="email"] {
 	padding: 2px 5px;
 	color: #CCCCFF;
 }
@@ -111,8 +111,31 @@ input[type="password"] {
 /*********************************************************************/
 
 header {
-	padding: 10px 0;
 	background-color:#fff;
+}
+
+header .error, 
+header .success {
+	margin-bottom: 0;
+	padding: 5px 0;
+	text-align:center;
+}
+
+header .error {
+	background-color: #F8E7E7;
+}
+
+header .success {
+	color:#46A00A;
+	background-color:#EBFAE1;
+}
+
+#wrapperheader {
+	padding: 10px 0;
+}
+
+header #logo {
+	border: none;
 }
 
 /* header login form */
@@ -130,6 +153,7 @@ header {
 #login-form input[type="submit"] {
 	margin-bottom:0;
 	padding:4px 10px;
+	width:56px;
 }
 
 #login-form a {

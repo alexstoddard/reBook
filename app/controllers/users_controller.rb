@@ -35,7 +35,7 @@ class UsersController < ApplicationController
     @user = User.create_with_location(user_params, @location_params)
 
     respond_to do |format|
-      if @user
+      if @user.errors.size == 0
         format.html { redirect_to root_path, notice: 'Account has been created. Check your email to activate.' }
         format.json { render action: 'show', status: :created, location: @user }
       else
@@ -87,7 +87,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:username, :email, :passhash, :image, :activated, 
-                                   :passhash_confirmation, :location, :location_description, :first, :last)
+      params.require(:user).permit(:first, :last, :username, :email, :passhash, :image, :activated, 
+                                   :passhash_confirmation, :location, :location_description, :terms)
     end
 end

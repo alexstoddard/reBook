@@ -9,8 +9,24 @@
 /********************Create account Page ***************************/
 /*********************************************************************/
 
+#create-account #new_user {
+	margin-bottom:30px;
+}
+
+#create-account #new_user >div {
+	margin-bottom: 15px;
+}
+
 #create-account label {
 	width:120px;
+}
+
+#create-account div .error {
+	margin-left:5px
+}
+
+#create-account .field_with_errors {
+	display:inline;
 }
 
 .error {
