@@ -2,8 +2,8 @@
 <b>From: </b><%= x["user_from"] %></br>
 <b>To: </b><%= x["user_to"] %></br>
 <b>Trade Book: </b><%= x["from_title"] %></br>
-<img src="<%= x['from_thumb']" %></br>
+<%= image_tag x["from_thumb"] %></br>
 <b>Get Book: </b><%= x["to_title"] %></br>
-<img src="<%= x['to_thumb']" %></br>
+<%= image_tag x["to_thumb"] %></br>
 </br>
 <% end %>
