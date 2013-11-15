@@ -1,1 +1,7 @@
-<%= @records.each {|x| x} %>
+<% @records.each do |x| %>
+From: <%= x.user_from %></br>
+To: <%= x.user_to %></br>
+Trade Book: <%= x.from_title %></br>
+Get Book: <%= x.to_title %></br>
+</br></br>
+<% end %>
