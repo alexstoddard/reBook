@@ -29,11 +29,11 @@ class LoginController < ApplicationController
     username = nil
     password = nil
     if user.nil?
-	  flash[:notice] = "Password or username does not match any user"
+	  flash[:login_error] = "Password or username does not match any user"
       flash[:color] = "invalid"
       redirect_to login_path
     elsif !user.activated
-	  flash[:notice] = "Please verify your email"
+	  flash[:login_error] = "Please verify your email"
       flash[:color] = "invalid"
       redirect_to login_path
 	else

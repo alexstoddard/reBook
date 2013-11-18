@@ -7,10 +7,10 @@
 				<% flash[:verified] = nil%>
 	   		</div>
 		<% end %>
-		<% unless flash[:notice].nil? %>
+		<% unless flash[:login_error].nil? %>
 			<div class="error">
-	   			<%= flash[:notice] %>
-				<% flash[:notice] = nil%>
+	   			<%= flash[:login_error] %>
+				<% flash[:login_error] = nil%>
 	   		</div>
 		<% end %>
 
