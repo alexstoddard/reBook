@@ -1,4 +1,0 @@
-class AddSaltToUsers < ActiveRecord::Migration
-  def change
-  end
-end

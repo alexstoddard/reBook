@@ -1,12 +1,12 @@
 <% @number = 1 %>
-<% @records.each do |x| %>
-<h2>Trade Number <%= @number %> </h2>
-<b>From: </b><%= x["user_from"] %></br>
-<b>To: </b><%= x["user_to"] %></br>
-<b>Trade Book: </b><%= x["from_title"] %></br>
-<%= image_tag x["from_thumb"] %></br>
-<b>Get Book: </b><%= x["to_title"] %></br>
-<%= image_tag x["to_thumb"] %></br>
+<% @trades.each do |x| %>
+  <h2>Trade Number <%= @number %> </h2>
+  <% x.trade_lines.each do |y| %>
+    <b>From: </b><%= y.user_from.username %></br>
+    <b>To: </b><%= y.user_to.username %></br>
+    <b>Trade Book: </b><%= y.book.name %></br>
+    <%= image_tag y.book.thumbnail %></br>
+  <% end %>
 <% @number = @number + 1 %>
 </br>
 <% end %>

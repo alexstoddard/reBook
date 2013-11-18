@@ -1,4 +1,0 @@
-class ChangeInventoryOwnsCondition < ActiveRecord::Migration
-  def change
-  end
-end

@@ -64,3 +64,5 @@ gem 'oauth2'
 gem 'debugger'
 
 gem 'bcrypt-ruby', :require =>'bcrypt'
+
+gem 'seed_dump'

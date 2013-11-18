@@ -38,7 +38,7 @@ class InventoryNeedsController < ApplicationController
       
       respond_to do |format|
         if @inventory_need.save
-          format.html { redirect_to search_path + "?search=" + params[:search]  }
+          format.html { redirect_to search_path + "?" + params[:search].to_query("search")  }
           format.json { render action: 'index', status: :created, location: @inventory_need }
         else
           format.html { render action: 'new' }
@@ -46,7 +46,7 @@ class InventoryNeedsController < ApplicationController
         end
       end
     else
-      redirect_to search_path + "?search=" + params[:search]
+      redirect_to search_path + "?" + params[:search].to_query("search")
     end
   end
 

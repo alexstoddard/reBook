@@ -10,7 +10,7 @@ Rebook::Application.configure do
   config.eager_load = false
 
   # The domain for localhost
-  REBOOK_DOMAIN = "localhost:3000"	
+  REBOOK_DOMAIN = "http://localhost:3000"	
   
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = true

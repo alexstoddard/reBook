@@ -1,4 +1,0 @@
-class ChangeBooksPublishedType < ActiveRecord::Migration
-  def change
-  end
-end
