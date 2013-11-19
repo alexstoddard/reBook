@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Hello <%= @user.username %></h1>
+    <p>
+      A forgotten password request was recieved for your reBook account. Details are provided below.
+    </p>
+    <p>
+      Follow this link to reset your password: <%= link_to "reset", @url %>.
+    </p>
+    <p>Thanks and have a great day!</p>
+  </body>
+</html>

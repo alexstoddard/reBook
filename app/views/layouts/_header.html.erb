@@ -8,11 +8,14 @@
 				<%= password_field_tag("login_passhash", nil, id: nil, placeholder: "Password") %>
 				<%= submit_tag("Login", class: "button") %>
 			<% end %>
-			<a href="/users/new" class="create">Create an Account</a>
-			<a href="#" class="forgot">Forgot Password? </a>
+      <%= link_to "Create an Account", new_user_path, :class => "create" %>
+      <%= link_to "Forgot Password? ", forgot_path, :class => "forgot" %>
 		</div> 
 	</div>
-  <!--
-	<div class="error">An error occurred. </div>
-  -->
+		<% unless flash[:notice].nil? %>
+			<div class="error">
+	   			<%= flash[:notice] %>
+				<% flash[:notice] = nil%>
+	   		</div>
+		<% end %>
 </header>

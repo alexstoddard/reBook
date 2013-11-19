@@ -7,6 +7,10 @@ class TradesController < ApplicationController
     @trades = Trade.all
   end
 
+  def matches
+    @trades = Trade.try_matches(session[:user_id])
+  end
+
   # GET /trades/1
   # GET /trades/1.json
   def show

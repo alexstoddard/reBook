@@ -1,0 +1,36 @@
+<div id="main">
+	<div id="create-account">
+		<h1>Reset your ReBook Password</h1>
+		
+			<%= form_for @user, as: :post, url: reset_path(@user.id), method: :put do |f| %>
+				
+			<div>
+        <%= f.hidden_field :id, :value => @user.id %>
+			  <%= f.label :username, "Username" %><%= f.label @user.username %>
+			</div>
+
+      </br>
+
+			<div>
+			  <%= f.label :passhash, "Password" %><%= f.password_field :passhash %>
+			  	<% if @user.errors[:passhash].present? %>
+			  		<span class="error">
+					  	<% @user.errors[:passhash].each do |msg| %>
+					  		<%= "Password " + msg + ". " %>
+					  	<% end %>
+				  	</span>
+			  	<% end %>
+			</div>
+      </br>
+			<div>
+			  <%= f.label :passhash_confirmation, "Confirm password" %><%= f.password_field :passhash_confirmation %>
+				<% if @user.errors[:passhash_confirmation].present? %>
+			  		<span class="error">Passwords don't match.</span>
+			  	<% end %>
+			</div>
+      </br>
+		  <%= f.submit "Reset it!", class: "button" %>
+			<% end %>
+
+	</div>
+</div>

@@ -10,7 +10,7 @@ class UserMailer < ActionMailer::Base
 
   def reset_email(user)
     @user = user;
-    @url = Rebook::Application::REBOOK_DOMAIN + '/login_reset?user_id='"#{@user.passhash}"
+    @url = Rebook::Application::REBOOK_DOMAIN + '/reset?user_id='"#{@user.passhash}"
 
     mail(to: @user.email, subject: 'ReBook: Reset Password')
   end

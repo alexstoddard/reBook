@@ -25,9 +25,16 @@ Rebook::Application.routes.draw do
   
   root 'homepage#index'
 
-  #homepage routes
-  get "/matches", to: 'users#matches'
+  #matching routes
+  get "/matches", to: 'trades#matches'
 
+  #user routes
+  get "/forgot", to: 'users#forgot'
+  post '/forgot', to: 'users#forgot_do'
+  get "/reset", to: 'users#reset'
+  put '/reset', to: 'users#reset_do'
+
+  #homepage routes
   get "/about", to: 'homepage#about'
   get "/faq", to: 'homepage#faq'
   get "/terms", to: 'homepage#terms'

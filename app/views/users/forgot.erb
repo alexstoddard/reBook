@@ -1,0 +1,25 @@
+<div id="main">
+	<div id="login">
+		<h1>Reset your password</h1>
+		<% unless flash[:verified].nil? %>
+			<div class="verified">
+	   			<%= flash[:verified] %>
+				<% flash[:verified] = nil%>
+	   		</div>
+		<% end %>
+		<% unless flash[:reset_error].nil? %>
+			<div class="error">
+	   			<%= flash[:reset_error] %>
+				<% flash[:reset_error] = nil%>
+	   		</div>
+		<% end %>
+
+		<%= form_tag(:action => 'forgot_do') do %>
+		   	<p>
+		   		<label for="username">Username or Email:</label></br> 
+		   		<%= text_field_tag("username") %>
+		   	</p>
+		   	<%= submit_tag("Reset", class: "button") %>
+		<% end %>
+	</div>
+</div>

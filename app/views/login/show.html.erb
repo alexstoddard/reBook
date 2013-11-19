@@ -7,6 +7,12 @@
 				<% flash[:verified] = nil%>
 	   		</div>
 		<% end %>
+		<% unless flash[:password_changed].nil? %>
+			<div class="verified">
+	   			<%= flash[:password_changed] %>
+				<% flash[:password_changed] = nil%>
+	   		</div>
+		<% end %>
 		<% unless flash[:login_error].nil? %>
 			<div class="error">
 	   			<%= flash[:login_error] %>

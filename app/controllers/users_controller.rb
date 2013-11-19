@@ -10,9 +10,56 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
-  def matches
-    @trades = Trade.try_matches(session[:user_id])
- end
+  # GET /forgot
+  # GET /forgot.json
+  def forgot
+  end
+
+  # POST /forgot
+  # POST /forgot.json
+  def forgot_do
+
+    @user = User.find_by_username(params[:username])
+    @user ||= User.find_by_email(params[:username])
+    
+    unless @user.nil?
+      UserMailer.reset_email(@user).deliver
+      redirect_to root_path
+    else
+      flash[:reset_error] = params[:username] + " does not match an account in our system."
+      redirect_to forgot_path
+    end
+
+  end
+
+  # GET /reset
+  # GET /reset.json
+  def reset
+    if params[:user_id] != nil
+      @user = User.find_by_passhash(params[:user_id])
+      if @user.nil?
+        flash[:reset_error] = "Could not reset password"
+        redirect_to forgot_path
+      end
+    end
+  end
+
+  # patch /reset
+  # patch /reset.json
+  def reset_do
+
+    @user = User.find(params[:post][:id])
+    @user.passhash = params[:post][:passhash]
+    @user.passhash_confirmation = params[:post][:passhash_confirmation]
+
+    if @user.save
+      flash[:password_changed] = 'Password was successfully reset. Login now.'
+      redirect_to login_path
+    else
+      render action: 'reset'
+    end
+
+  end
 
   # GET /users/1
   # GET /users/1.json
