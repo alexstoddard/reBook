@@ -33,6 +33,7 @@
 		<p>
 		  <strong>Image:</strong>
 		  <%= @user.image %>
+		  <%= link_to(image_tag(@user.image, alt: "Bunny", id: 'img'), root_path) %>
 		</p>
 
 		<!--
