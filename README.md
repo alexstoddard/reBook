@@ -1,7 +1,7 @@
 reBook
 ======
 
-reBook Main Project Repository
+reBook Main Project Repository  
 Visit us at our site, hosted @ [Heroku](http://rebook.herokuapp.com):<br>
 
 # What is reBook?
