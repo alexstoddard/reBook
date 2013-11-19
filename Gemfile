@@ -66,3 +66,4 @@ gem 'debugger'
 gem 'bcrypt-ruby', :require =>'bcrypt'
 
 gem 'seed_dump'
+gem 'facebox-rails'
