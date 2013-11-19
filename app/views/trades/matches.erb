@@ -1,12 +1,21 @@
 <% @number = 1 %>
-<% @trades.each do |x| %>
-  <h2>Trade Number <%= @number %> </h2>
-  <% x.trade_lines.each do |y| %>
-    <b>From: </b><%= y.user_from.username %></br>
-    <b>To: </b><%= y.user_to.username %></br>
-    <b>Trade Book: </b><%= y.book.name %></br>
-    <%= image_tag y.book.thumbnail %></br>
-  <% end %>
-<% @number = @number + 1 %>
+<% @inventory_needs.each do |x| %>
+<div>
+    <b>Book Name: </b><%= x.book.name %></br>
+    <%= image_tag x.book.thumbnail %></br>
+    Possible trades for this book: 
+    <% if @book_hash[x.book_id].nil? %>
+    0
+    <% else %>
+      <%= @book_hash[x.book_id].size %> 
+    <% end %>
+    <%= link_to "Show match details", "/match_details/" + x.book_id.to_s %>
+    </br>
+</div>
+<% end %> 
 </br>
-<% end %>
+</br>
+</br>
+</br>
+</br>
+</br>
