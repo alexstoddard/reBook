@@ -19,6 +19,12 @@ class InventoryOwnsController < ApplicationController
   # GET /inventory_owns/new
   def new
     @inventory_own = InventoryOwn.new
+
+    @api_id = params[:api_id]
+
+    @conditions = Condition.all
+
+    render :layout => 'facebox'
   end
 
   # GET /inventory_owns/1/edit
@@ -28,17 +34,17 @@ class InventoryOwnsController < ApplicationController
   # POST /inventory_owns
   # POST /inventory_owns.json
   def create
-    @book = BooksController.add_if_nonexistant(params[:api_id])
+    @book = BooksController.add_if_nonexistant(params[:inventory_own][:api_id])
     
     unless InventoryOwn.find_by_book_id_and_user_id(@book.id, session[:user_id]) or InventoryNeed.find_by_book_id_and_user_id(@book.id, session[:user_id])
       @inventory_own = InventoryOwn.new
       @inventory_own.book_id = @book.id
       @inventory_own.user_id = session[:user_id]
-      @inventory_own.condition_id = Condition.all[0].id
+      @inventory_own.condition_id = params[:inventory_own][:condition]
       
       respond_to do |format|
         if @inventory_own.save
-          format.html { redirect_to search_path + "?" + params[:search].to_query("search") }
+          format.html { redirect_to search_path + "?" + params[:inventory_own][:search].to_query("search") }
           format.json { render action: 'show', status: :created, location: @inventory_own }
         else
           format.html { render action: 'new' }
@@ -46,7 +52,7 @@ class InventoryOwnsController < ApplicationController
         end
       end
     else
-      redirect_to search_path + "?" + params[:search].to_query("search")
+      redirect_to search_path + "?" + params[:inventory_own][:search].to_query("search")
     end
   end
  

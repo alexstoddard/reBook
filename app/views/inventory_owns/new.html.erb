@@ -1,0 +1,10 @@
+		<h1>What condition?</h1>
+			<%= form_for @inventory_own, url: inventory_owns_path, method: :post do |f| %>
+			<div>
+        <%= f.hidden_field :api_id, :value => @api_id %>
+        <%= f.hidden_field :search, :value => params[:search] %>
+			  <%= f.label :condition, "Condition" %>:   <%= f.select :condition, @conditions.collect { |p| [p.description, p.id] } %></p>
+			</div>
+			</br>
+			<%= f.submit "Add to own list", class: "button" %>
+			<% end %>
