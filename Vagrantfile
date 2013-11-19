@@ -9,4 +9,5 @@ Vagrant::Config.run do |config|
     :manifests_path => 'puppet/manifests',
     :module_path    => 'puppet/modules',
     :manifest_file  => 'default.pp'
+
 end

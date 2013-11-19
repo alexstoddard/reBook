@@ -6,7 +6,7 @@ Exec {
   path => ['/usr/sbin', '/usr/bin', '/sbin', '/bin']
 }
 
-# --- Preinstall Stage ---------------------------------------------------------
+# --- Preinstall Stage --------------------------------------------------------
 
 stage { 'preinstall':
   before => Stage['main']
