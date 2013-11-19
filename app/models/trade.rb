@@ -83,15 +83,3 @@ class Trade < ActiveRecord::Base
   end
 
 end
-
-class TradeResultLine
-  attr_accessor :user_from, :user_from_id, :user_to, :user_to_id, :book_id, :book_name, :book_thumbnail
-end
-
-class TradeResult      
-  attr_writer :lines
-
-  def lines
-    @lines ||= []
-  end
-end

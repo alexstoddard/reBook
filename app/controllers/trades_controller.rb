@@ -6,14 +6,64 @@ class TradesController < ApplicationController
   def index
     @trades = Trade.all
   end
+  
+  def json_to_trade(json)
+    trade = Trade.new
+
+    json["trade_lines"].each do |x|
+      line = trade.trade_lines.build()
+      line.user_from_id = x["user_from_id"]
+      line.user_to_id = x["user_to_id"]
+      line.book_id = x["book_id"]
+    end
+    
+    return trade
+
+  end
+
+  def propose_trade
+    @trade = json_to_trade(ActiveSupport::JSON.decode(params[:json]))
+    render :layout => "facebox"
+  end
+
+  def match_details
+    @book_id = params[:id]
+    @book_matches = []
+    @trades = Trade.try_matches(session[:user_id])
+    @book = Book.find(@book_id)
+    puts "book_id:" + @book_id
+    @trades.each do |x|
+      puts x.trade_lines[x.trade_lines.length-1].book_id
+      if x.trade_lines[x.trade_lines.length-1].book_id == @book_id.to_i
+        puts "hello"
+        @book_matches <<= x
+      end
+    end
+
+  end
 
   def matches
+    @book_hash = { }
     @trades = Trade.try_matches(session[:user_id])
+    @inventory_needs = InventoryNeed.find_all_by_user_id(session[:user_id])
+    
+    @trades.each do |x|
+      found_id = x.trade_lines[x.trade_lines.length-1].book_id
+
+      if @book_hash[found_id].nil?
+        @book_hash[found_id] = []
+      end
+
+      @book_hash[found_id] <<= x
+
+    end
+
   end
 
   # GET /trades/1
   # GET /trades/1.json
   def show
+
   end
 
   # GET /trades/new

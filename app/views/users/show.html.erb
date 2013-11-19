@@ -1,31 +1,46 @@
-<p id="notice"><%= notice %></p>
+<div id="wrapperuserinfo">
 
-<p>
-  <strong>ID:</strong>
-  <%= @user.id %>
-</p>
+	<div id="userinfo">
+		<!--
+		<p id="notice"><%= notice %></p>
+		<p>
+		  <strong>ID:</strong>
+		  <%= @user.id %>
+		</p>
+		-->
+		
+		 <%= link_to "Edit My Account", edit_user_path, :id => "edit" %>
+		
+		<h1>Account Preferences</h1>
+		
+		<p>
+		  <h2>Username:</h2>
+		  <%= @user.username %>
+		</p>
 
-<p>
-  <strong>Username:</strong>
-  <%= @user.username %>
-</p>
+		<p>
+		  <h3>Email:</h3>
+		  <%= @user.email %>
+		</p>
 
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
+		<!--
+		<p>
+		  <strong>Passhash:</strong>
+		  <%= @user.passhash %>
+		</p>
+		-->
 
-<p>
-  <strong>Passhash:</strong>
-  <%= @user.passhash %>
-</p>
+		<p>
+		  <strong>Image:</strong>
+		  <%= @user.image %>
+		  <%= link_to(image_tag(@user.image, alt: "Bunny", id: 'img'), root_path) %>
+		</p>
 
-<p>
-  <strong>Image:</strong>
-  <%= @user.image %>
-</p>
-
-<p>
-  <strong>Activated:</strong>
-  <%= @user.activated %>
-</p>
+		<!--
+		<p>
+		  <strong>Activated:</strong>
+		  <%= @user.activated %>
+		</p>
+		-->
+	</div>
+</div>
