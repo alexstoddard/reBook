@@ -1,7 +1,43 @@
 <script type="text/javascript">
+
   jQuery(document).ready(function($) {
-  $('a[rel*=facebox]').facebox() 
-  })
+  	$('a[rel*=facebox]').facebox(); 
+
+  	//adding a book to want list
+  	//ajax post
+  	$('article .thumbnail form.want input[type="submit"]').click(function() {
+  		var want_form = $(this).parent('.want'); //current "add to want list" form
+  		var have_form = want_form.siblings('.have'); //current "add to have list" form
+  		var loading = want_form.siblings('.loading');	//loading gif
+  		
+  		//hide buttons and show loading gif
+  		want_form.hide();
+  		have_form.hide();
+  		loading.show();
+
+  		$.ajax({
+            type: 'POST',
+            url: "/inventory_needs",
+            data: want_form.serialize(),
+            error: function(data){
+            	console.log(data); 
+            	//error! show all buttons again, hide loading gif, show message
+            	loading.hide();
+            	have_form.show();
+            	want_form.show();
+            	want_form.parents('.actions').append('<p>Sorry! An error occured. Please try again.</p>');
+            },
+            success: function(data){
+            	console.log(data);
+            	//success! remove "add to have list" form, hide loading gif, show message
+            	have_form.remove();
+            	loading.hide();
+            	want_form.parents('.actions').append('<p>You have successfully added this book to your <%= link_to "Want List", inventory_needs_path %>.</p>');
+            }
+        });
+    	return false;
+  	})
+  });
 </script>
 
 <div id="main">
@@ -26,24 +62,32 @@
 			<% @result.books.each do |x| %>
 			  <article>
 			  	<div class="thumbnail">
-			  	  <img src="<%= x.thumbnail %>">
+			  	  <img src="<%= x.thumbnail %>" class="bookcover">
 
-			  	  <% unless session[:user_id].nil? %>
-						<% if x.hide_own %>
-							This book is already in your <%= link_to "Have List", inventory_owns_path %>.
-							<br/>
-						<% elsif x.hide_need %>
-							This book is already in your <%= link_to "Want List", inventory_needs_path %>. 
-							<br/>
-						<% else%>
-               <%= link_to "Add to Have List", new_inventory_own_path(:api_id => x.id, :search => params[:search]), :class => "add have", :rel => "facebox" %>
-							 <%= form_tag inventory_needs_path, :method => 'post', :class => "add want" do %>
-								<%= submit_tag "Add to Want List", :name => nil %>
-								<%= hidden_field_tag :api_id, x.id %>
-								<%= hidden_field_tag :search, params[:search] %>
-							 <% end %>
-						<% end %>
-				    <% end %>
+			  	  <div class="actions">
+				  	  <% unless session[:user_id].nil? %>
+							<% if x.hide_own %>
+								<p>This book is already in your <%= link_to "Have List", inventory_owns_path %>.</p>
+							<% elsif x.hide_need %>
+								<p>This book is already in your <%= link_to "Want List", inventory_needs_path %>.</p>
+							<% else%>
+								<%= image_tag("ajax-loader.gif", alt: "Adding...", class: 'loading') %>
+
+	               				<%= link_to "Add to Have List", new_inventory_own_path(:api_id => x.id, :search => params[:search]), :class => "add have", :rel => "facebox" %>
+	               				<%= form_tag inventory_owns_path, :method => 'post', :class => "add have" do %>
+		                                <%= submit_tag "Add to Have List", :name => nil %>
+		                                <%= hidden_field_tag :api_id, x.id %>
+		                                <%= hidden_field_tag :search, params[:search] %>
+		                        <% end %>
+
+								<%= form_tag inventory_needs_path, :remote=>true, :class => "add want" do %>
+									<%= submit_tag "Add to Want List", :name => nil %>
+									<%= hidden_field_tag :api_id, x.id %>
+									<%= hidden_field_tag :search, params[:search] %>
+								<% end %>
+							<% end %>
+					    <% end %>
+					</div> <!-- /.actions -->
 			  	</div>
 
 			  	<div class="details">

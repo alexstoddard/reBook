@@ -30,8 +30,8 @@
 
       <div class="thumbnail">
         <img src="<%= inventory_own.book.thumbnail %>" alt="<%= inventory_own.book.name %>" />
-        <p>Condition: <%= inventory_own.condition.description %></p>  
-        <p><%= link_to 'Remove', inventory_own, method: :delete, data: { confirm: 'Are you sure?' } %></p>  
+        <p class="condition">Condition: <%= inventory_own.condition.description %> <span>(edit)</span></p>  
+        <p class="remove"><%= link_to 'Remove', inventory_own, method: :delete, data: { confirm: 'Are you sure?' } %></p>  
       </div>
 
       <div class="bookinfo">

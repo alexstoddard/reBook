@@ -49,7 +49,7 @@
 }
 
 
-#search article img {
+#search article img.bookcover {
 	margin-right:15px;
 	margin-bottom:10px;
 	box-shadow: 2px 2px 6px -1px #919191;
@@ -66,8 +66,17 @@
 
 /* add to have/want list buttons */
 
-#search article .add {
-	padding-left:15px;
+#search .actions {
+	margin-right:15px;
+	text-align:center;
+}
+
+#search .actions p {
+	text-align:left;
+}
+
+#search article .loading {
+	display:none;
 }
 
 #search article .add input[type="submit"] {

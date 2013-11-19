@@ -26,12 +26,20 @@
 	border: solid #949494 1px;
 	box-shadow: 2px 2px 6px -1px #919191;
 	margin-right:15px;
-	margin-bottom:10px;
+	margin-bottom:5px;
 }
 
 .inventory .book .thumbnail p {
-	text-align:right;
 	padding-right:15px;
+	margin-bottom:0;
+}
+
+.inventory .book .thumbnail p.condition {
+	font-size:1.1em;
+}
+
+.inventory .book .thumbnail p.condition span {
+	font-size:0.8em;
 }
 
 .inventory .bookinfo {
