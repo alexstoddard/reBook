@@ -71,7 +71,7 @@
 	text-align:center;
 }
 
-#search .actions p {
+#search .actions .message {
 	text-align:left;
 }
 
@@ -79,7 +79,9 @@
 	display:none;
 }
 
-#search article .add input[type="submit"] {
+#search article .add input[type="submit"],
+#search article .have_button,
+#search article .cancel_button {
 	padding: 4px 10px;
 	border:none;
 	border-radius:5px;
@@ -90,8 +92,26 @@
 	cursor:pointer;
 }
 
-#search article .add.have input[type="submit"] {
+#search article .add.have,
+#search article .cancel_button {
+	display:none;
+}
+
+#search article .add.have .select_condition {
+	margin-bottom:5px;
+}
+
+#search article .add.have input[type="submit"],
+#search article .have_button {
 	background-color:#3861CA;
+}
+
+#search article .cancel_button {
+	background-color:#bbb;
+}
+
+#search article .cancel_button:hover {
+	background-color:#888;
 }
 
 #search article .add.have input[type="submit"]:hover {

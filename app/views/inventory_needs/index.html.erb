@@ -23,7 +23,7 @@
     </div>
   <% else %>
     <div id="search">
-        
+		
           <h2>Add more books to your Want List:</h2>
           
           <%= form_tag("/search", method: "get") do %>
@@ -39,7 +39,7 @@
         
         <div class="thumbnail">
           <img src="<%= inventory_need.book.thumbnail %>" alt="<%= inventory_need.book.name %>" />
-          <p><%= link_to 'Remove', inventory_need, method: :delete, remote: true, class: "remove_link"  %></p>  
+          <p class="remove"><%= link_to 'Remove', inventory_need, method: :delete, remote: true, class: "remove_link"  %></p>  
         </div>
 
         <div class="bookinfo">
