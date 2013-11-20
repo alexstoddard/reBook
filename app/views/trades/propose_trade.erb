@@ -1,2 +1,18 @@
-<%= @trade.to_json(:include => :trade_lines) %>
+<%= form_tag(:action => 'create') do %>
+  <p>
+    <label for="meet_time">Proposed Meeting Date/Time:</label></br> 
+    <%= text_field_tag("meet_time") %>
+    <%= hidden_field_tag "json", @trade.to_json(:include => :trade_lines) %>
+  </p>
+  <p>
+    <label for="place">Proposed Meeting Place:</label></br> 
+    <%= text_field_tag("place") %>
+  </p>
+  <p>
+    <label for="comment">Comments:</label></br> 
+    <%= text_field_tag("comment") %>
+  </p>
+
+ 	<%= submit_tag("Propose", class: "button") %>
+<% end %>
 

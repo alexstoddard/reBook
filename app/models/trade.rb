@@ -21,7 +21,7 @@ class Trade < ActiveRecord::Base
       o1.need_matches.each do | n1 |
         n1.user_owns.each do | o2 |
           o2.need_matches.each do | n2 |
-            if n2.user_id == user
+            if n2.user_id == user # and not in trade line with accepted true
               trade = Trade.new
 
               l1 = trade.trade_lines.build()
@@ -51,7 +51,7 @@ class Trade < ActiveRecord::Base
           o2.need_matches.each do | n2 |
             n2.user_owns.each do | o3 |
               o3.need_matches.each do | n3 |
-                if n3.user_id == user
+                if n3.user_id == user # and not in trade line with accepted true
                   trade = Trade.new
 
                   l1 = trade.trade_lines.build()

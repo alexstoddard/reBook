@@ -13,7 +13,7 @@
     <b>Trade Book: </b><%= y.book.name %></br>
     <%= image_tag y.book.thumbnail %></br>
   <% end %>
-<%= link_to "Propose trade", "/propose_trade/" + x.to_json(:include=> :trade_lines), :rel => "facebox" %>
+<%= link_to "Propose trade", "/propose_trade/" + CGI.escape(x.to_json(:include=> :trade_lines)), :rel => "facebox" %>
 <% @number = @number + 1 %>
 </br>
 <% end %>

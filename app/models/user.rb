@@ -4,6 +4,10 @@ class User < ActiveRecord::Base
 
   # Member fields
   attr_accessor :location, :location_description
+  cattr_accessor :enable_mailer do
+    true
+  end
+
   EMAIL_PATTERN = /\A[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\z/i
 
   # Validation requirements
@@ -29,9 +33,13 @@ class User < ActiveRecord::Base
   # Triggers to be run in certain situations
   before_save :encrypt_passhash, :send_activation
   
+  def self.initialize
+    enable_mailer = true
+  end
+
   # Need to send activation email when user changes their address
   def send_activation
-    if email_changed?
+    if email_changed? and enable_mailer
       activated = false
       UserMailer.welcome_email(self).deliver
     end
