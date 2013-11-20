@@ -5,15 +5,56 @@
 </script>
 <div id="main">
 <% @number = 1 %>
-<% @book_matches.each do |x| %>
+<h1>Accepted Trades</h1>
+<% @book_matches[:accepted].each do |x| %>
   <h2>Trade Number <%= @number %> </h2>
   <% x.trade_lines.each do |y| %>
-    <b>From: </b><%= y.user_from.username %></br>
-    <b>To: </b><%= y.user_to.username %></br>
-    <b>Trade Book: </b><%= y.book.name %></br>
-    <%= image_tag y.book.thumbnail %></br>
+    <b>From: </b><%= y.inventory_own.user.username %></br>
+    <b>To: </b><%= y.inventory_need.user.username %></br>
+    <b>Trade Book: </b><%= y.inventory_own.book.name %></br>
+    <%= image_tag y.inventory_own.book.thumbnail %></br>
   <% end %>
-<%= link_to "Propose trade", "/propose_trade/" + CGI.escape(x.to_json(:include=> :trade_lines)), :rel => "facebox" %>
+  </br>
+  <h2>Notes</h2>
+  <% x.trade_notes.each do |y| %>
+    <b><%= y.user.username %> said: </b><br>
+    <b>When: </b><%= y.meet_time %>
+    <b>Where: </b><%= y.place %></br>
+    <b>Comments: </b><%= y.comment %></br></br>
+  <% end %>
+<% @number = @number + 1 %>
+</br>
+<% end %>
+<h1>Proposed Trades</h1>
+<% @book_matches[:active].each do |x| %>
+  <h2>Trade Number <%= @number %> </h2>
+  <% x.trade_lines.each do |y| %>
+    <b>From: </b><%= y.inventory_own.user.username %></br>
+    <b>To: </b><%= y.inventory_need.user.username %></br>
+    <b>Trade Book: </b><%= y.inventory_own.book.name %></br>
+    <%= image_tag y.inventory_own.book.thumbnail %></br>
+  <% end %>
+  </br>
+  <h2>Notes</h2>
+  <% x.trade_notes.each do |y| %>
+    <b><%= y.user.username %> said: </b><br>
+    <b>When: </b><%= y.meet_time %>
+    <b>Where: </b><%= y.place %></br>
+    <b>Comments: </b><%= y.comment %></br>
+  <% end %>
+<% @number = @number + 1 %>
+</br>
+<% end %>
+<h1>Possible Trades</h1>
+<% @book_matches[:possible].each do |x| %>
+  <h2>Trade Number <%= @number %> </h2>
+  <% x.trade_lines.each do |y| %>
+    <b>From: </b><%= y.inventory_own.user.username %></br>
+    <b>To: </b><%= y.inventory_need.user.username %></br>
+    <b>Trade Book: </b><%= y.inventory_own.book.name %></br>
+    <%= image_tag y.inventory_own.book.thumbnail %></br>
+  <% end %>
+<%= link_to "Propose trade", "/propose_trade/" + x.escaped_json, :rel => "facebox" %>
 <% @number = @number + 1 %>
 </br>
 <% end %>

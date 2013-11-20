@@ -2,6 +2,7 @@ class InventoryOwn < ActiveRecord::Base
   belongs_to :book
   belongs_to :user
   belongs_to :condition
+  has_many :trade_lines
 
   has_many :need_matches, class_name: "InventoryNeed",
                           foreign_key: "book_id", primary_key: "book_id"

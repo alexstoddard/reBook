@@ -1,16 +1,16 @@
-<%= form_tag(:action => 'create') do %>
+<%= form_for @trade_note, :url => url_for(:controller => 'trades', :action => 'create') do |f|  %>
   <p>
-    <label for="meet_time">Proposed Meeting Date/Time:</label></br> 
-    <%= text_field_tag("meet_time") %>
-    <%= hidden_field_tag "json", @trade.to_json(:include => :trade_lines) %>
+    <%= f.label :meet_time, "Proposed Meeting Date/Time:" %>
+    <%= f.text_field :meet_time %>
+    <%= f.hidden_field :json, :value => @trade.escaped_json %>
   </p>
   <p>
-    <label for="place">Proposed Meeting Place:</label></br> 
-    <%= text_field_tag("place") %>
+    <%= f.label :place, "Proposed Meeting Place:" %>
+    <%= f.text_field :place %>
   </p>
   <p>
-    <label for="comment">Comments:</label></br> 
-    <%= text_field_tag("comment") %>
+    <%= f.label :comment, "Comments:" %></br>
+    <%= f.text_field :comment %>
   </p>
 
  	<%= submit_tag("Propose", class: "button") %>

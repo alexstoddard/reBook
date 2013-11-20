@@ -1,21 +1,14 @@
+<div id="main">
 <% @number = 1 %>
 <% @inventory_needs.each do |x| %>
 <div>
     <b>Book Name: </b><%= x.book.name %></br>
     <%= image_tag x.book.thumbnail %></br>
-    Possible trades for this book: 
-    <% if @book_hash[x.book_id].nil? %>
-    0
-    <% else %>
-      <%= @book_hash[x.book_id].size %> 
-    <% end %>
-    <%= link_to "Show match details", "/match_details/" + x.book_id.to_s %>
-    </br>
+    Accepted trades for this book: <%= @need_hash[x.id][:accepted].size %></br>
+    Proposed trades for this book: <%= @need_hash[x.id][:active].size %></br>
+    Possible trades for this book: <%= @need_hash[x.id][:possible].size %></br>
+    <%= link_to "Show match details", "/match_details/" + x.id.to_s %>
+    </br></br>
 </div>
 <% end %> 
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
+</div>
