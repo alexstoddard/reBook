@@ -2,34 +2,96 @@
 
   jQuery(document).ready(function($) {
 
+  	//clicked on "Add to Have List", show form to prompt for condition
+  	$('.have_button').click(function(e) {
+  		$(this).hide();
+  		$(this).siblings('.cancel_button').show(); //show cancel button
+  		$(this).siblings('form.have').show();	//show have form
+  		$(this).siblings('form.want').hide();	//hide want form
+  	});
+
+  	//cancel adding to Have List
+  	$('.cancel_button').click(function(e) {
+  		$(this).hide();
+  		$(this).siblings('form.have').hide();	//hide have form
+  		$(this).siblings('.have_button').show();	//show have button
+  		$(this).siblings('form.want').show();	//show want form
+  	});
+
+  	//add a book to have list
+  	//ajax post
+  	$('article form.have').submit(function() {
+  		var have_form = $(this); //current "add to have list" form
+  		var have_button = $(this).siblings('.have_button');
+  		var cancel_button = $(this).siblings('.cancel_button');
+  		var want_form = $(this).siblings('form.want'); //current "add to want list" form
+  		var loading = $(this).siblings('.loading'); //loading gif
+
+  		//hide buttons and show loading gif
+  		have_form.hide();
+  		cancel_button.hide();
+  		want_form.hide();
+  		loading.show();
+
+  		$.ajax({
+  			type: 'POST',
+  			url: $(this).attr('action'),
+  			data: have_form.serialize(),
+  			error: function(){
+            	//error! show all buttons again, hide loading gif, show message
+            	loading.hide();
+            	have_button.show();
+            	have_form.hide();
+            	want_form.show();
+            	loading.siblings('.message').text('Sorry! An error occured. Please try again.');
+            },
+            success: function(){
+            	//success! remove forms, hide loading gif, show message
+            	have_form.remove();
+            	have_button.remove();
+            	cancel_button.remove();
+            	want_form.remove();
+            	loading.hide();
+            	link = '<%= link_to "Have List", inventory_owns_path %>';
+            	loading.siblings('.message').html('You have successfully added this book to your ' + link + '.');
+            }
+  		});
+
+  		return false;
+  	});
+
   	//adding a book to want list
   	//ajax post
   	$('article form.want').submit(function() {
   		var want_form = $(this); //current "add to want list" form
-  		var have_form = want_form.siblings('.have'); //current "add to have list" form
-  		var loading = want_form.siblings('.loading');	//loading gif
+  		var have_form = $(this).siblings('form.have'); //current "add to have list" form]
+  		var have_button = $(this).siblings('.have_button');
+  		var loading = $(this).siblings('.loading');	//loading gif
   		
   		//hide buttons and show loading gif
   		want_form.hide();
-  		have_form.hide();
+  		have_button.hide();
   		loading.show();
 
   		$.ajax({
             type: 'POST',
-            url: "/inventory_needs",
+            url: $(this).attr('action'),
             data: want_form.serialize(),
             error: function(){
             	//error! show all buttons again, hide loading gif, show message
             	loading.hide();
-            	have_form.show();
+            	have_button.show();
             	want_form.show();
-            	want_form.parents('.actions').append('<p>Sorry! An error occured. Please try again.</p>');
+            	loading.siblings('.message').text('Sorry! An error occured. Please try again.');
             },
             success: function(){
-            	//success! remove "add to have list" form, hide loading gif, show message
+            	//success! remove forms, hide loading gif, show message
+            	have_button.remove();
             	have_form.remove();
+            	want_form.remove();
             	loading.hide();
-            	want_form.parents('.actions').append('<p>You have successfully added this book to your <%= link_to "Want List", inventory_needs_path %>.</p>');
+            	link = '<%= link_to "Want List", inventory_needs_path %>';
+            	loading.siblings('.message').html('You have successfully added this book to your ' + link + '.');
             }
         });
     	return false;
@@ -70,18 +132,25 @@
 							<% else%>
 								<%= image_tag("ajax-loader.gif", alt: "Adding...", class: 'loading') %>
 
-	               				<%= form_tag inventory_owns_path, :method => 'post', :class => "add have" do %>
-		                                <%= submit_tag "Add to Have List", :name => nil %>
-		                                <%= label_tag :condition_id, "Condition:" %> <%= select_tag :condition_id, options_from_collection_for_select(@conditions, "id", "description") %>
+								<input type="button" class="have_button" value="Add to Have List" />
+
+	               				<%= form_tag inventory_owns_path, :remote => true, :class => "add have" do %>
+		                                <div class="select_condition">
+		                                	<%= label_tag :condition_id, "Condition:" %> <%= select_tag :condition_id, options_from_collection_for_select(@conditions, "id", "description") %>
+		                                </div>
 		                                <%= hidden_field_tag :api_id, x.id %>
 		                                <%= hidden_field_tag :search, params[:search] %>
+		                                <%= submit_tag "Add to Have List", :name => nil %>
 		                        <% end %>
+		                        <input type="button" class="cancel_button" value="Cancel" />
 
-								<%= form_tag inventory_needs_path, :remote=>true, :class => "add want" do %>
-									<%= submit_tag "Add to Want List", :name => nil %>
+								<%= form_tag inventory_needs_path, :remote => true, :class => "add want" do %>
 									<%= hidden_field_tag :api_id, x.id %>
 									<%= hidden_field_tag :search, params[:search] %>
+									<%= submit_tag "Add to Want List", :name => nil %>
 								<% end %>
+
+								<div class="message"><!-- for error/success messages --></div>
 							<% end %>
 					    <% end %>
 					</div> <!-- /.actions -->
