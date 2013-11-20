@@ -1,12 +1,11 @@
 <script type="text/javascript">
 
   jQuery(document).ready(function($) {
-  	$('a[rel*=facebox]').facebox(); 
 
   	//adding a book to want list
   	//ajax post
-  	$('article .thumbnail form.want input[type="submit"]').click(function() {
-  		var want_form = $(this).parent('.want'); //current "add to want list" form
+  	$('article form.want').submit(function() {
+  		var want_form = $(this); //current "add to want list" form
   		var have_form = want_form.siblings('.have'); //current "add to have list" form
   		var loading = want_form.siblings('.loading');	//loading gif
   		
@@ -19,16 +18,14 @@
             type: 'POST',
             url: "/inventory_needs",
             data: want_form.serialize(),
-            error: function(data){
-            	console.log(data); 
+            error: function(){
             	//error! show all buttons again, hide loading gif, show message
             	loading.hide();
             	have_form.show();
             	want_form.show();
             	want_form.parents('.actions').append('<p>Sorry! An error occured. Please try again.</p>');
             },
-            success: function(data){
-            	console.log(data);
+            success: function(){
             	//success! remove "add to have list" form, hide loading gif, show message
             	have_form.remove();
             	loading.hide();
@@ -62,7 +59,7 @@
 			<% @result.books.each do |x| %>
 			  <article>
 			  	<div class="thumbnail">
-			  	  <img src="<%= x.thumbnail %>" class="bookcover">
+			  	  <%= image_tag(x.thumbnail, alt: x.title, class: "bookcover") %>
 
 			  	  <div class="actions">
 				  	  <% unless session[:user_id].nil? %>
@@ -73,9 +70,9 @@
 							<% else%>
 								<%= image_tag("ajax-loader.gif", alt: "Adding...", class: 'loading') %>
 
-	               				<%= link_to "Add to Have List", new_inventory_own_path(:api_id => x.id, :search => params[:search]), :class => "add have", :rel => "facebox" %>
 	               				<%= form_tag inventory_owns_path, :method => 'post', :class => "add have" do %>
 		                                <%= submit_tag "Add to Have List", :name => nil %>
+		                                <%= label_tag :condition_id, "Condition:" %> <%= select_tag :condition_id, options_from_collection_for_select(@conditions, "id", "description") %>
 		                                <%= hidden_field_tag :api_id, x.id %>
 		                                <%= hidden_field_tag :search, params[:search] %>
 		                        <% end %>

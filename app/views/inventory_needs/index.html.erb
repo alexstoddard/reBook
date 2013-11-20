@@ -1,7 +1,7 @@
 <script type="text/javascript">
   $(function() {
 
-    $('.remove').click(function() {
+    $('.remove_link').click(function(e) {
       book =  $(this).parents('.book');
       book.animate({height: 0}, function() {
         book.remove();
@@ -39,7 +39,7 @@
         
         <div class="thumbnail">
           <img src="<%= inventory_need.book.thumbnail %>" alt="<%= inventory_need.book.name %>" />
-          <p><%= link_to 'Remove', inventory_need, method: :delete, remote: true, class: "remove"  %></p>  
+          <p><%= link_to 'Remove', inventory_need, method: :delete, remote: true, class: "remove_link"  %></p>  
         </div>
 
         <div class="bookinfo">

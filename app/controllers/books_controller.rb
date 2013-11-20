@@ -84,6 +84,7 @@ class BooksController < ApplicationController
 
   # Show search results
 	def search
+    @conditions = Condition.all
 		searcher = SearchApi.new
 
 		query = params[:search] || ""

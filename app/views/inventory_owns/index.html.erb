@@ -1,3 +1,49 @@
+<script type="text/javascript">
+  $(function() {
+
+    $('.remove_link').click(function(e) {
+      book =  $(this).parents('.book');
+      book.animate({height: 0}, function() {
+        book.remove();
+      });
+    });
+
+    $('.condition a').click(function(e) {
+      e.preventDefault();
+      conditions = $(this).parents('.condition');
+      conditions.hide();
+      conditions.siblings('.edit_inventory_own').show();
+    });
+
+    $('.edit_inventory_own').submit(function() {
+      var loading = $(this).find('.loading');
+      loading.show();
+      var form = $(this);
+      var conditions_div = $(this).siblings('.condition');
+      var new_condition = $(this).find('#inventory_own_condition_id option:selected').text();
+      console.log(new_condition);
+      $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            error: function(data){
+              //error! hide loading gif, show message
+              loading.hide();
+              form.append('<p>Sorry! An error occured. Please try again.</p>');
+            },
+            success: function(data){
+              //success! hide loading gif, show updated condition
+              loading.hide();
+              conditions_div.children('span.description').text(new_condition);
+              form.hide();
+              conditions_div.show();
+            }
+        });
+    });
+
+  });
+</script>
+
 <div id="main" class="inventory">
   
 <% if @inventory_owns.empty? %>
@@ -29,9 +75,17 @@
     <div class="book">
 
       <div class="thumbnail">
-        <img src="<%= inventory_own.book.thumbnail %>" alt="<%= inventory_own.book.name %>" />
-        <p class="condition">Condition: <%= inventory_own.condition.description %> <span>(edit)</span></p>  
-        <p class="remove"><%= link_to 'Remove', inventory_own, method: :delete, data: { confirm: 'Are you sure?' } %></p>  
+        <%= image_tag( inventory_own.book.thumbnail, alt: inventory_own.book.name, class: "bookcover") %>
+
+        <div class="condition">
+          Condition: <span class="description"><%= inventory_own.condition.description %></span> <span class="edit">(<a href="#">edit</a>)</span>
+        </div> 
+        <%= form_for(inventory_own, remote: true) do |f| %>
+          <%= f.label :condition_id, "Condition:" %> <%= f.select :condition_id, @conditions.collect {|p| [ p.description, p.id ] } %>
+          <%= f.submit "Update Condition" %>
+          <%= image_tag("ajax-loader.gif", alt: "Adding...", class: 'loading') %>
+        <% end %>  
+        <p class="remove"><%= link_to 'Remove', inventory_own, method: :delete, remote: true, class: "remove_link" %></p>  
       </div>
 
       <div class="bookinfo">
