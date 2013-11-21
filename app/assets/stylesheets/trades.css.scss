@@ -6,23 +6,27 @@
 #matches article {
 	clear:both;
 	overflow:hidden;
-	border-top: 5px solid #4093C4;
-	padding:5px 15px;
 	margin-bottom:20px;
 }
 
-#matches article.green {
-	border-top: 5px solid #60964C;
-}
-
-#matches article.red {
-	border-top: 5px solid #CF5353;
-}
-
-#matches h3 {
-	padding-bottom:10px;
+#matches article h3 {
 	font-weight:bold;
 	font-size:1.3em;
+	color:#fff;
+	background:#4093C4;
+	padding:10px 15px;
+	margin-bottom:12px;
+}
+#matches article.green  h3 {
+	background: #60964C;
+}
+
+#matches article.red h3 {
+	background: #CF5353;
+}
+
+#matches article.grey h3 {
+	background:#8F8F8F;
 }
 
 #matches h3 span {
@@ -44,7 +48,7 @@
 
 #matches article .trade-info {
 	float:left;
-	width:790px;
+	width:820px;
 	padding:10px 0;
 	font-size:1.2em;
 }
@@ -75,6 +79,7 @@
 }
 
 #matches article .possible-trades .trades li {
+	vertical-align:top;
 	display:inline-block;
 	width:30%;
 	margin-right:2%;
