@@ -23,8 +23,12 @@ class UserMailer < ActionMailer::Base
   def trade_email(trade)
 	@trade = trade;
 	@url = Rebook::Application::REBOOK_DOMAIN + '/matches'
-	@trade.trade_lines.drop(1).each do |x|
-		mail(to: x.inventory_own.user.email, subject: 'ReBook: Someone Wants to Trade With You!')
+	@trade.trade_lines[1..-1].each do |x|
+		email_trade_to_users(x.inventory_own.user.email).deliver
 	end
+  end
+  
+  def email_trade_to_users(user_email)
+	mail(to: user_email, subject: 'ReBook: Someone Wants to Trade With You!')
   end
 end
