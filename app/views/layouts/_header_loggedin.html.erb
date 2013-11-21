@@ -3,8 +3,8 @@
 						"http://localhost:3000/inventory_owns", 
 						"http://localhost:3000/"] %>
 	<div id="wrapperheader">
-		
-		<div class = "search">
+		<%= image_tag("bookmark.png", id: "bookmark") %>
+		<div id= "search-bar">
 			<% currentURL = request.original_url %>
 			<% unless searchBarHash.include?(currentURL) %>
 				<%= form_tag("/search", method: "get") do %>

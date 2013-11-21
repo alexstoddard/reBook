@@ -133,40 +133,54 @@ header .success {
 
 #wrapperheader {
 	padding: 10px 0;
+	position:relative;
 }
 
 header #logo {
 	border: none;
 }
 
+header #bookmark {
+	position: absolute;
+	width: 35px;
+	right: 0;
+	top: 0;
+}
+
+/*header search bar */
+
+header #search-bar {
+	margin-right:50px;
+}
+
 /* header login form */
-#login-form {
+header #login-form {
 	float: right;
 	margin-top: 20px;
 	text-align:right;
 }
 
-#login-form input[type="text"], 
-#login-form input[type="password"] {
+header #login-form input[type="text"], 
+header #login-form input[type="password"] {
 	width: 100px;
 }
 
-#login-form input[type="submit"] {
+header #login-form input[type="submit"] {
 	margin-bottom:0;
 	padding:4px 10px;
 	width:56px;
 }
 
-#login-form a {
+header #login-form a {
 	font-size:0.9em;
 }
 
-#login-form .create {
+header #login-form .create {
 	position:relative;
 	right:105px;
 }
 
-#login-form .forgot {
+header #login-form .forgot {
 	position:relative;
 	right:82px;
 }
@@ -212,6 +226,7 @@ header > h4 {
 	float:right;
 	margin-top:17px;
 	font-size:0.9em;
+	margin-right:50px;
 }
 
 #account-info h1 {

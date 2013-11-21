@@ -15,8 +15,8 @@ class TradesController < ApplicationController
     render :layout => "facebox"
   end
 
-  # GET /matche_details/1
-  # GET /matche_details/1.json
+  # GET /matches_details/1
+  # GET /matches_details/1.json
   def match_details
     need_id = params[:id].to_i
     user_id = session[:user_id]
