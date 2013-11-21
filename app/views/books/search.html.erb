@@ -134,18 +134,40 @@
 
 								<input type="button" class="have_button" value="Add to Have List" />
 
-	               				<%= form_tag inventory_owns_path, :remote => true, :class => "add have" do %>
+	               				<%= form_for x, :url => url_for(:controller => 'inventory_owns', :action => 'create'), :remote => true, :html => {:class => "add have"} do |f| %>
 		                                <div class="select_condition">
-		                                	<%= label_tag :condition_id, "Condition:" %> <%= select_tag :condition_id, options_from_collection_for_select(@conditions, "id", "description") %>
-		                                </div>
-		                                <%= hidden_field_tag :googleId, x.googleId %>
+	                                	<%= label_tag :condition_id, "Condition:" %> <%= select_tag :condition_id, options_from_collection_for_select(@conditions, "id", "description") %>
+  	                                </div>
+		                                <%= f.hidden_field :googleId, :value => x.googleId %>
+		                                <%= f.hidden_field :id, :value => x.id %>
+		                                <%= f.hidden_field :name, :value => x.name %>
+		                                <%= f.hidden_field :subject, :value => x.subject %>
+	                                  <%= f.hidden_field :author, :value => x.author %>
+	                                  <%= f.hidden_field :edition, :value => x.edition %>
+	                                  <%= f.hidden_field :price, :value => x.price %>
+	                                  <%= f.hidden_field :thumbnail, :value => x.thumbnail %>
+	                                  <%= f.hidden_field :isbn, :value => x.isbn %>
+	                                  <%= f.hidden_field :published, :value => x.published %>
+	                                  <%= f.hidden_field :description, :value => x.description %>
+
 		                                <%= hidden_field_tag :search, params[:search] %>
-		                                <%= submit_tag "Add to Have List", :name => nil %>
+		                                <%= f.submit "Add to Have List", :name => nil %>
 		                        <% end %>
 		                        <input type="button" class="cancel_button" value="Cancel" />
 
-								<%= form_tag inventory_needs_path, :remote => true, :class => "add want" do %>
-									<%= hidden_field_tag :googleId, x.googleId %>
+								<%= form_for x, :url => url_for(:controller => 'inventory_needs', :action => 'create'),  :remote => true, :html => {:class => "add want"} do |f| %>
+                  <%= f.hidden_field :googleId, :value => x.googleId %>
+                  <%= f.hidden_field :id, :value => x.id %>
+                  <%= f.hidden_field :name, :value => x.name %>
+                  <%= f.hidden_field :subject, :value => x.subject %>
+                  <%= f.hidden_field :author, :value => x.author %>
+                  <%= f.hidden_field :edition, :value => x.edition %>
+                  <%= f.hidden_field :price, :value => x.price %>
+                  <%= f.hidden_field :thumbnail, :value => x.thumbnail %>
+                  <%= f.hidden_field :isbn, :value => x.isbn %>
+                  <%= f.hidden_field :published, :value => x.published %>
+                  <%= f.hidden_field :description, :value => x.description %>
+
 									<%= hidden_field_tag :search, params[:search] %>
 									<%= submit_tag "Add to Want List", :name => nil %>
 								<% end %>
