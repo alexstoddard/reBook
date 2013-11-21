@@ -1,14 +1,30 @@
 <div id="main">
-<% @number = 1 %>
-<% @inventory_needs.each do |x| %>
-<div>
-    <b>Book Name: </b><%= x.book.name %></br>
-    <%= image_tag x.book.thumbnail %></br>
-    Accepted trades for this book: <%= @need_hash[x.id][:accepted].size %></br>
-    Proposed trades for this book: <%= @need_hash[x.id][:active].size %></br>
-    Possible trades for this book: <%= @need_hash[x.id][:possible].size %></br>
-    <%= link_to "Show match details", "/match_details/" + x.id.to_s %>
-    </br></br>
-</div>
-<% end %> 
+	<div id="matches">
+		<h1>Your Trade Matches</h1>
+		<% @number = 1 %>
+		<% @inventory_needs.each do |x| %>
+			<% if @need_hash[x.id][:accepted].size == 0 #do not show active trades (trades already accepted by user)%>
+				<article>
+				    <div class="need-details">
+				    	<h3><%= x.book.name %></h3>
+				    	<%= image_tag(x.book.thumbnail, alt: x.book.name) %>
+						<p><strong>Author:</strong> <%= x.book.author %><br />
+						<strong>ISBN:</strong> <%= x.book.isbn %><br />
+						<strong>Published:</strong> <%= x.book.published %></p>
+				    </div>
+
+				    <div class="proposed-trades">
+				    	<% @proposed_count = @need_hash[x.id][:active].size %>
+				    	<% if @proposed_count > 0 #show message for proposed trades %>
+				    		<%= @proposed_count %> users have proposed a trade to you. <%= link_to "View Trades.", match_details_path(x.id.to_s) %>
+				    	<% end %>
+					    Proposed trades for this book: <%= @need_hash[x.id][:active].size %></br>
+					    Possible trades for this book: <%= @need_hash[x.id][:possible].size %></br>
+					    <%= link_to "Show match details", "/match_details/" + x.id.to_s %>
+				    </div>
+				    </br></br>
+				</article>
+			<% end #if %>
+		<% end #each %> 
+	</div>
 </div>

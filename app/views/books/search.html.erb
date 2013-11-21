@@ -115,7 +115,7 @@
 	    	<% if @result.books.length == 0 %>
 	    		<h3>Sorry, no results were found for "<%= params[:search] %>". Try again with a different search term.</h3>
 	    	<% else %>
-				<h3><%= @result.books.length %> Results for "<%= params[:search] %>"</h3>
+				<h3><%= pluralize(@result.books.length, "Result") %> for "<%= params[:search] %>"</h3>
 			<% end %>
 
 			<% @result.books.each do |x| %>

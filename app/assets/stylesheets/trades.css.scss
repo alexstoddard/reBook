@@ -1,3 +1,94 @@
 // Place all the styles related to the Trades controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+ 
+
+#matches article {
+	clear:both;
+	overflow:hidden;
+	border-top: 5px solid #4093C4;
+	padding:5px 15px;
+	margin-bottom:20px;
+}
+
+#matches article.green {
+	border-top: 5px solid #60964C;
+}
+
+#matches article.red {
+	border-top: 5px solid #CF5353;
+}
+
+#matches h3 {
+	padding-bottom:10px;
+	font-weight:bold;
+	font-size:1.3em;
+}
+
+#matches h3 span {
+	font-size: 0.75em;
+	text-transform: uppercase;
+}
+
+#matches article .need-details {
+	max-width:145px;
+	float:left;
+	margin-right:15px;
+}
+
+#matches article .need-details img.bookcover {
+	border: solid #949494 1px;
+	box-shadow: 2px 2px 6px -1px #919191;
+	margin-bottom:5px;
+}
+
+#matches article .trade-info {
+	float:left;
+	width:790px;
+	padding:10px 0;
+	font-size:1.2em;
+}
+
+#matches article .proposed-trades {
+	text-align:center;
+}
+
+#matches article .proposed-trades a {
+	color: #4E9135;
+	font-weight: bold;
+	text-transform: uppercase;
+	font-size: 0.9em;
+}
+
+#matches article .possible-trades {
+	position:relative;
+}
+
+#matches article .possible-trades p.no-matches {
+	margin: 20px auto;
+	width: 450px;
+}
+
+#matches article .possible-trades .trades {
+	font-size:0.85em;
+	margin-left:20px;
+}
+
+#matches article .possible-trades .trades li {
+	display:inline-block;
+	width:30%;
+	margin-right:2%;
+}
+
+#matches article .possible-trades .trades li img {
+	max-height: 100px;
+}
+
+#matches article .possible-trades .view-more {
+	position: absolute;
+	right: 0;
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 0.9em;
+	color: #2256DA;
+}
