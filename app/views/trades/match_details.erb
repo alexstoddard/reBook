@@ -4,59 +4,79 @@
   })
 </script>
 <div id="main">
-<% @number = 1 %>
-<h1>Accepted Trades</h1>
-<% @book_matches[:accepted].each do |x| %>
-  <h2>Trade Number <%= @number %> </h2>
-  <% x.trade_lines.each do |y| %>
-    <b>From: </b><%= y.inventory_own.user.username %></br>
-    <b>To: </b><%= y.inventory_need.user.username %></br>
-    <b>Trade Book: </b><%= y.inventory_own.book.name %></br>
-    <%= image_tag y.inventory_own.book.thumbnail %></br>
+  <% @number = 1 %>
+
+  <% if @book_matches[:accepted].size > 0 #pending trade %>
+    <h1>Pending Trade</h1>
+      <% @trade = []
+      @book_matches[:accepted].each do |x|
+        if x.inventory_own.user.id == session[:user_id] #my trade line
+          @trade[0][:book_name] = x.inventory_own.book.name
+          @trade[0][:book_image] = x.inventory_own.book.thumbnail
+          @trade[0][:book_condition] = x.inventory_own.condition.description
+          @trade[0][:trade_with_user] = x.inventory_need.user.username
+        end %>
+
+        <%= @trade[0][:book_name] %>
+      <% end #each %>
+
+  <% else #trades propose by other users, and other trade possibilities %>
+    <h1 name="proposals">Trade Proposals</h1>
+
+    <h1 name="matches">Other Trade Matches</h1>
   <% end %>
+  <h1>Accepted Trades</h1>
+  <% @book_matches[:accepted].each do |x| %>
+    <h2>Trade Number <%= @number %> </h2>
+    <% x.trade_lines.each do |y| %>
+      <b>From: </b><%= y.inventory_own.user.username %></br>
+      <b>To: </b><%= y.inventory_need.user.username %></br>
+      <b>Trade Book: </b><%= y.inventory_own.book.name %></br>
+      <%= image_tag y.inventory_own.book.thumbnail %></br>
+    <% end %>
+    </br>
+    <h2>Notes</h2>
+    <% x.trade_notes.each do |y| %>
+      <b><%= y.user.username %> said: </b><br>
+      <b>When: </b><%= y.meet_time %>
+      <b>Where: </b><%= y.place %></br>
+      <b>Comments: </b><%= y.comment %></br></br>
+    <% end %>
+  <% @number = @number + 1 %>
   </br>
-  <h2>Notes</h2>
-  <% x.trade_notes.each do |y| %>
-    <b><%= y.user.username %> said: </b><br>
-    <b>When: </b><%= y.meet_time %>
-    <b>Where: </b><%= y.place %></br>
-    <b>Comments: </b><%= y.comment %></br></br>
   <% end %>
-<% @number = @number + 1 %>
-</br>
-<% end %>
-<h1>Proposed Trades</h1>
-<% @book_matches[:active].each do |x| %>
-  <h2>Trade Number <%= @number %> </h2>
-  <% x.trade_lines.each do |y| %>
-    <b>From: </b><%= y.inventory_own.user.username %></br>
-    <b>To: </b><%= y.inventory_need.user.username %></br>
-    <b>Trade Book: </b><%= y.inventory_own.book.name %></br>
-    <%= image_tag y.inventory_own.book.thumbnail %></br>
-  <% end %>
+  <h1>Proposed Trades</h1>
+  <% @book_matches[:active].each do |x| %>
+    <h2>Trade Number <%= @number %> </h2>
+    <% x.trade_lines.each do |y| %>
+      <b>From: </b><%= y.inventory_own.user.username %></br>
+      <b>To: </b><%= y.inventory_need.user.username %></br>
+      <b>Trade Book: </b><%= y.inventory_own.book.name %></br>
+      <%= image_tag y.inventory_own.book.thumbnail %></br>
+    <% end %>
+    </br>
+    <h2>Notes</h2>
+    <% x.trade_notes.each do |y| %>
+      <b><%= y.user.username %> said: </b><br>
+      <b>When: </b><%= y.meet_time %>
+      <b>Where: </b><%= y.place %></br>
+      <b>Comments: </b><%= y.comment %></br>
+    <% end %>
+  <% @number = @number + 1 %>
   </br>
-  <h2>Notes</h2>
-  <% x.trade_notes.each do |y| %>
-    <b><%= y.user.username %> said: </b><br>
-    <b>When: </b><%= y.meet_time %>
-    <b>Where: </b><%= y.place %></br>
-    <b>Comments: </b><%= y.comment %></br>
   <% end %>
-<% @number = @number + 1 %>
-</br>
-<% end %>
-<h1>Possible Trades</h1>
-<% @book_matches[:possible].each do |x| %>
-  <h2>Trade Number <%= @number %> </h2>
-  <% x.trade_lines.each do |y| %>
-    <b>From: </b><%= y.inventory_own.user.username %></br>
-    <b>To: </b><%= y.inventory_need.user.username %></br>
-    <b>Trade Book: </b><%= y.inventory_own.book.name %></br>
-    <%= image_tag y.inventory_own.book.thumbnail %></br>
+  <h1>Possible Trades</h1>
+  <% @book_matches[:possible].each do |x| %>
+    <h2>Trade Number <%= @number %> </h2>
+    <% x.trade_lines.each do |y| %>
+      <b>From: </b><%= y.inventory_own.user.username %></br>
+      <b>To: </b><%= y.inventory_need.user.username %></br>
+      <b>Trade Book: </b><%= y.inventory_own.book.name %></br>
+      <%= image_tag y.inventory_own.book.thumbnail %></br>
+    <% end %>
+  <%= link_to "Propose trade", "/propose_trade/" + x.escaped_json, :rel => "facebox" %>
+  <% @number = @number + 1 %>
+  </br>
   <% end %>
-<%= link_to "Propose trade", "/propose_trade/" + x.escaped_json, :rel => "facebox" %>
-<% @number = @number + 1 %>
-</br>
-<% end %>
 </div>
 
