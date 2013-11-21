@@ -1,4 +1,6 @@
 Rebook::Application.routes.draw do
+  resources :user_schedules
+
   resources :inventory_owns
 
   resources :users
