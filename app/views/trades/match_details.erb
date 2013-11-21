@@ -9,16 +9,36 @@
   <% if @book_matches[:accepted].size > 0 #pending trade %>
     <h1>Pending Trade</h1>
       <% @trade = []
-      @book_matches[:accepted].each do |x|
+      @book_matches[:accepted].first.trade_lines.each do |x|
         if x.inventory_own.user.id == session[:user_id] #my trade line
-          @trade[0][:book_name] = x.inventory_own.book.name
-          @trade[0][:book_image] = x.inventory_own.book.thumbnail
-          @trade[0][:book_condition] = x.inventory_own.condition.description
+          @trade[0] = {}
+          @trade[0][:book_own_name] = x.inventory_own.book.name
+          @trade[0][:book_own_image] = x.inventory_own.book.thumbnail
+          @trade[0][:book_own_condition] = x.inventory_own.condition.description
           @trade[0][:trade_with_user] = x.inventory_need.user.username
-        end %>
+          @trade[0][:book_want_name] = x.inventory_need.book.name
+        end #if
+      end #each
+      @book_matches[:accepted].first.trade_lines.each do |x| 
+        info = {}
+        info[:user] = x.inventory_own.user.username
+        info[:book_own_name] = x.inventory_own.book.name
+        info[:book_own_image] = x.inventory_own.book.thumbnail
+        info[:book_own_condition] = x.inventory_own.condition.description
+        info[:trade_with_user] = x.inventory_need.user.username
+        info[:book_want_name] = x.inventory_need.book.name
 
-        <%= @trade[0][:book_name] %>
-      <% end #each %>
+        if info[:user].eql? @trade[0][:trade_with_user] #trade line for user you are getting your book from
+          @trade[1] = info
+        else 
+          @trade[2] = info
+        end
+      end %>
+      You are trading your copy of <%= @trade[0][:book_own_name] %> (condition: <%= @trade[0][:book_own_condition] %>) to get a copy of <%= @trade[0][:book_want_name] %><br />
+      <%= image_tag @trade[0][:book_own_image], alt: @trade[0][:book_own_name] %> <br />
+      <%= @trade[1][:user] %> is trading their copy of <%= @trade[1][:book_own_name] %> (condition: <%= @trade[1][:book_own_condition] %>) to get a copy of <%= @trade[1][:book_want_name] %><br />
+      <%= image_tag @trade[1][:book_own_image], alt: @trade[1][:book_own_name] %> <br />
+
 
   <% else #trades propose by other users, and other trade possibilities %>
     <h1 name="proposals">Trade Proposals</h1>
@@ -33,6 +53,8 @@
       <b>To: </b><%= y.inventory_need.user.username %></br>
       <b>Trade Book: </b><%= y.inventory_own.book.name %></br>
       <%= image_tag y.inventory_own.book.thumbnail %></br>
+      <b>Get Book: </b><%= y.inventory_need.book.name %><br />
+      <%= image_tag y.inventory_need.book.thumbnail %>
     <% end %>
     </br>
     <h2>Notes</h2>

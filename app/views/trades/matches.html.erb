@@ -33,8 +33,7 @@
 				    		<div class="pending-trades">
 				    			<p>This trade is pending.</p>
 				    			<% @need_hash[x.id][:accepted].each do |trade|
-				    				trade.trade_lines.each do |y| 
-				    					debugger %>
+				    				trade.trade_lines.each do |y| %>
 				    					<% if y.inventory_own.user.id != session[:user_id] #don't show trade line corresponding to current user (they were the one who proposed the trade) %>
 				    						<p>
 					    						<% if y.user_from_accepted %>
