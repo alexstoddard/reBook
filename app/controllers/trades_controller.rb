@@ -14,6 +14,10 @@ class TradesController < ApplicationController
 
     render :layout => "facebox"
   end
+  
+  def trade_details
+	
+  end
 
   # GET /matches_details/1
   # GET /matches_details/1.json
@@ -64,7 +68,7 @@ class TradesController < ApplicationController
     respond_to do |format|
       if @trade.save
 		UserMailer.trade_email(@trade).deliver
-        format.html { redirect_to matches_path, notice: 'Trade was successfully created.' }
+        format.html { redirect_to Rebook::Application::REBOOK_DOMAIN + '/trade_details/'"#{@trade.id}", notice: 'Trade was successfully created.' }
         format.json { render action: 'show', status: :created, location: @trade }
       else
         format.html { render action: 'new' }
