@@ -17,6 +17,7 @@ class SearchApi
   def search_book(id)
     search = prepare_book_string(id)
     json = connect(search)
+    debugger
     books = parse(json, true)
 
     return books

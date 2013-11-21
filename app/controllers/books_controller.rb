@@ -41,7 +41,7 @@ class BooksController < ApplicationController
 
   def self.add_if_nonexistant(api_id)
     book = Book.find_by_googleId(api_id)
-    
+
     if book 
       return book
     end
