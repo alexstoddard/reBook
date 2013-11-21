@@ -1,6 +1,5 @@
 class Trade < ActiveRecord::Base
 
-  # Callbacks
 
   # Relationships
   has_many :user_feedbacks, dependent: :destroy
@@ -124,7 +123,6 @@ class Trade < ActiveRecord::Base
       line.inventory_need_id = x["inventory_need_id"]
       line.inventory_own_id = x["inventory_own_id"]
       line.user_from_accepted = x["user_from_accepted"]
-
     end
     
     return trade
@@ -146,6 +144,8 @@ class Trade < ActiveRecord::Base
 
     # Available 2 person trades
     x = InventoryOwn.where(:user_id => user).includes(:need_matches => {:user_owns => :need_matches })
+
+    debugger
 
     x.each do | o1 |
       o1.need_matches.each do | n1 |

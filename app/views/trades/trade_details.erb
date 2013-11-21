@@ -1,0 +1,20 @@
+<div class="main">
+	<h2>Trade number: <%= params[:trade_id]%></h2>
+	<br/><br/>
+	<% @trade.trade_lines.each do |y| %>
+		<div style="float:left; padding-right: 20px; width: 150px">
+		<b>From: </b><%= y.inventory_own.user.username %><br/>
+		<b>To: </b><%= y.inventory_need.user.username %><br/>
+		<b>Trade Book: </b><%= y.inventory_own.book.name %><br/>
+		<%= image_tag y.inventory_own.book.thumbnail %><br/>
+		</div>
+	<% end %>
+	<div style="clear:left">
+		<br/>
+		<b> Suggested Meet Time: </b> <%= @trade.trade_notes[0].meet_time%> <br/>
+		<b> Suggested Meet Place: </b> <%= @trade.trade_notes[0].place %> <br/>
+		<b> Message: </b> <%= @trade.trade_notes[0].comment %> <br/>
+	</div>
+	
+	
+</div>

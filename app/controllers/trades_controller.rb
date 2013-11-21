@@ -14,6 +14,11 @@ class TradesController < ApplicationController
 
     render :layout => "facebox"
   end
+  
+  def trade_details
+	@trade = Trade.find_by_id(params[:trade_id])
+
+  end
 
   # GET /matches_details/1
   # GET /matches_details/1.json
@@ -54,7 +59,7 @@ class TradesController < ApplicationController
   # POST /trades
   # POST /trades.json
   def create
-
+    
     @trade = Trade.json_to_trade(params[:trade_note][:json])
     @note = @trade.trade_notes.build(trade_note_params)
     @note.user_id = session[:user_id]
@@ -63,8 +68,8 @@ class TradesController < ApplicationController
 
     respond_to do |format|
       if @trade.save
-		UserMailer.trade_email(@trade).deliver
-        format.html { redirect_to matches_path, notice: 'Trade was successfully created.' }
+        UserMailer.trade_email(@trade).deliver
+        format.html { redirect_to Rebook::Application::REBOOK_DOMAIN + '/trade_details/'"#{@trade.id}", notice: 'Trade was successfully created.' }
         format.json { render action: 'show', status: :created, location: @trade }
       else
         format.html { render action: 'new' }

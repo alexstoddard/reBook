@@ -1,0 +1,108 @@
+<div id="main">
+	<div id="matches">
+		<h1>Your Trade Matches</h1>
+		<% @number = 1 %>
+		<% @inventory_needs.each do |x| %>
+			<% if @need_hash[x.id][:completed].size == 0 #do not show complete trades (trades already accepted by all users)%>
+				<% 
+				@pending_count = @need_hash[x.id][:accepted].size #number of users who have accepted this trade 
+				@proposed_count = @need_hash[x.id][:active].size #number of trades proposed by another user to this current user
+				@possible_count = @need_hash[x.id][:possible].size #number of possible trades
+
+				if @proposed_count > 0 #at least one proposed trade-> green border %>
+					<article class="green">
+				<% elsif @pending_count > 0 #pendivng trade, waiting on other users %>
+					<article class="grey">
+				<% elsif @possible_count == 0 #no possible trades-> red border %>
+					<article class="red">
+				<% else #normal->blue border %>
+					<article>
+				<% end %>
+					<h3><span>Get this book:</span><br />
+				    	<%= x.book.name %></h3>
+				    
+				    <div class="need-details">	
+				    	<%= image_tag(x.book.thumbnail, alt: x.book.name, class: "bookcover") %>
+						<p><strong>Author:</strong> <%= x.book.author %><br />
+						<strong>ISBN:</strong> <%= x.book.isbn %><br />
+						<strong>Published:</strong> <%= x.book.published %></p>
+				    </div>
+
+				    <div class="trade-info">
+				    	<% if @pending_count > 0 #show pending message %>
+				    		<div class="pending-trades">
+				    			<p>This trade is pending.</p>
+				    			<% @need_hash[x.id][:accepted].each do |trade|
+				    				trade.trade_lines.each do |y|  %>
+				    					<% if y.inventory_own.user.id != session[:user_id] #don't show trade line corresponding to current user (they were the one who proposed the trade) %>
+				    						<p>
+					    						<% if y.user_from_accepted %>
+					    							<%= y.inventory_own.user.username %> has accepted this trade.
+					    						<% else %>
+					    							<%= y.inventory_own.user.username %> has not yet accepted this trade.
+					    						<% end %>
+					    					</p>
+				    					<% end
+				    				end
+				    			end %>
+				    			<p><a href="#">Cancel this trade.</a></p>
+				    		</div>
+				    	<% else %>
+						    <div class="proposed-trades">
+						    	<% if @proposed_count > 0 #show message for proposed trades %>
+						    		<% if @proposed_count == 1 %>
+						  				<p>1 user has proposed a trade to you. <%= link_to "View Trade »", "/match_details/" + x.id.to_s %></p>
+						  			<% else %>
+						  				<p><% @proposed_count %> users have proposed trades to you. <%= link_to "View Trades »", "/match_details/" + x.id.to_s %></p>
+						  			<% end %>
+						  			
+						    	<% end %>
+							</div>
+							<div class="possible-trades">
+								<% if @possible_count > 0 #show trade options that user can propose %>
+									<% if @possible_count == 1 %>
+							    		<p>There is 1 possible trade for this book.</p>
+							    	<% else %>
+							    		<p>There are <%= @possible_count %> trades for this book.</p>
+							    	<% end %>
+
+							    	<ul class="trades">
+								    	<% # list first three possible trade
+								    	@need_hash[x.id][:possible].take(3).each do |trade| %>
+								    		<li>
+								    		 	<% trade.trade_lines.each do |y|
+								    		 		inventory = y.inventory_own
+								    		 		if inventory.user.id != session[:user_id] and inventory.book.isbn == x.book.isbn #save the condition of the book user would be trading for
+								    		 			@other_condition = inventory.condition.description
+								    		 			@trade_with_user = inventory.user.username #who you would be trading with
+								    		 		end
+								    		 		#save info about this possible trade
+								    		 		if inventory.user.id == session[:user_id] 
+								    		 			@image_tag = inventory.book.thumbnail #your book image
+								    		 			@your_book = inventory.book.name #your book title
+								    		 		end 	
+												end %> 
+												<%= image_tag @image_tag, alt: @your_book %><br />
+											    <strong>Trade with:</strong> <%= @trade_with_user %><br />
+											    Their book is in <%= @other_condition %> condition.<br />
+											    <strong>Trade Your Book:</strong> <%= @your_book %><br />
+											    <% if trade.trade_lines.size > 2 %>
+											    	<strong>This is a <%= trade.trade_lines.size %>-way trade.</strong>
+											    <% end %>
+										    </li>
+								    	<% end %>
+							    	</ul>
+							    	<% if @possible_count > 0 #3 %>
+							    		<%= link_to "View More Matches »", "/match_details/" + x.id.to_s, class: "view-more" %>
+							    	<% end %>
+							    <% elsif @possible_count == 0 && @proposed_count == 0 #no possible trades  %>
+							    	<p class="no-matches">Sorry, there are no Trade Matches for this book at the moment. Try adding more books to your Have List or checking back later.</p>
+							    <% end %>
+						    </div>
+						<% end #if, for either pending or proposed&possible %>
+					</div>
+				</article>
+			<% end #if %>
+		<% end #each %> 
+	</div>
+</div>

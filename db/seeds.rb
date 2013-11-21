@@ -18,8 +18,6 @@ User.new({ :id => 11, :username => "ycmou", :email => "rebook.test@gmail.com", :
 User.new({ :id => 12, :username => "cloncaric", :email => "rebook.test@gmail.com", :passhash_confirmation => "abcdefgh", :passhash => "abcdefgh", :image => nil, :created_at => "2013-11-18 09:06:17", :updated_at => "2013-11-18 09:06:30", :activated => true, :first => "Calvin", :last => "Loncaric" }).save(:validate => false, :run_callbacks => false)
 User.new({ :id => 13, :username => "urbs", :email => "rebook.test@gmail.com", :passhash_confirmation => "abcdefgh", :passhash => "abcdefgh", :image => nil, :created_at => "2013-11-18 09:06:17", :updated_at => "2013-11-18 09:06:30", :activated => true, :first => "James", :last => "Stoddard" }).save(:validate => false, :run_callbacks => false)
 
-User.update_all(:email => "urbshermit@gmail.com")
-
 Book.create!([
   { :id => 1, :name => "Database System Concepts", :subject => nil, :author => "Abraham Silberschatz, Henry F. Korth, S. Sudarshan", :edition => nil, :price => nil, :googleId => "Hvn_QQAACAAJ", :thumbnail => "http://bks4.books.google.com/books?id=Hvn_QQAACAAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73CgOXKGWuYXgOAJ7XhqUL14PE1EF66qh_fwQ30iz9luUdV44VZarZcVm0znDMf7-Mh4biDJeFzewAVpQ89mYb0fKGULO6TgB4Nh0XplWxmyTLKP_M&source=gbs_api", :created_at => "2013-11-13 18:56:35", :updated_at => "2013-11-13 18:56:35", :isbn => "0071289593", :published => "2011", :description => "Database System Concepts by Silberschatz, Korth and Sudarshan is now in its 6th edition and is one of the cornerstone texts of database education. It presents the fundamental concepts of database management in an intuitive manner geared toward allowing students to begin working with databases as quickly as possible.<p>The text is designed for a first course in databases at the junior/senior undergraduate level or the first year graduate level. It also contains additional material that can be used as supplements or as introductory material for an advanced course. Because the authors present concepts as intuitive descriptions, a familiarity with basic data structures, computer organization, and a high-level programming language are the only prerequisites. Important theoretical results are covered, but formal proofs are omitted. In place of proofs, figures and examples are used to suggest why a result is true." },
   { :id => 2, :name => "Database Systems: The Complete Book", :subject => nil, :author => "Garcia-Molina", :edition => nil, :price => nil, :googleId => "-5mqs4hQIBcC", :thumbnail => "http://bks1.books.google.com/books?id=-5mqs4hQIBcC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73KOJIG9eBPQ7_AWOijlHIcavS0qcOAW1Zd0_lIdzrrjb_Udo-N1zoPF-YPQHXdWCr-JGUWoCbMzPixv38uGkhqKWjFM1qeF2oxmJwY5moKnlZObC0&source=gbs_api", :created_at => "2013-11-13 18:56:40", :updated_at => "2013-11-13 18:56:40", :isbn => "813170842X", :published => "2008", :description => nil },
@@ -66,9 +64,9 @@ Book.create!([
 ])
 
 Condition.create!([
-  { :description => "Poor", :image => nil, :created_at => "2013-11-13 19:05:31", :updated_at => "2013-11-13 19:05:31" },
+  { :description => "Good", :image => nil, :created_at => "2013-11-13 19:05:31", :updated_at => "2013-11-13 19:05:31" },
   { :description => "Fair", :image => nil, :created_at => "2013-11-13 19:05:42", :updated_at => "2013-11-13 19:05:42" },
-  { :description => "Good", :image => nil, :created_at => "2013-11-13 19:05:55", :updated_at => "2013-11-13 19:05:55" }
+  { :description => "Poor", :image => nil, :created_at => "2013-11-13 19:05:55", :updated_at => "2013-11-13 19:05:55" }
 ])
 
 
