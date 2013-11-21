@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h2>Hi!</h2>
+    <p>
+		Someone has proposed a trade with you! Here are the details:
+		<br/>
+	</p>
+	<p>
+		<% @trade.trade_lines.each do |y| %>
+			<div style="float:left; padding-right: 20px">
+			<b>From: </b><%= y.inventory_own.user.username %><br/>
+			<b>To: </b><%= y.inventory_need.user.username %><br/>
+			<b>Trade Book: </b><%= y.inventory_own.book.name %><br/>
+			<%= image_tag y.inventory_own.book.thumbnail %><br/>
+			</div>
+		<% end %>
+		<div style="clear:left">
+			<br/>
+			<b> Suggested Meet Time: </b> <%= @trade.trade_notes[0].meet_time%> <br/>
+			<b> Suggested Meet Place: </b> <%= @trade.trade_notes[0].place %> <br/>
+			<b> Message: </b> <%= @trade.trade_notes[0].comment %> <br/>
+		</div>
+		<p>
+			<br/>
+			Click <%= link_to "here", @url %> to go to your matches page.
+			<br/><br/>
+			Cheers,
+			<br/>
+			ReBook
+		</p>
+	</p>
+  </body>
+</html>

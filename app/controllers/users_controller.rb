@@ -25,6 +25,7 @@ class UsersController < ApplicationController
     unless @user.nil?
       UserMailer.reset_email(@user).deliver
       redirect_to root_path
+      flash[:notice] = "An email has been sent to your account, check it to reset your password."
     else
       flash[:reset_error] = params[:username] + " does not match an account in our system."
       redirect_to forgot_path
@@ -35,8 +36,8 @@ class UsersController < ApplicationController
   # GET /reset
   # GET /reset.json
   def reset
-    if params[:user_id] != nil
-      @user = User.find_by_passhash(params[:user_id])
+    if params[:token] != nil
+      @user = User.find_by_token(params[:token])
       if @user.nil?
         flash[:reset_error] = "Could not reset password"
         redirect_to forgot_path
@@ -51,6 +52,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:post][:id])
     @user.passhash = params[:post][:passhash]
     @user.passhash_confirmation = params[:post][:passhash_confirmation]
+    @user.token = nil
 
     if @user.save
       flash[:password_changed] = 'Password was successfully reset. Login now.'
@@ -138,4 +140,6 @@ class UsersController < ApplicationController
       params.require(:user).permit(:first, :last, :username, :email, :passhash, :image, :activated, 
                                    :passhash_confirmation, :location, :location_description, :terms)
     end
+
+    
 end

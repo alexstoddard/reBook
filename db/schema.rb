@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131120202753) do
+ActiveRecord::Schema.define(version: 20131121061156) do
 
   create_table "books", force: true do |t|
     t.string   "name"
@@ -101,6 +101,7 @@ ActiveRecord::Schema.define(version: 20131120202753) do
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "location_id"
   end
 
   create_table "user_feedbacks", force: true do |t|
@@ -132,6 +133,7 @@ ActiveRecord::Schema.define(version: 20131120202753) do
     t.string   "salt"
     t.string   "first"
     t.string   "last"
+    t.string   "token"
   end
 
 end
