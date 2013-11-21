@@ -13,11 +13,14 @@
 		
 			<%= form_for @user do |f| %>
 			
-			<div>
-				<%= f.label :image, "Image" %>
-				<%= f.select :image,[['Bunny', 'bunny.png'],['Snake', 'snake.png']] %>
-				<%= link_to(image_tag("pig.png", alt: "userimage", id: 'img'), root_path) %>
+			<div id="imgsection">
+				<%= f.label :image, "Pick You Avatar" %>
+				<%= f.select :image,[['Dragon', 'dragon.png'],['Bunny', 'bunny.png'],['Snake', 'snake.png'],['Dog', 'dog.png']] %>
+				<div id="userimg">
+					<%= link_to(image_tag("dragon.png", alt: "userimage", id: 'img'), root_path) %>
+				</div>
 			</div>
+			
 			<div>
 			  <%= f.label :first, "First Name" %><%= f.text_field :first %>
 			  	<% if @user.errors[:first].present? %>
