@@ -59,12 +59,13 @@ class TradesController < ApplicationController
   # POST /trades.json
   def create
 
+    params[:trade_note][:meet_time] = DateTime.parse(params[:trade_note][:meet_time])
+
     @trade = Trade.json_to_trade(params[:trade_note][:json])
     @note = @trade.trade_notes.build(trade_note_params)
     @note.user_id = session[:user_id]
     @trade.user_accept(session[:user_id])
-    @trade.status = :accepted
-
+	@trade.status = :accepted
     respond_to do |format|
       if @trade.save
 		UserMailer.trade_email(@trade).deliver
