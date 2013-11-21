@@ -1,3 +1,15 @@
+<script>
+	$(function() {
+		
+		$('#user_image').change(function () {
+			var img = $('#user_image').val();
+			$('#logo').attr("src", '/assets/' + img);
+			$('.img').attr("src", '/assets/' + img);
+			alert(img);
+		});
+	});
+</script>
+
 <div id="wrappermain">
 	<div id="main">
 		<h1>Update your ReBook Account</h1>
@@ -15,6 +27,14 @@
     </div>
   <% end %>
 
+	<div id="imgsection">
+		<%= f.label :image, "Pick You Avatar" %>
+		<%= f.select :image,[['Dragon', 'dragon.png'],['Bunny', 'bunny.png'],['Snake', 'snake.png'],['Dog', 'dog.png']] %>	
+		<div id="userimg">
+			<%= link_to(image_tag(@user.image, alt: "Bunny", class: 'img'), root_path) %>
+		</div>
+	</div>
+	
   <h3>Name</h3>
   <%= f.text_field :first, placeholder: "First", class: "text" %>
   <%= f.text_field :last, placeholder: "Last", class: "text" %>

@@ -236,6 +236,18 @@ header > h4 {
 	text-align:right;
 }
 
+#avatartop img{
+	height: auto;
+	width: 45px;
+	
+}
+#avatartop {
+	float:left;
+}
+
+#preferences {
+	clear: left;
+}
 /********************Navigation bar***********************************/
 /*********************************************************************/
 

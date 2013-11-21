@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   validates :first, :presence => true
   validates :last, :presence => true
   validates :username, :presence => true, :uniqueness => true, :length => { :in => 4..20 }
-  validates :email, :presence => true, :uniqueness => true, :format => EMAIL_PATTERN
+  #validates :email, :presence => true, :uniqueness => true, :format => EMAIL_PATTERN
   validates :passhash, :confirmation => true, :presence => true
   validates :passhash_confirmation, :presence => true
   validates_length_of :passhash, :in => 8..20, :on => :create
