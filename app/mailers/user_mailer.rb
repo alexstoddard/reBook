@@ -22,7 +22,7 @@ class UserMailer < ActionMailer::Base
   
   def trade_email(trade)
 	@trade = trade;
-	@url = Rebook::Application::REBOOK_DOMAIN + '/matches'
+	@url = Rebook::Application::REBOOK_DOMAIN + '/trade_details/'"#{@trade.id}"
 	@trade.trade_lines[1..-1].each do |x|
 		email_trade_to_users(x.inventory_own.user.email).deliver
 	end

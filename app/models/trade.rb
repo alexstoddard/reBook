@@ -145,6 +145,8 @@ class Trade < ActiveRecord::Base
     # Available 2 person trades
     x = InventoryOwn.where(:user_id => user).includes(:need_matches => {:user_owns => :need_matches })
 
+    debugger
+
     x.each do | o1 |
       o1.need_matches.each do | n1 |
         n1.user_owns.each do | o2 |

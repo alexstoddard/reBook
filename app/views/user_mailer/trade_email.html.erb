@@ -7,11 +7,11 @@
     <h2>Hi!</h2>
     <p>
 		Someone has proposed a trade with you! Here are the details:
-		<br/>
+		<br/><br/><br/>
 	</p>
 	<p>
 		<% @trade.trade_lines.each do |y| %>
-			<div style="float:left; padding-right: 20px">
+			<div style="float:left; padding-right: 20px; width: 150px">
 			<b>From: </b><%= y.inventory_own.user.username %><br/>
 			<b>To: </b><%= y.inventory_need.user.username %><br/>
 			<b>Trade Book: </b><%= y.inventory_own.book.name %><br/>
@@ -26,7 +26,7 @@
 		</div>
 		<p>
 			<br/>
-			Click <%= link_to "here", @url %> to go to your matches page.
+			Click <%= link_to "here", @url %> to view the trade.
 			<br/><br/>
 			Cheers,
 			<br/>

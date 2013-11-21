@@ -64,9 +64,9 @@ Book.create!([
 ])
 
 Condition.create!([
-  { :description => "Poor", :image => nil, :created_at => "2013-11-13 19:05:31", :updated_at => "2013-11-13 19:05:31" },
+  { :description => "Good", :image => nil, :created_at => "2013-11-13 19:05:31", :updated_at => "2013-11-13 19:05:31" },
   { :description => "Fair", :image => nil, :created_at => "2013-11-13 19:05:42", :updated_at => "2013-11-13 19:05:42" },
-  { :description => "Good", :image => nil, :created_at => "2013-11-13 19:05:55", :updated_at => "2013-11-13 19:05:55" }
+  { :description => "Poor", :image => nil, :created_at => "2013-11-13 19:05:55", :updated_at => "2013-11-13 19:05:55" }
 ])
 
 
