@@ -112,16 +112,16 @@
 	    <% end %>
 
 	    <% if !@result.nil? %>
-	    	<% if @result.books.length == 0 %>
+	    	<% if @result[:books].length == 0 %>
 	    		<h3>Sorry, no results were found for "<%= params[:search] %>". Try again with a different search term.</h3>
 	    	<% else %>
-				<h3><%= @result.books.length %> Results for "<%= params[:search] %>"</h3>
+				<h3><%= @result[:books].length %> Results for "<%= params[:search] %>"</h3>
 			<% end %>
 
-			<% @result.books.each do |x| %>
+			<% @result[:books].each do |x| %>
 			  <article>
 			  	<div class="thumbnail">
-			  	  <%= image_tag(x.thumbnail, alt: x.title, class: "bookcover") %>
+			  	  <%= image_tag(x.thumbnail, alt: x.name, class: "bookcover") %>
 
 			  	  <div class="actions">
 				  	  <% unless session[:user_id].nil? %>
@@ -138,14 +138,14 @@
 		                                <div class="select_condition">
 		                                	<%= label_tag :condition_id, "Condition:" %> <%= select_tag :condition_id, options_from_collection_for_select(@conditions, "id", "description") %>
 		                                </div>
-		                                <%= hidden_field_tag :api_id, x.id %>
+		                                <%= hidden_field_tag :googleId, x.googleId %>
 		                                <%= hidden_field_tag :search, params[:search] %>
 		                                <%= submit_tag "Add to Have List", :name => nil %>
 		                        <% end %>
 		                        <input type="button" class="cancel_button" value="Cancel" />
 
 								<%= form_tag inventory_needs_path, :remote => true, :class => "add want" do %>
-									<%= hidden_field_tag :api_id, x.id %>
+									<%= hidden_field_tag :googleId, x.googleId %>
 									<%= hidden_field_tag :search, params[:search] %>
 									<%= submit_tag "Add to Want List", :name => nil %>
 								<% end %>
@@ -157,8 +157,8 @@
 			  	</div>
 
 			  	<div class="details">
-				    <h2><%= x.title %></h2>
-				   	<p><strong>Author:</strong> <%= x.authors %><br />
+				    <h2><%= x.name %></h2>
+				   	<p><strong>Author:</strong> <%= x.author %><br />
 			        <strong>ISBN:</strong> <%= x.isbn %><br />
 			        <strong>Published:</strong> <%= x.published %><br /></p>
               <% unless x.description.nil? %>

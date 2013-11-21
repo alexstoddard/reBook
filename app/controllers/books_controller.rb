@@ -39,34 +39,6 @@ class BooksController < ApplicationController
     end
   end
 
-  def self.add_if_nonexistant(api_id)
-    book = Book.find_by_googleId(api_id)
-
-    if book 
-      return book
-    end
-
-    api = SearchApi.new
-    result = api.search_book(api_id)
-    
-    if result.status == :response_ok
-      book = Book.new
-
-      book.author = result.book.authors
-      book.name = result.book.title
-      book.thumbnail = result.book.thumbnail
-      book.googleId = result.book.id
-      book.isbn = result.book.isbn
-      book.description = result.book.description
-      book.published = result.book.published
-
-      if book.save
-        return book
-      end
-    end
-    
-    return false
-  end
 
   # PATCH/PUT /books/1
   # PATCH/PUT /books/1.json
@@ -83,33 +55,16 @@ class BooksController < ApplicationController
   end
 
   # Show search results
+  # GET /search
+  # GET /search.json
 	def search
-    @conditions = Condition.all
-		searcher = SearchApi.new
 
 		query = params[:search] || ""
 
-		if query 
-		  @result = searcher.search(query, 40)
-		end
-		if session[:user_id]
-			user_owns = InventoryOwn.find_all_by_user_id(session[:user_id])
-			user_needs = InventoryNeed.find_all_by_user_id(session[:user_id])
-			@result.books.each do |x|
+    @conditions = Condition.all
+	  @result = Book.search(query, 40)
+    @result = Book.calculate_hidden(@result, session[:user_id])
 
-				user_owns.each do |y|
-					if y.book.googleId == x.id
-						x.hide_own = true
-					end        
-				end
-
-				user_needs.each do |y|
-					if y.book.googleId == x.id
-						x.hide_need = true
-					end        
-				end
-			end
-		end
 	end
 
   # DELETE /books/1

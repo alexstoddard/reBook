@@ -29,6 +29,7 @@ class InventoryOwnsController < ApplicationController
   # POST /inventory_owns
   # POST /inventory_owns.json
   def create
+    debugger
     @book = BooksController.add_if_nonexistant(params[:api_id])
     
     unless InventoryOwn.find_by_book_id_and_user_id(@book.id, session[:user_id]) or InventoryNeed.find_by_book_id_and_user_id(@book.id, session[:user_id])

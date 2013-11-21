@@ -4,7 +4,7 @@ require 'json'
 :response_ok
 :response_failed
 
-class SearchApi
+class GoogleApi
 
   def search(terms, limit)
     search = prepare_search_string(terms, limit)
@@ -17,7 +17,6 @@ class SearchApi
   def search_book(id)
     search = prepare_book_string(id)
     json = connect(search)
-    debugger
     books = parse(json, true)
 
     return books
@@ -31,14 +30,9 @@ class SearchApi
       raise 'web service error' if (stream.status.first != '200')
       json =  JSON.parse(stream.read)
     rescue OpenURI::HTTPError => oe
-      response = BookResponse.new
-      response.status = :response_failed
-      return response
+      return :response_failed
     rescue Exception => e
-      puts e
-      response = BookResponse.new
-      response.status = :response_failed
-      return response
+      return :response_failed
     end
 
   end
@@ -75,12 +69,18 @@ class SearchApi
 
   def parse(json, single)
 
-    response = BookResponse.new
-    response.status = :response_ok
+    response = { }
+    response[:status] = :response_ok
+    response[:books] = []
+
+    if json == :response_failed
+      response[:status] = :response_failed
+      return response
+    end
 
     if single
       book = parse_result(get_item(json))
-      response.book = book
+      response[:book] = book
     else
       items = get_items(json)
 
@@ -91,7 +91,7 @@ class SearchApi
       items.each do |x|
         begin
           book = parse_result(x)
-          response.books = response.books << book
+          response[:books] <<= book
         rescue
         end
       end
@@ -102,16 +102,15 @@ class SearchApi
   
   def parse_result(x)
 
-    book = ApiBook.new
+    book = { }
 
-    book.title = require_get(:get_title, x)
-    book.thumbnail = require_get(:get_thumbnail, x)
-    book.link = require_get(:get_link, x)
-    book.id = require_get(:get_id, x)
-    book.authors = optional_get(:get_authors, x)
-    book.isbn = optional_get(:get_isbn,x)
-    book.description = optional_get(:get_description,x)
-    book.published = optional_get(:get_published,x)
+    book[:name] = require_get(:get_name, x)
+    book[:thumbnail] = require_get(:get_thumbnail, x)
+    book[:googleId] = require_get(:get_id, x)
+    book[:author] = optional_get(:get_author, x)
+    book[:isbn] = optional_get(:get_isbn,x)
+    book[:description] = optional_get(:get_description,x)
+    book[:published] = optional_get(:get_published,x)
 
     return book
   end
@@ -151,7 +150,7 @@ class SearchApi
     return x["volumeInfo"]["publishedDate"]
   end
 
-  def get_authors(x)
+  def get_author(x)
     return x["volumeInfo"]["authors"].join(", ")
   end
 
@@ -159,7 +158,7 @@ class SearchApi
     return x["id"]
   end
 
-  def get_title(x)
+  def get_name(x)
     return x["volumeInfo"]["title"]
   end
 
@@ -167,23 +166,6 @@ class SearchApi
     return x["volumeInfo"]["imageLinks"]["thumbnail"]
   end
 
-  def get_link(x)
-    return x["selfLink"]
-  end
-
   private :connect, :parse, :prepare_search_string
 
-end
-
-class ApiBook
-  attr_accessor :title, :thumbnail, :link, :id, :authors, :isbn, :hide_own, :hide_need, :description, :published
-end
-
-class BookResponse      
-  attr_accessor :status, :book
-  attr_writer :books
-
-  def books
-    @books ||= []
-  end
 end
