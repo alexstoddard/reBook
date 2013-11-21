@@ -16,7 +16,8 @@ class TradesController < ApplicationController
   end
   
   def trade_details
-	
+	@trade = Trade.find_by_id(params[:trade_id])
+
   end
 
   # GET /matches_details/1
@@ -64,7 +65,7 @@ class TradesController < ApplicationController
     @note.user_id = session[:user_id]
     @trade.user_accept(session[:user_id])
     @trade.status = :accepted
-    
+
     respond_to do |format|
       if @trade.save
         UserMailer.trade_email(@trade).deliver
