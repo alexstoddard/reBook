@@ -26,13 +26,11 @@ class User < ActiveRecord::Base
   has_many :user_locations, dependent: :destroy
   has_many :user_feedbacks, :class_name => 'UserFeedback', :foreign_key => 'user_from_id', :dependent => :destroy
   has_many :user_feedbacks, :class_name => 'UserFeedback', :foreign_key => 'user_to_id', :dependent => :destroy
-  has_many :trade_lines, :class_name => 'TradeLine', :foreign_key => 'user_from_id', :dependent => :destroy
-  has_many :trade_lines, :class_name => 'TradeLine', :foreign_key => 'user_to_id', :dependent => :destroy
   has_many :trade_notes, dependent: :destroy
 
   # Triggers to be run in certain situations
   before_save :encrypt_passhash, :send_activation
-  
+
   def self.initialize
     enable_mailer = true
   end
@@ -63,6 +61,10 @@ class User < ActiveRecord::Base
     end
 
     return nil
+  end
+
+  def generate_token
+    self.token = Digest::SHA1.hexdigest([Time.now, rand].join)
   end
 
   # Returns whether a given password hashes to this user's password
