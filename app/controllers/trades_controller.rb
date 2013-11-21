@@ -61,9 +61,10 @@ class TradesController < ApplicationController
     @note = @trade.trade_notes.build(trade_note_params)
     @note.user_id = session[:user_id]
     @trade.user_accept(session[:user_id])
-
+	@trade.status = :accepted
     respond_to do |format|
       if @trade.save
+		UserMailer.trade_email(@trade).deliver
         format.html { redirect_to matches_path, notice: 'Trade was successfully created.' }
         format.json { render action: 'show', status: :created, location: @trade }
       else

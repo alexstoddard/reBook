@@ -29,7 +29,7 @@ Rebook::Application.routes.draw do
   get "/matches", to: 'trades#matches'
   get "/match_details/:id", to: 'trades#match_details'
   get "/propose_trade/:json", to: 'trades#propose_trade'
-
+  
   #user routes
   get "/forgot", to: 'users#forgot'
   post '/forgot', to: 'users#forgot_do'
