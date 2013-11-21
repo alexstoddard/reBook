@@ -1,14 +1,7 @@
 <div id="wrapperuserinfo">
 
 	<div id="userinfo">
-		<!--
-		<p id="notice"><%= notice %></p>
-		<p>
-		  <strong>ID:</strong>
-		  <%= @user.id %>
-		</p>
-		-->
-		
+
 		 <%= link_to "Edit My Account", edit_user_path, :id => "edit" %>
 		
 		<h1>Account Preferences</h1>
@@ -23,24 +16,26 @@
 		  <%= @user.email %>
 		</p>
 
-		<!--
-		<p>
-		  <strong>Passhash:</strong>
-		  <%= @user.passhash %>
-		</p>
-		-->
-
 		<p>
 		  <strong>Image:</strong>
 		  <%= @user.image %>
 		  <%= link_to(image_tag(@user.image, alt: "Bunny", id: 'img'), root_path) %>
 		</p>
 
-		<!--
-		<p>
-		  <strong>Activated:</strong>
-		  <%= @user.activated %>
-		</p>
-		-->
+	  <div id="locations">
+		  <h1>Locations</h1>
+		  <p>
+        <% @user.user_locations.each do |x| %>
+        <strong>
+        <%= x.location.name %>:<br>
+        </strong>
+           <% x.user_schedules.each do |y| %>
+              From: <%= y.from %>
+              To: <%= y.to %>
+              Day: <%= y.day %>
+           <% end %>
+        <% end %>
+		  </p>
+	  </div>
 	</div>
 </div>

@@ -31,11 +31,6 @@
 	<h3>Your current email address</h3>
   <%= f.text_field :email, class: "text" %>
 
-	<h3>Location</h3>
-	<%= f.select :location, @locations.collect {|p| [ p.name, p.id ] }, class: "text" %>
-
-	<h3>Role at Location</h3>
-  <%= f.text_field :location_description, class: "text" %>
   <br />
   <br />
   <%= f.submit %>
