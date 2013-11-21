@@ -1,6 +1,8 @@
 class Trade < ActiveRecord::Base
 
   # Callbacks
+  validates :inventory_own_id, uniqueness: true
+  validates :inventory_need_id, uniqueness: true
 
   # Relationships
   has_many :user_feedbacks, dependent: :destroy
