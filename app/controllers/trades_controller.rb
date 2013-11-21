@@ -64,6 +64,8 @@ class TradesController < ApplicationController
     @note.user_id = session[:user_id]
     @trade.user_accept(session[:user_id])
     @trade.status = :accepted
+    
+    debugger
 
     respond_to do |format|
       if @trade.save
