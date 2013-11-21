@@ -7,30 +7,6 @@ class Trade < ActiveRecord::Base
   has_many :trade_lines, dependent: :destroy
   has_many :trade_notes, dependent: :destroy
 
-  # This function returns trades for the user which are active and have been
-  # accepted by the user
-  def self.accepted_trades(user)
-    Trade.includes(:trade_lines).select do |trade| 
-      trade.trade_lines.any? do |line|
-        line.inventory_own.user_id == user and line.user_from_accepted == true
-      end
-    end
-  end
-
-  # This function returns trades for the user which are active and have not
-  # been accepted by the user
-  def self.active_trades(user)
-    Trade.includes(:trade_lines).select do |trade| 
-      trade.trade_lines.any? do |line|
-        line.inventory_own.user_id == user and (line.user_from_accepted == false or line.user_from_accepted.nil?)
-      end
-    end
-  end
-
-#  def self.has_accepted_owns(owned) 
-#    owned.
-#  end
-
   def user_accept(user_id)
     trade_lines.each do |x|
       if x.inventory_own.user_id == user_id
@@ -50,18 +26,63 @@ class Trade < ActiveRecord::Base
 
   def self.trades_by_needs(user_id) 
 
-
-    possible_trades = Trade.possible_trades(user_id)
-    active_trades = Trade.active_trades(user_id)
-    accepted_trades = Trade.accepted_trades(user_id)
-    
+    trades = Trade.includes(:trade_lines)
     needs = InventoryNeed.find_all_by_user_id(user_id)
+    
+    # These are filters for the various types of situations a trade can exist in
+    # To add another type, you need only map a symbol to a proc that returns a filtered
+    # version of a trade collection
+    filters = {
+      # This filter returns trades which are possible for the user but which no on
+      # has yet taken action on
+      :possible => lambda do |user, trades|
+       return possible_trades(user)
+     end,
+     # This filter returns trades for the user which are active and have been
+     # accepted by the user
+     :accepted => lambda do |user, trades|
+       trades.select do |trade| 
+         trade.trade_lines.any? do |line|
+           line.user_from_accepted == true and line.inventory_own.user_id == user
+         end
+       end
+     end,
+     # This filter returns trades for the user which are active and have not
+     # been accepted by the user
+     :active => lambda do |user, trades|
+       trades.select do |trade| 
+         trade.trade_lines.all? do |line|
+           line.inventory_own.user_id == user and line.user_from_accepted == false
+         end
+       end
+     end,
+     # This filter returns trades for the user which are not accepted by any
+     # party. That is, someone has declined
+     :declined => lambda do |user, trades|
+       trades.select do |trade| 
+         trade.trade_lines.all? do |line|
+           line.user_from_accepted == false
+         end
+       end
+     end,
+     # This filter returns trades for the user which are not accepted by any
+     # party. That is, someone has declined
+     :completed =>  lambda do |user, trades|
+       trades.includes(:trade_lines).select do |trade| 
+         trade.trade_lines.all? do |line|
+           line.user_from_accepted == true
+         end
+       end
+     end
+    }
 
-    need_hash = create_need_hash(needs, [:possible, :accepted, :active])
+    need_hash = create_need_hash(needs, filters.keys)
 
-    hash_trades(need_hash, possible_trades, :possible, user_id)
-    hash_trades(need_hash, accepted_trades, :accepted, user_id)
-    hash_trades(need_hash, active_trades, :active, user_id)
+    filters.keys.each do |filter|
+      proc = filters[filter]
+      passed = proc.call(user_id, trades)
+      self.hash_trades(need_hash, passed, filter, user_id)
+    end
 
     return need_hash
 

@@ -7,6 +7,8 @@
     Accepted trades for this book: <%= @need_hash[x.id][:accepted].size %></br>
     Proposed trades for this book: <%= @need_hash[x.id][:active].size %></br>
     Possible trades for this book: <%= @need_hash[x.id][:possible].size %></br>
+    Declined trades for this book: <%= @need_hash[x.id][:declined].size %></br>
+    Completed trades for this book: <%= @need_hash[x.id][:completed].size %></br>
     <%= link_to "Show match details", "/match_details/" + x.id.to_s %>
     </br></br>
 </div>
