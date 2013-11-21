@@ -65,8 +65,6 @@ class TradesController < ApplicationController
     @trade.user_accept(session[:user_id])
     @trade.status = :accepted
     
-    debugger
-
     respond_to do |format|
       if @trade.save
         UserMailer.trade_email(@trade).deliver
