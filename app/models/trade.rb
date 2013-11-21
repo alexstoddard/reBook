@@ -1,8 +1,5 @@
 class Trade < ActiveRecord::Base
 
-  # Callbacks
-  validates :inventory_own_id, uniqueness: true
-  validates :inventory_need_id, uniqueness: true
 
   # Relationships
   has_many :user_feedbacks, dependent: :destroy
@@ -126,7 +123,6 @@ class Trade < ActiveRecord::Base
       line.inventory_need_id = x["inventory_need_id"]
       line.inventory_own_id = x["inventory_own_id"]
       line.user_from_accepted = x["user_from_accepted"]
-
     end
     
     return trade
