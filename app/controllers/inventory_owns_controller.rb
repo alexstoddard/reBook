@@ -29,7 +29,9 @@ class InventoryOwnsController < ApplicationController
   # POST /inventory_owns
   # POST /inventory_owns.json
   def create
-    @book = BooksController.add_if_nonexistant(params[:api_id])
+
+    @book = Book.new(book_params)
+    @book.save_book
     
     unless InventoryOwn.find_by_book_id_and_user_id(@book.id, session[:user_id]) or InventoryNeed.find_by_book_id_and_user_id(@book.id, session[:user_id])
       @inventory_own = InventoryOwn.new
@@ -84,5 +86,10 @@ class InventoryOwnsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def inventory_own_params
       params.require(:inventory_own).permit(:book_id, :user_id, :condition_id)
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def book_params
+      params.require(:book).permit(:id, :name, :subject, :author, :edition, :price, :googleId, :thumbnail, :isbn, :published, :description)
     end
 end
