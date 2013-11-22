@@ -24,6 +24,8 @@ class UserSchedulesController < ApplicationController
   # POST /user_schedules
   # POST /user_schedules.json
   def create
+    params[:from] = params[:from].split("").select { |x| x != ":" }.join.to_i
+    params[:to] = params[:to].split("").select { |x| x != ":" }.join.to_i
 
     @user = User.find(session[:user_id])
     @user_locations = UserLocation.find_all_by_user_id(session[:user_id])

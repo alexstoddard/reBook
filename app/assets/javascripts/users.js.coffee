@@ -9,3 +9,7 @@ jQuery($).ready ->
 jQuery($).ready ->
   $('#loclist a').live("click") ->
      $.getScript(this.href)
+
+jQuery($).ready ->
+  alert("hello")
+  $('.datepick').timepicker(options)

@@ -15,8 +15,8 @@
     <%= form_tag user_schedules_path, :method => :post, :remote => true do %>
 
     <div class="field">
-      <%= label_tag :from, "From"%><%= text_field_tag :from %>
-      <%= label_tag :to, "To"%><%= text_field_tag :to %>
+      <%= label_tag :from, "From"%><%= text_field_tag :from, nil, :class=>"datepick" %>
+      <%= label_tag :to, "To"%><%= text_field_tag :to, nil, :class=>"datepick"%>
       <%= label_tag :day, "Day"%><%= text_field_tag :day %>
       <%= hidden_field_tag :user_location_id, x.id %>
       <%= submit_tag "Add schedule", :name => nil %>
@@ -26,7 +26,6 @@
     <% end %>
     
   </div>
-
   <% @user_location = x %>
   <div class="usersched">
     <% x.user_schedules.each do |y| %>
@@ -38,5 +37,8 @@
     </br>
     <% end %>
   </div>
+  <script>
+  $('.datepick').timepicker({ disableTextInput:true, timeFormat: 'H:i' })
+  </script>
 <% end %>
 </p>
