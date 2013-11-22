@@ -11,5 +11,4 @@ jQuery($).ready ->
      $.getScript(this.href)
 
 jQuery($).ready ->
-  alert("hello")
   $('.datepick').timepicker(options)

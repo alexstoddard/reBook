@@ -17,14 +17,22 @@
 
 $(function() {
 
-	$('header #bookmark').click(function() {
-		if (parseInt($(this).css('top')) == 0) {
-			$(this).animate({ top: '-20px' });
-			$('header #search-bar').animate({ height: "toggle" });
-		} else {
-			$(this).animate({ top: 0 });
-			$('header #search-bar').animate({ height: "toggle"});
-		}
-	});
+    $('header #bookmark').click(function() {
+	if (parseInt($(this).css('top')) == 0) {
+	    $(this).animate({ top: '-20px' });
+	    $('header #search-bar').animate({ height: "toggle" });
+	} else {
+	    $(this).animate({ top: 0 });
+	    $('header #search-bar').animate({ height: "toggle"});
+	}
+    });
+
+    var img = $('#user_image').val();
+    $('#img').attr("src", '/assets/'+ img);
+
+    $('#user_image').change(function () {
+	var img = $('#user_image').val();
+	$('#img').attr("src", '/assets/' + img);
+    });
 
 });
