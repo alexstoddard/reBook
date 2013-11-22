@@ -90,10 +90,12 @@
 }
 
 #matches article .possible-trades .view-more {
-	position: absolute;
-	right: 0;
+	text-align:right;
+}
+
+#matches article .possible-trades .view-more a {
 	text-transform: uppercase;
 	font-weight: bold;
 	font-size: 0.9em;
-	color: #2256DA;
+	color: #2A4EA8;
 }
