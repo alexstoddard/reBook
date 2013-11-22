@@ -1,11 +1,11 @@
 <header>
-	<% searchBarHash = ["http://localhost:3000/inventory_needs",
-						"http://localhost:3000/inventory_owns", 
-						"http://localhost:3000/"] %>
+	<% searchBarHash = ["/inventory_needs",
+						"/inventory_owns", 
+						"/"] %>
 	<div id="wrapperheader">
 		<%= image_tag("bookmark.png", id: "bookmark") %>
 		<div id= "search-bar">
-			<% currentURL = request.original_url %>
+			<% currentURL = url_for :only_path=>true %>
 			<% unless searchBarHash.include?(currentURL) %>
 				<%= form_tag("/search", method: "get") do %>
 					<%= text_field_tag('search', nil, id: nil, placeholder: "Title, ISBN, Author", id: "headerSearch") %>

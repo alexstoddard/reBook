@@ -10,6 +10,7 @@
  *
  *= require_self
  *= require jquery.facebox
+ *= require jquery.timepicker.css
  */
 
  * {
@@ -282,6 +283,6 @@ footer a {
 /*************************Header Section***************************/
 /******************************************************************/
 #headerSearch{
-	width: 85%;
+	width: 80%;
 	margin-left:5%;
 }

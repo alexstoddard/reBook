@@ -24,15 +24,17 @@ class UserSchedulesController < ApplicationController
   # POST /user_schedules
   # POST /user_schedules.json
   def create
+    params[:from] = params[:from].split("").select { |x| x != ":" }.join.to_i
+    params[:to] = params[:to].split("").select { |x| x != ":" }.join.to_i
+
+    @user = User.find(session[:user_id])
+    @user_locations = UserLocation.find_all_by_user_id(session[:user_id])
     @user_schedule = UserSchedule.new(user_schedule_params)
+    @user_location = UserLocation.find(@user_schedule.user_location_id)
 
     respond_to do |format|
       if @user_schedule.save
-        format.html { redirect_to @user_schedule, notice: 'User schedule was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @user_schedule }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @user_schedule.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end
@@ -55,9 +57,12 @@ class UserSchedulesController < ApplicationController
   # DELETE /user_schedules/1.json
   def destroy
     @user_schedule.destroy
+
+    @user = User.find(session[:user_id])
+    @user_locations = UserLocation.find_all_by_user_id(session[:user_id])
+
     respond_to do |format|
-      format.html { redirect_to user_schedules_url }
-      format.json { head :no_content }
+      format.js
     end
   end
 
@@ -69,6 +74,6 @@ class UserSchedulesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_schedule_params
-      params[:user_schedule]
+      params.permit(:from, :to, :day, :user_location_id)
     end
 end

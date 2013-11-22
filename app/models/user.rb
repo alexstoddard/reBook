@@ -19,8 +19,9 @@ class User < ActiveRecord::Base
   validates :passhash_confirmation, :presence => true
   validates_length_of :passhash, :in => 8..20, :on => :create
   validates :terms, :acceptance => true
-  
-  # Relationships
+  validates :user_locations, presence: true
+
+  # Relationshipsvalidates 
   has_many :inventory_needs, dependent: :destroy
   has_many :inventory_owns, dependent: :destroy
   has_many :user_locations, dependent: :destroy
