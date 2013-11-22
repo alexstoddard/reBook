@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-
+  skip_before_filter :validate_user, except: [:create, :forgot_do]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :set_locations, only: [:edit, :update, :create, :new]
   before_action :set_params, only: [:update, :create]
@@ -66,6 +66,8 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    @user_location = UserLocation.new
+    @user_locations = UserLocation.all
   end
 
   # GET /users/new

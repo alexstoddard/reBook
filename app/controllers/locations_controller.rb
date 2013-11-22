@@ -4,7 +4,7 @@ class LocationsController < ApplicationController
   # GET /locations
   # GET /locations.json
   def index
-    @locations = Location.all
+    @locations = Location.search_user(params[:user_id], params[:search])
   end
 
   # GET /locations/1

@@ -1,0 +1,44 @@
+<h2>Locations and schedules:</h2>
+<p>
+	<% @user.user_locations.each do |x| %>
+	<strong>
+  <div class="userlocheader">
+		   <%= image_tag x.location.icon, :height => 40, :width => 40 %>
+       <div><%= x.location.name %>
+       <%= link_to "Remove", user_location_path(x.id), 
+                                  :method => :delete, :remote => true %><br>
+       </div> 
+	</strong>
+  </div>
+
+  <div class="schedform">
+    <%= form_tag user_schedules_path, :method => :post, :remote => true do %>
+
+    <div class="field">
+      <%= label_tag :from, "From"%><%= text_field_tag :from, nil, :class=>"datepick" %>
+      <%= label_tag :to, "To"%><%= text_field_tag :to, nil, :class=>"datepick"%>
+      <%= label_tag :day, "Day"%><%= text_field_tag :day %>
+      <%= hidden_field_tag :user_location_id, x.id %>
+      <%= submit_tag "Add schedule", :name => nil %>
+      </br>
+    </div>
+    </br>
+    <% end %>
+    
+  </div>
+  <% @user_location = x %>
+  <div class="usersched">
+    <% x.user_schedules.each do |y| %>
+	  From: <%= y.from %>
+	  To: <%= y.to %>
+	  Day: <%= y.day %>
+       <%= link_to "Remove", user_schedule_path(y.id), 
+                                  :method => :delete, :remote => true %><br>
+    </br>
+    <% end %>
+  </div>
+  <script>
+  $('.datepick').timepicker({ disableTextInput:true, timeFormat: 'H:i' })
+  </script>
+<% end %>
+</p>

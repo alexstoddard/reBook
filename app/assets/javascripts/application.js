@@ -13,7 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.facebox
-
+//= require jquery.timepicker.js
 
 $(function() {
 

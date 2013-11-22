@@ -1,10 +1,16 @@
 <header>
-	<% searchBarHash = ["http://localhost:3000/inventory_needs",
-						"http://localhost:3000/inventory_owns", 
-						"http://localhost:3000/"] %>
+	<% searchBarHash = ["/inventory_needs",
+						"/inventory_owns", 
+						"/"] %>
 	<div id="wrapperheader">
+<<<<<<< HEAD
 		
 			<% currentURL = request.original_url %>
+=======
+		<%= image_tag("bookmark.png", id: "bookmark") %>
+		<div id= "search-bar">
+			<% currentURL = url_for :only_path=>true %>
+>>>>>>> d1498c6b84f57a101b4d7b9db806d3151c64e45e
 			<% unless searchBarHash.include?(currentURL) %>
 				<%= image_tag("bookmark.png", id: "bookmark") %>
 				<div id= "search-bar">
@@ -22,8 +28,13 @@
 		</div>
 
 		<div id="account-info">
+			<div id="avatartop">
+				<%= link_to(image_tag(User.find(session[:user_id]).image, alt: "userimg", class: "img"), root_path) %>
+			</div>
 			<h1><%= session[:user_name] %></h1>
-			<%= link_to "Account Preferences", user_path(session[:user_id]) %> | <a href="/logout">Logout</a>
+			<div id="preferences">
+				<%= link_to "Account Preferences", user_path(session[:user_id]) %> | <a href="/logout">Logout</a>
+			</div>
 		</div>
 	</div>
 		<% unless flash[:notice].nil? %>
