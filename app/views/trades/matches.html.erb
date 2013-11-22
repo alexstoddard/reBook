@@ -45,6 +45,7 @@
 				    					<% end
 				    				end
 				    			end %>
+								<%= link_to "View Trade", "/trade_details/" + @need_hash[x.id][:accepted][0].id.to_s %>
 				    			<p><a href="#">Cancel this trade.</a></p>
 				    		</div>
 				    	<% else %>
