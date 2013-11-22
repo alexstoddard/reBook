@@ -1,5 +1,5 @@
 class LoginController < ApplicationController
-
+  skip_before_filter :validate_user
   def logout 
     session[:user_id] = nil
     session[:user_name] = nil
