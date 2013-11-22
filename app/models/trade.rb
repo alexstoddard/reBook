@@ -131,7 +131,6 @@ class Trade < ActiveRecord::Base
     end
 
     return need_hash
-
   end
 
   def self.create_need_hash(needs, symbols)
