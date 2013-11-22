@@ -3,14 +3,7 @@
 						"/inventory_owns", 
 						"/"] %>
 	<div id="wrapperheader">
-<<<<<<< HEAD
-		
-			<% currentURL = request.original_url %>
-=======
-		<%= image_tag("bookmark.png", id: "bookmark") %>
-		<div id= "search-bar">
 			<% currentURL = url_for :only_path=>true %>
->>>>>>> d1498c6b84f57a101b4d7b9db806d3151c64e45e
 			<% unless searchBarHash.include?(currentURL) %>
 				<%= image_tag("bookmark.png", id: "bookmark") %>
 				<div id= "search-bar">
