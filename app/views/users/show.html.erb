@@ -26,20 +26,25 @@
 		</p>
 
 
-	  <div id="locations">
-		  <h2>Locations:</h2>
-		  <p>
-			<% @user.user_locations.each do |x| %>
-			<strong>
-			<%= x.location.name %><br>
-			</strong>
-			   <% x.user_schedules.each do |y| %>
-				  From: <%= y.from %>
-				  To: <%= y.to %>
-				  Day: <%= y.day %>
-			   <% end %>
-			<% end %>
-		  </p>
+    <div id="locations">
+      <%= form_tag locations_path, :method => :get, :remote => true, :id => "location_form" do %>
+
+      <div class="field" id="location-results">
+        <%= label_tag :search, "Add locations to your profile:"%><br>
+        <%= hidden_field_tag :user_id, @user.id %>
+        <%= text_field_tag :search, params[:search], :id => "searcher", :autocomplete =>"off" %>
+        <%= submit_tag "Search", :name => nil %>
+      </div>
+
+
+      <% end %>
+    <div class="field" id="loclist">
+      <%= render :partial => 'location_results' %>
+    </div>
+    </br>
 	  </div>
+    <div id="userlocs">
+      <%= render :partial => 'user_locations' %>
+    </div>
 	</div>
 </div>

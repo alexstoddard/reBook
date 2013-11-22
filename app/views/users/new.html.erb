@@ -23,7 +23,7 @@
 				<%= f.label :image, "Pick You Avatar" %>
 				<%= f.select :image,[['Dragon', 'dragon.png'],['Bunny', 'bunny.png'],['Snake', 'snake.png'],['Dog', 'dog.png']] %>
 				<div id="userimg">
-					<%= link_to(image_tag("/assest/" + @user.image, alt: "userimage", id: 'img'), root_path) %>
+					<%= link_to(image_tag("/assets/" + @user.image.to_s, alt: "userimage", id: 'img'), root_path) %>
 				</div>
 			</div>
 			

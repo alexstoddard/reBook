@@ -66,6 +66,8 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    @user_location = UserLocation.new
+    @user_locations = UserLocation.all
   end
 
   # GET /users/new

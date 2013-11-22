@@ -24,15 +24,12 @@ class UserLocationsController < ApplicationController
   # POST /user_locations
   # POST /user_locations.json
   def create
-    @user_location = UserLocation.new(user_location_params)
+    @user_location = UserLocation.new(:user_id => session[:user_id], :location_id => params[:location_id].to_i)
+    @user = User.find(session[:user_id])
 
     respond_to do |format|
       if @user_location.save
-        format.html { redirect_to @user_location, notice: 'User location was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @user_location }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @user_location.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end
@@ -54,10 +51,14 @@ class UserLocationsController < ApplicationController
   # DELETE /user_locations/1
   # DELETE /user_locations/1.json
   def destroy
-    @user_location.destroy
-    respond_to do |format|
-      format.html { redirect_to user_locations_url }
-      format.json { head :no_content }
+    @user = User.find(session[:user_id])
+
+    if @user.user_locations.size > 1
+      @user_location.destroy
+
+      respond_to do |format|
+        format.js
+      end
     end
   end
 
