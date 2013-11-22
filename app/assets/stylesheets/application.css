@@ -115,6 +115,10 @@ header {
 	background-color:#fff;
 }
 
+header a {
+	color:#494949;
+}
+
 header .error, 
 header .success {
 	margin-bottom: 0;
@@ -140,17 +144,44 @@ header #logo {
 	border: none;
 }
 
+header #logo img {
+	margin-top:4px;
+}
+
 header #bookmark {
 	position: absolute;
 	width: 35px;
 	right: 0;
-	top: 0;
+	top: -20px;
+	cursor:pointer;
 }
 
 /*header search bar */
 
 header #search-bar {
 	margin-right:50px;
+	display:none;
+	position:absolute;
+	right:0;
+}
+
+header #search-bar input[type="text"] {
+	height: 16px;
+	padding: 2px 8px;
+	font-size: 0.95em;
+	width: 220px;
+}
+
+header #search-bar input[type="submit"] {
+	height: 24px;
+	border-radius: 0;
+	padding: 0;
+	width: 60px;
+	background-color: #525252;
+	font-weight: normal;
+	text-transform: uppercase;
+	font-size: 0.95em;
+	margin-left: 1px;
 }
 
 /* header login form */
@@ -188,7 +219,6 @@ header #login-form .forgot {
 header h1 {
 	float: right;
 	margin-top: 3%;
-	color: #CCCCFF;
 }
 
 header > img, footer img {
@@ -224,16 +254,17 @@ header > h4 {
 
 #account-info {
 	float:right;
-	margin-top:17px;
+	margin-top:30px;
 	font-size:0.9em;
 	margin-right:50px;
 }
 
 #account-info h1 {
 	float:none;
-	font-size:3em;
+	font-size:2.5em;
 	margin-bottom:0;
 	text-align:right;
+	color: #636363;
 }
 
 /********************Navigation bar***********************************/
@@ -265,11 +296,4 @@ footer {
 
 footer a {
 	color:#585858;
-}
-
-/*************************Header Section***************************/
-/******************************************************************/
-#headerSearch{
-	width: 85%;
-	margin-left:5%;
 }

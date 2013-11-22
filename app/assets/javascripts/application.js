@@ -13,3 +13,18 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.facebox
+
+
+$(function() {
+
+	$('header #bookmark').click(function() {
+		if (parseInt($(this).css('top')) == 0) {
+			$(this).animate({ top: '-20px' });
+			$('header #search-bar').animate({ height: "toggle" });
+		} else {
+			$(this).animate({ top: 0 });
+			$('header #search-bar').animate({ height: "toggle"});
+		}
+	});
+
+});

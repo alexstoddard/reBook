@@ -18,6 +18,54 @@ class Trade < ActiveRecord::Base
     trade_lines.each { |x| x.user_from_accepted = false }
   end
 
+
+  #get tradelines for a trade excluding the one corresponding 
+  #to the given user_id (excluding the tradeline where given user is the one with the inventory_own book)
+  def get_tradelines_except(user_id)
+    filtered_tradelines = []
+
+    trade_lines.each do |x|
+      if x.inventory_own.user_id != user_id
+        filtered_tradelines << x
+      end
+    end
+    return filtered_tradelines 
+  end
+
+  #get the tradeline for a trade only matching the given user_id
+  #(only the tradeline where the given user is the one with the inventory_own book)
+  def get_tradeline_only(user_id)
+    trade_lines.each do |x|
+      if x.inventory_own.user_id == user_id
+        return x
+      end
+    end
+  end
+
+  #get the tradeline that the user with given user_id is giving their book to
+  #in case of two-way trades, get_trade_line_to and get_tradeline_from will be the same
+  def get_tradeline_to(user_id)
+    my_tradeline = get_tradeline_only(user_id)
+    other_tradelines = get_tradelines_except(user_id)
+    to_user = my_tradeline.inventory_need.user_id
+    other_tradelines.each do |x|
+      if x.inventory_own.user_id == to_user
+        return x
+      end
+    end
+  end
+
+  #get the tradeline that the user with the given user_id is getting their book from
+  #in case of two-way trades, get_tradeline_to and get_tradeline_from will be the same
+  def get_tradeline_from(user_id)
+    other_tradelines = get_tradelines_except(user_id)
+    other_tradelines.each do |x|
+      if x.inventory_need.user_id == user_id
+        return x
+      end
+    end
+  end
+
   def self.trades_by_need(user_id, need_id) 
     need_hash = trades_by_needs(user_id)
     return need_hash[need_id]
@@ -38,7 +86,7 @@ class Trade < ActiveRecord::Base
        return possible_trades(user)
      end,
      # This filter returns trades for the user which are active and have been
-     # accepted by the user
+     # accepted by the user (trades that are waiting on other users to accept)
      :accepted => lambda do |user, trades|
        trades.select do |trade| 
          trade.trade_lines.any? do |line|
@@ -47,10 +95,10 @@ class Trade < ActiveRecord::Base
        end
      end,
      # This filter returns trades for the user which are active and have not
-     # been accepted by the user
+     # been accepted by the user (trades another user proposed)
      :active => lambda do |user, trades|
        trades.select do |trade| 
-         trade.trade_lines.all? do |line|
+         trade.trade_lines.any? do |line|
            line.inventory_own.user_id == user and line.user_from_accepted == false
          end
        end
@@ -64,10 +112,9 @@ class Trade < ActiveRecord::Base
          end
        end
      end,
-     # This filter returns trades for the user which are not accepted by any
-     # party. That is, someone has declined
+     # This filter returns trades for the user which are accepted by all parties.
      :completed =>  lambda do |user, trades|
-       trades.includes(:trade_lines).select do |trade| 
+       trades.select do |trade| 
          trade.trade_lines.all? do |line|
            line.user_from_accepted == true
          end
@@ -144,8 +191,6 @@ class Trade < ActiveRecord::Base
 
     # Available 2 person trades
     x = InventoryOwn.where(:user_id => user).includes(:need_matches => {:user_owns => :need_matches })
-
-    debugger
 
     x.each do | o1 |
       o1.need_matches.each do | n1 |
