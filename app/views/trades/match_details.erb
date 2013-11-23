@@ -20,6 +20,7 @@
 
   <% if @book_matches[:active].size > 0 #trades waiting on current user to accept %>
     <div class="proposed-trades">
+      <a name="proposed"></a>
       <h1><%= pluralize(@book_matches[:active].size, "Proposed Trade") %></h1>
       
       <ul class="trades">
@@ -78,6 +79,7 @@
 
   <% if @book_matches[:possible].size > 0 #all possible trades %>
     <div class="possible-trades">
+      <a name="possible"></a>
       <h1><%= pluralize(@book_matches[:possible].size, "Possible Trade") %></h1>
 
       <% @count = 0 %>

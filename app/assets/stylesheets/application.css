@@ -10,6 +10,7 @@
  *
  *= require_self
  *= require jquery.facebox
+ *= require jquery.timepicker
  */
 
  * {
@@ -86,7 +87,7 @@ body {
 /*****************Button and Text Box Styling**********************/
 /******************************************************************/
 .button {
-	background-color: #CCCCFF;
+	background-color: #6897D3;
 	border-radius: 5px;
 	color: white;
 	padding: 8px;
@@ -97,7 +98,7 @@ body {
 }
 
 .button:hover {
-	background-color:#A3A3EC;
+	background-color:#4D7DBB;
 	text-decoration: none;
 }
 
@@ -254,9 +255,11 @@ header > h4 {
 
 #account-info {
 	float:right;
-	margin-top:30px;
 	font-size:0.9em;
-	margin-right:50px;
+	position:absolute;
+	right:100px;
+	bottom:20px;
+	text-align:right;
 }
 
 #account-info h1 {
@@ -267,12 +270,26 @@ header > h4 {
 	color: #636363;
 }
 
+#account-info #avatartop {
+	position:absolute;
+	right:-50px;
+	bottom:0;
+	width:40px;
+	height:40px;
+	overflow:hidden;
+}
+
+#account-info #avatar-top img {
+	width:40px;
+	max-height:40px;
+}
+
 /********************Navigation bar***********************************/
 /*********************************************************************/
 
 #navbar {
 	text-align: center;
-	padding: 8px 8px 8px 20px;
+	padding: 8px 0px;
 	display:inline-block;
 	width:400px;
 	vertical-align:bottom;

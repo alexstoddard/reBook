@@ -56,39 +56,126 @@
 	margin-top: 5px;
 	line-height: 205px;	
 }
-/********************User Preferences Page ***************************/
+
+/********************User Preferences Page (show.html.erb) ***************************/
 /*********************************************************************/
-#userinfo {
-	width: 980px;
-	margin: 0 auto;
+
+#show-user h1 span {
+	font-size:0.6em;
 }
 
-#edit {
-	float: right;
-	margin-top: 8px;
-	margin-left: 5px;
-	font-size: 20px;
+#show-user #user-info {
+	margin-bottom:20px;
 }
 
-#avatar {
+#show-user #avatar {
 	float: right;
 	clear: right;
 	margin-right: 200px;
 }
 
-.locitem {
- float: left;
- margin: 20px 20px;
- text-align: center;
+/*********************User Schedules Edit Page **********************/
+/********************************************************************/
+
+#edit-schedule #location-form,
+#edit-schedule #results {
+	margin-bottom:20px;
 }
 
-.userlocheader img{
+#edit-schedule #location-form label {
+	margin-right:5px;
 }
 
-.userlocheader div{
- display: inline-block;
+#edit-schedule #location-form .button {
+	padding:4px 7px;
+	margin-left:3px;
 }
 
-#userlocs {
-clear: both;
+#edit-schedule #results ul {
+	padding:12px;
 }
+
+#edit-schedule #results li {
+	overflow:hidden;
+	margin-bottom:5px;
+	list-style: none; 
+}
+
+#edit-schedule #results li img {
+	vertical-align:middle;
+	margin-right: 5px;
+}
+
+#edit-schedule #schedules {
+	margin-top:30px;
+}
+
+#edit-schedule #schedules article,
+#show-user .schedule-info article {
+	margin-bottom:30px;
+}
+
+#edit-schedule #schedules article .location,
+#show-user .schedule-info article .location {
+	margin-bottom:20px;
+}
+
+#edit-schedule #schedules article .location img,
+#show-user .schedule-info article .location img {
+	max-width:40px;
+	height:auto;
+	margin-right:5px;
+	vertical-align:middle;
+}
+
+#edit-schedule #schedules article .location h2,
+#show-user .schedule-info article .location h2 {
+	display:inline-block;
+}
+
+#edit-schedule #schedules article .form {
+	margin-bottom:15px;
+}
+
+#edit-schedule #schedules article .form label {
+	margin-right:5px;
+}
+
+#edit-schedule #schedules article .form input[type="text"] {
+	padding:5px;
+	margin-right:10px;
+}
+
+#edit-schedule #schedules article .form input[type="text"]:last-child {
+	margin-right:0;
+}
+
+#edit-schedule #schedules article .form .datepick {
+	width:69px;
+}
+
+
+#edit-schedule #schedules article .form input[type="submit"] {
+	border: none;
+	background: #BBB;
+	padding: 7px 8px;
+	border-radius: 5px;
+	text-transform: uppercase;
+	cursor:pointer;
+	margin-left:3px;
+}
+
+#edit-schedule #schedules article .form input[type="submit"]:hover {
+	background:#ADADAD;
+}
+
+#edit-schedule #schedules article .times ul
+#show-user .schedule-info article .times ul {
+	margin-left:12px;
+}
+
+#edit-schedule #schedules article .times ul li,
+#show-user .schedule-info article .times ul li {
+	list-style:none;
+}
+

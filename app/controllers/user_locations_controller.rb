@@ -29,7 +29,7 @@ class UserLocationsController < ApplicationController
 
     respond_to do |format|
       if @user_location.save
-        format.js
+        format.js {}
       end
     end
   end
@@ -57,7 +57,7 @@ class UserLocationsController < ApplicationController
       @user_location.destroy
 
       respond_to do |format|
-        format.js
+        format.js {}
       end
     end
   end

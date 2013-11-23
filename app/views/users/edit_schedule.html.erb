@@ -1,30 +1,23 @@
 <div id="main">
-<div id="wrapperuserinfo">
+  <div id="edit-schedule">
 
-	<div id="userinfo">
+    <h1>Locations and Schedules:</h1>
 
-		<h1>Edit Your Schedule</h1>
+    <%= form_tag locations_path, :method => :get, :remote => true, :id => "location-form" do %>
+        <div class="field" id="location-results">
+            <%= hidden_field_tag :user_id, @user.id %>
+            <%= label_tag :search, "Search Locations: "%><%= text_field_tag :search, params[:search], :id => "searcher", :autocomplete =>"off" %>
+            <%= submit_tag "Search", :name => nil, :class => "button" %>
+          </div>
+    <% end %>
 
-    <div id="locations">
-      <%= form_tag locations_path, :method => :get, :remote => true, :id => "location_form" do %>
-
-      <div class="field" id="location-results">
-        <%= label_tag :search, "Add locations to your profile:"%><br>
-        <%= hidden_field_tag :user_id, @user.id %>
-        <%= text_field_tag :search, params[:search], :id => "searcher", :autocomplete =>"off" %>
-        <%= submit_tag "Search", :name => nil %>
-      </div>
-
-
-      <% end %>
-    <div class="field" id="loclist">
+    <div id="results">
       <%= render :partial => 'location_results' %>
     </div>
-    </br>
-	  </div>
-    <div id="userlocs">
-      <%= render :partial => 'user_locations' %>
+
+    <div id="schedules">
+      <%= render :partial => 'user_schedules' %>
     </div>
-	</div>
-</div>
+
+  </div>
 </div>
