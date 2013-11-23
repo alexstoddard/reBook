@@ -1,5 +1,5 @@
 class TradesController < ApplicationController
-  before_action :set_trade, only: [:show, :edit, :update, :destroy]
+  before_action :set_trade, only: [:show, :edit, :update, :destroy, :accept_trade, :decline_trade, :update_trade, :accept_trade_show, :accept_trade]
 
   # GET /trades
   # GET /trades.json
@@ -7,17 +7,59 @@ class TradesController < ApplicationController
     @trades = Trade.all
   end
   
+  def accept_trade_show
+    @trade_note = TradeNote.new
+    render :layout => "facebox"
+  end
+  
+  def accept_trade
+
+    @note = TradeNote.new(trade_note_params)
+    @trade.user_accept(session[:user_id].to_i)
+    @trade.append_note(session[:user_id], @note)
+    @trade.save
+
+    redirect_to "/trade_details/" + @trade.id.to_s
+
+  end
+  
+  def decline_trade_show
+    @trade_note = TradeNote.new
+    render :layout => "facebox"
+  end
+  
+  def decline_trade
+    @note = TradeNote.new(trade_note_params)
+    @trade.user_decline(session[:user_id].to_i)
+    @trade.append_note(session[:user_id], @note)
+    @trade.save
+
+    redirect_to "/trade_details/" + @trade.id.to_s
+  end
+  
+  def update_trade_show
+    @trade_note = TradeNote.new
+    render :layout => "facebox"
+  end
+  
+  def update_trade 
+    @note = TradeNote.new(trade_note_params)
+    @trade.user_update(session[:user_id].to_i)
+    @trade.append_note(session[:user_id], @note)
+    @trade.save
+
+    redirect_to "/trade_details/" + @trade.id.to_s
+  end
+  
   def propose_trade
     @trade = Trade.json_to_trade(params[:json])
     @trade_note = TradeNote.new
     @trade_note.user_id = params[:user_id]
-
     render :layout => "facebox"
   end
   
   def trade_details
 	@trade = Trade.find_by_id(params[:trade_id])
-	
   end
 
   # GET /matches_details/1
@@ -59,12 +101,11 @@ class TradesController < ApplicationController
   # POST /trades
   # POST /trades.json
   def create
-    
+
     @trade = Trade.json_to_trade(params[:trade_note][:json])
-    @note = @trade.trade_notes.build(trade_note_params)
-    @note.user_id = session[:user_id]
+    @note = TradeNote.new(trade_note_params)
     @trade.user_accept(session[:user_id])
-    @trade.status = :accepted
+    @trade.append_note(session[:user_id], @note)
 
     respond_to do |format|
       if @trade.save
@@ -105,7 +146,7 @@ class TradesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_trade
-      @trade = Trade.find(params[:id])
+      @trade = Trade.find(params[:id].to_i)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
