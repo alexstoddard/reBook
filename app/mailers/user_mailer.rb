@@ -7,9 +7,7 @@ class UserMailer < ActionMailer::Base
 
     @url = Rebook::Application::REBOOK_DOMAIN + '/login?token='"#{@user.token}"
 
-    Thread.new do
-      mail(to: @user.email, subject: 'ReBook: Validate Email')
-    end
+    mail(to: @user.email, subject: 'ReBook: Validate Email')
   end
 
   def reset_email(user)
@@ -18,9 +16,7 @@ class UserMailer < ActionMailer::Base
     @user.save(:validate => false)
     
     @url = Rebook::Application::REBOOK_DOMAIN + '/reset?token='"#{@user.token}"
-    Thread.new do
       mail(to: @user.email, subject: 'ReBook: Reset Password')
-    end
   end
   
   def trade_email(trade)
