@@ -7,17 +7,40 @@ class TradesController < ApplicationController
     @trades = Trade.all
   end
   
+  def accept_trade_show
+	@trade = Trade.find(params[:id])
+	@trade_note = @trade.trade_notes.build()
+  end
+  
+  def accept_trade
+	Trade.find(params[:id]).user_accept(session[:user_id])
+  end
+  
+  def decline_trade_show
+  
+  end
+  
+  def decline_trade
+	Trade.find(params[:id]).user_decline(session[:user_id])
+  end
+  
+  def update_trade_show
+  
+  end
+  
+  def update_trade 
+	
+  end
+  
   def propose_trade
     @trade = Trade.json_to_trade(params[:json])
     @trade_note = TradeNote.new
     @trade_note.user_id = params[:user_id]
-
     render :layout => "facebox"
   end
   
   def trade_details
 	@trade = Trade.find_by_id(params[:trade_id])
-	
   end
 
   # GET /matches_details/1
