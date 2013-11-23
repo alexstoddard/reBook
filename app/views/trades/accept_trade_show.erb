@@ -1,0 +1,10 @@
+<%= form_for @trade_note, :url => url_for(:controller => 'trades', :action => 'accept_trade_show') do |f|  %>
+  <h2>Accept Trade</h2>
+  <p>
+    <%= f.label :comment, "Comments:" %></br>
+    <%= f.text_field :comment %>
+  </p>
+
+ 	<%= submit_tag("Accept", class: "button") %>
+<% end %>
+
