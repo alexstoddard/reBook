@@ -12,6 +12,10 @@
 				@pending_count = @need_hash[x.id][:accepted].size #number of users who have accepted this trade 
 				@proposed_count = @need_hash[x.id][:active].size #number of trades proposed by another user to this current user
 				@possible_count = @need_hash[x.id][:possible].size #number of possible trades
+				%>
+				Pending count: <%= @pending_count %>
+				Proposed count: <%= @proposed_count %>
+				Possible count: <%= @possible_count %>
 				if @proposed_count > 0 #at least one proposed trade-> green header %>
 					<article class="green">
 				<% elsif @pending_count > 0 #pending trade-> grey header %>

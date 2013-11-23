@@ -1,52 +1,42 @@
 <div id="main">
-<div id="wrapperuserinfo">
+	<div id="user-show">
 
-	<div id="userinfo">
+		<div class="userinfo">
 
-		 <%= link_to "Edit My Account", edit_user_path, :id => "edit" %>
-		 
-		 <div id="avatar">
-		  <h2>Your Avatar:</h2>
-		  <div id="userimg">
-			<%= link_to(image_tag(@user.image, alt: "Bunny", id: 'img'), root_path) %>
-		  </div>
+			<%= link_to "Edit Account Info", edit_user_path, :id => "edit" %>
+			 
+			<div id="avatar">
+				<h2>Your Avatar:</h2>
+			  	<div id="userimg">
+					<%= link_to(image_tag(@user.image, alt: "Bunny", id: 'img'), root_path) %>
+			  	</div>
+			</div>
+		
+			<h1>My Account</h1>
+			<p><strong>First Name:</strong> <%= @user.first %></p>
+			<p><strong>Last Name:</strong> <%= @user.last %></p>
+			<p><strong>Username:</strong> <%= @user.username %></p>
+			<p><strong>Email:</strong> <%= @user.email %></p>
 		</div>
-		
-		<h1>Account Preferences</h1>
 
-		
-		
-		<p>
-		  <h2>Username:</h2>
-		  <%= @user.username %>
-		</p>
+		<div class="locations">
+			<%= form_tag locations_path, :method => :get, :remote => true, :id => "location_form" do %>
+		    	<div class="field" id="location-results">
+		        	<%= label_tag :search, "Add locations to your profile:"%><br>
+		        	<%= hidden_field_tag :user_id, @user.id %>
+		        	<%= text_field_tag :search, params[:search], :id => "searcher", :autocomplete =>"off" %>
+		        	<%= submit_tag "Search", :name => nil %>
+		      	</div>
+			<% end %>
 
-		<p>
-		  <h2>Email:</h2>
-		  <%= @user.email %>
-		</p>
+			<div class="field" id="loclist">
+				<%= render :partial => 'location_results' %>
+			</div>
+		</div>
+	    
+	    <div class="schedules">
+	    	<%= render :partial => 'user_locations' %>
+	    </div>
 
-
-    <div id="locations">
-      <%= form_tag locations_path, :method => :get, :remote => true, :id => "location_form" do %>
-
-      <div class="field" id="location-results">
-        <%= label_tag :search, "Add locations to your profile:"%><br>
-        <%= hidden_field_tag :user_id, @user.id %>
-        <%= text_field_tag :search, params[:search], :id => "searcher", :autocomplete =>"off" %>
-        <%= submit_tag "Search", :name => nil %>
-      </div>
-
-
-      <% end %>
-    <div class="field" id="loclist">
-      <%= render :partial => 'location_results' %>
-    </div>
-    </br>
-	  </div>
-    <div id="userlocs">
-      <%= render :partial => 'user_locations' %>
-    </div>
 	</div>
-</div>
 </div>

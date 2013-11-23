@@ -56,27 +56,24 @@
 	margin-top: 5px;
 	line-height: 205px;	
 }
-/********************User Preferences Page ***************************/
-/*********************************************************************/
-#userinfo {
-	width: 980px;
-	margin: 0 auto;
-}
 
-#edit {
+/********************User Preferences Page (show.html.erb) ***************************/
+/*********************************************************************/
+
+#user-show #edit {
 	float: right;
 	margin-top: 8px;
 	margin-left: 5px;
 	font-size: 20px;
 }
 
-#avatar {
+#user-show #avatar {
 	float: right;
 	clear: right;
 	margin-right: 200px;
 }
 
-.locitem {
+#user-show .locitem {
  float: left;
  margin: 20px 20px;
  text-align: center;
