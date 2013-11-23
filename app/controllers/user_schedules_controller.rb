@@ -34,7 +34,7 @@ class UserSchedulesController < ApplicationController
 
     respond_to do |format|
       if @user_schedule.save
-        format.js
+        format.js {}
       end
     end
   end
@@ -62,7 +62,7 @@ class UserSchedulesController < ApplicationController
     @user_locations = UserLocation.find_all_by_user_id(session[:user_id])
 
     respond_to do |format|
-      format.js
+      format.js {}
     end
   end
 

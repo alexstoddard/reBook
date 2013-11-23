@@ -1,13 +1,12 @@
 <div id="main">
   <div id="edit-schedule">
 
-    <h2>Locations and Schedules:</h2>
+    <h1>Locations and Schedules:</h1>
 
-    <%= form_tag locations_path, :method => :get, :remote => true, :id => "location_form" do %>
+    <%= form_tag locations_path, :method => :get, :remote => true, :id => "location-form" do %>
         <div class="field" id="location-results">
-            <%= label_tag :search, "Search Locations: "%>
             <%= hidden_field_tag :user_id, @user.id %>
-            <%= text_field_tag :search, params[:search], :id => "searcher", :autocomplete =>"off" %>
+            <%= label_tag :search, "Search Locations: "%><%= text_field_tag :search, params[:search], :id => "searcher", :autocomplete =>"off" %>
             <%= submit_tag "Search", :name => nil, :class => "button" %>
           </div>
     <% end %>
