@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
 					"/forgot"]
     if session[:user_id] != nil
       # continue to current_user url
-	  if session[:user_id] != 10 && loginPage.include?("/users")
+	  if session[:user_id] != 10 && loginPage.include?(url_for :only_path=>true)
 		redirect_to("http://localhost:3000/")
 	  end
     else
