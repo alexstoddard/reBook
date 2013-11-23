@@ -6,6 +6,21 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def admin?
+    user = current_user
+    (not user.nil?) and user.id == 10
+  end
+
+  def current_user
+    user_id = session[:user_id]
+
+    unless user_id.nil? 
+      user_id = user_id.to_i
+    end
+
+    User.find(user_id.to_i)
+  end
+
   def validate_user() 
     loginPage = ["/users"]
     unrestricted = ["/users/new",
