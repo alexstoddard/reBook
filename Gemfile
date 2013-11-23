@@ -35,6 +35,7 @@ group :doc do
   gem 'sdoc', require: false
 end
 group :development, :test do
+      gem 'debugger'
       gem 'rspec-rails'
       gem 'factory_girl_rails' 
 end 
@@ -60,8 +61,6 @@ end
 
 gem 'oauth'
 gem 'oauth2'
-
-gem 'debugger'
 
 gem 'bcrypt-ruby', :require =>'bcrypt'
 
