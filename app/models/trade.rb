@@ -105,8 +105,10 @@ class Trade < ActiveRecord::Base
   def self.hash_trades(book_hash, trades, symbol, user_id)
     trades.each do |x|
       line = x.trade_lines.find { |y| y.inventory_need.user_id == user_id }
-      found_id = line.inventory_need_id
-      book_hash[found_id][symbol] <<= x
+      unless line.nil?
+        found_id = line.inventory_need_id
+        book_hash[found_id][symbol] <<= x
+      end
     end
   end
 
