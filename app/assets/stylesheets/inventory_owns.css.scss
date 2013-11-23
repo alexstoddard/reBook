@@ -78,7 +78,7 @@
 
 /****Have/Want List Book Search Box*****/
 .inventory #search {
-	background-color: #9CB0E2;
+	background-color: #A1C9EE;
 	margin:20px 0;
 	padding: 8px 8px 12px 8px;
 	width:800px
@@ -104,4 +104,9 @@
 	margin-left: 6px;
 	text-transform: uppercase;
 	font-size: 1.2em;
+	background-color:#537EB4;
+}
+
+.inventory #search input[type="submit"]:hover {
+	background-color:#4671A8;
 }

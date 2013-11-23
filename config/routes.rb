@@ -26,6 +26,8 @@ Rebook::Application.routes.draw do
   resources :locations
   
   root 'homepage#index'
+  #user_routes
+  get "edit_schedule/", to: 'users#edit_schedule'
 
   #matching routes
   get "matches", to: 'trades#matches'
@@ -34,12 +36,12 @@ Rebook::Application.routes.draw do
   #actions relating to trades
   get "/propose_trade/:json", to: 'trades#propose_trade'
   get "/trade_details/:trade_id", to: 'trades#trade_details'
-  get "/update_trade/:id", to: 'trades#update_show'
-  post "/update_trade/:id", to: 'trade#update'
-  get "/accept_trade/:id", to: 'trade#accept_trade_show'
-  post "/accept_trade/:id", to: 'trade#accept_trade'
-  get "/decline_trade/:id", to: 'trade#decline_trade_show'
-  post "/decline_trade/:id", to: 'trade#decline_trade'
+  get "/update_trade/:id", to: 'trades#update_trade_show'
+  post "/update_trade/:id", to: 'trades#update_trade'
+  get "/accept_trade/:id", to: 'trades#accept_trade_show'
+  post "/accept_trade/:id", to: 'trades#accept_trade'
+  get "/decline_trade/:id", to: 'trades#decline_trade_show'
+  post "/decline_trade/:id", to: 'trades#decline_trade'
   
   #user routes
   get "/forgot", to: 'users#forgot'

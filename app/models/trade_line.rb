@@ -1,7 +1,7 @@
 class TradeLine < ActiveRecord::Base
   # Callbacks
-  validates :inventory_own_id, uniqueness: true
-  validates :inventory_need_id, uniqueness: true
+#  validates :inventory_own_id, uniqueness: true
+#  validates :inventory_need_id, uniqueness: true
 
   # Relationship
   belongs_to :trade

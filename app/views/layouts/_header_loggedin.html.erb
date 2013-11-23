@@ -26,16 +26,24 @@
 			</div>
 			<h1><%= session[:user_name] %></h1>
 			<div id="preferences">
-				<%= link_to "Account Preferences", user_path(session[:user_id]) %> | <a href="/logout">Logout</a>
+				<%= link_to "My Account", user_path(session[:user_id]) %> | <a href="/logout">Logout</a>
 			</div>
 		</div>
 	</div>
-		<% unless flash[:notice].nil? %>
-			<div class="error">
-	   			<%= flash[:notice] %>
-				<% flash[:notice] = nil%>
-	   		</div>
-		<% end %>
+	
+	<% unless flash[:notice].nil? %>
+		<div class="error">
+   			<%= flash[:notice] %>
+			<% flash[:notice] = nil%>
+   		</div>
+	<% end %>
+
+	<% unless flash[:success].nil? %>
+		<div class="success">
+   			<%= flash[:success] %>
+			<% flash[:success] = nil%>
+   		</div>
+	<% end %>
 		
 	
 </header>
