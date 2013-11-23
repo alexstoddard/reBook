@@ -6,32 +6,34 @@ class Trade < ActiveRecord::Base
   has_many :trade_lines, dependent: :destroy
   has_many :trade_notes, dependent: :destroy
 
-  def user_accept(user_id, message)
+  def user_accept(user_id)
     trade_lines.each do |x|
       if x.inventory_own.user_id == user_id
         x.user_from_accepted = true
+        x.save
       end
     end
-	@note = self.trade_notes.build(message)
-	self.save()
   end
 
-  def user_decline(user_id, message)
+  def user_decline(user_id)
     trade_lines.each { |x| x.user_from_accepted = false }
-	@note = self.trade_notes.build(message)
-	self.save()
+    trade_lines.each { |x| x.save }
   end
   
-  def user_update(user_id, message)
-	trade_lines.each do |x|
-		if x.inventory_own.user_id != user_id
-			x.user_from_accepted = false 
-		else
-			x.user_from_accepted = true
-		end
-	end
-	@note = self.trade_notes.build(message)
-	self.save()
+  def user_update(user_id)
+    trade_lines.each do |x|
+      if x.inventory_own.user_id != user_id
+        x.user_from_accepted = false 
+      else
+        x.user_from_accepted = true
+      end
+      x.save
+    end
+  end
+
+  def append_note(user_id, note)
+    note.user_id = user_id
+    trade_notes << note
   end
 
   #get tradelines for a trade excluding the one corresponding 
@@ -113,9 +115,13 @@ class Trade < ActiveRecord::Base
      # been accepted by the user (trades another user proposed)
      :active => lambda do |user, trades|
        trades.select do |trade| 
-         trade.trade_lines.any? do |line|
+         a = (trade.trade_lines.any? do |line|
            line.inventory_own.user_id == user and line.user_from_accepted == false
-         end
+         end)
+         b = (trade.trade_lines.any? do |line|
+           line.inventory_own.user_id != user and line.user_from_accepted == true
+         end)
+         (a and b)
        end
      end,
      # This filter returns trades for the user which are not accepted by any

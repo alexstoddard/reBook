@@ -14,24 +14,28 @@
 			<%= image_tag y.inventory_own.book.thumbnail %><br/>
 		</div>
 	<% end %>
+  <% @trade.trade_notes.each do |note| %>
 	<div style="clear:left">
 		<br/>
-		<b> Suggested Meet Time: </b> <%= @trade.trade_notes[0].meet_time%> <br/>
-		<b> Suggested Meet Place: </b> <%= @trade.trade_notes[0].place %> <br/>
-		<b> Message: </b> <%= @trade.trade_notes[0].comment %> <br/>
+		<b> Suggested Meet Time: </b> <%= note.meet_time%> <br/>
+		<b> Suggested Meet Place: </b> <%= note.place %> <br/>
+		<b> <%= note.user.username %> says: </b> <%= note.comment %> <br/>
 	</div>
+  <% end %>
 	<br/><br/>
+
 	<div>
 		<% @trade.trade_lines.each do |x| %>
 			<% if x.inventory_own.user.id == session[:user_id] %>
 				<% if !x.user_from_accepted %>
 					<%= link_to 'Accept trade', "/accept_trade/" + @trade.id.to_s, :action => :get, :rel => "facebox" %>
+          </br>
 					<%= link_to 'Decline trade', "/decline_trade/" + @trade.id.to_s, :action => :get, :rel => "facebox"  %>
 				<% else %> 
-					<%= link_to "Cancel Trade", "/decline_trade/", :rel => "facebox" %>
+					<%= link_to "Cancel Trade", "/decline_trade/" + @trade.id.to_s, :rel => "facebox" %>
 				<% end %>
 				<br/>
-				<%= link_to "Update Meeting Information", "/update_trade/" + @trade.escaped_json,:rel => "facebox" %>
+				<%= link_to "Update Meeting Information", "/update_trade/" + @trade.id.to_s, :rel => "facebox" %>
 				
 			<% end %>
 			
