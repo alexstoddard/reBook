@@ -96,7 +96,7 @@
 						    		<p class="view-more"><%= link_to "Propose a Trade »", "/match_details/" + x.id.to_s %></p>
 						    	<% end %>
 						    <% elsif @pending_count == 0 and @possible_count == 0 and @proposed_count == 0#no possible trades  %>
-						    	<p class="no-matches">Sorry, there are no Trade Matches for this book at the moment. Try adding more books to your Have List or checking back later.</p>
+						    	<p class="no-matches">Sorry, there are no trade matches for this book at the moment. Try adding more books to your <%= link_to "have list", inventory_owns_path %> or checking back later.</p>
 						    <% end %>
 					    </div>
 					</div>

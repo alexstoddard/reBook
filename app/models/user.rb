@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
   has_many :inventory_needs, dependent: :destroy
   has_many :inventory_owns, dependent: :destroy
   has_many :user_locations, dependent: :destroy
-  has_many :user_feedbacks, :class_name => 'UserFeedback', :foreign_key => 'user_from_id', :dependent => :destroy
+#  has_many :user_feedbacks, :class_name => 'UserFeedback', :foreign_key => 'user_from_id', :dependent => :destroy
   has_many :user_feedbacks, :class_name => 'UserFeedback', :foreign_key => 'user_to_id', :dependent => :destroy
   has_many :trade_notes, dependent: :destroy
 
@@ -53,9 +53,23 @@ class User < ActiveRecord::Base
     end
   end
 
+  def feedback_count
+    return user_feedbacks.count
+  end
+
+  def feedback_score
+    x = user_feedbacks.average(:feedback_id)
+    if x.nil?
+      return 3
+    else
+      return ((5.0/3.0)*x).round
+    end
+  end
+
   # Utility method which looks up a user and returns it if
   # the provided password hashes identically to the database
   def self.authenticate(login_username, login_password)
+
     user = User.find_by_username(login_username)
     if user && user.matches_password(login_password)
       return user
