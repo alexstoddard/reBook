@@ -1,13 +1,12 @@
-
 <% unless @locations.nil? %>
    </br>
    <% @locations.each do |x| %>
-   <div class = "locitem">
-   <%= link_to user_locations_path + "?location_id=" + x.id.to_s, :method => :post, :remote => true do %>
-   <%= image_tag x.icon, :height => 40, :width => 40 %><br>
-   <%= x.name %></br>
-   <% end %>
-   </div>
+      <div class = "locitem">
+         <%= link_to user_locations_path + "?location_id=" + x.id.to_s, :method => :post, :remote => true do %>
+            <%= image_tag x.icon, :height => 40, :width => 40 %><br>
+            <%= x.name %></br>
+         <% end %>
+      </div>
    <% end %>
    <br/>
 <% end %>

@@ -1,18 +1,26 @@
-<%= form_for @trade_note, :url => url_for(:controller => 'trades', :action => 'create') do |f|  %>
-  <p>
-    <%= f.label :meet_time, "Proposed Meeting Date/Time:" %>
-    <%= f.text_field :meet_time %>
+<div id="propose-trade">
+  <h2>Propose a Trade</h2>
+  <% @my_tradeline = @trade.get_tradeline_only(session[:user_id])
+  @to_tradeline = @trade.get_tradeline_to(session[:user_id]) %>
+  <p><strong>To:</strong> <%= @to_tradeline.inventory_own.user.username %></p>
+  <p><strong>Their Book:</strong> <%= @to_tradeline.inventory_own.book.name %> (condition: <%= @to_tradeline.inventory_own.condition.description.downcase %>)</p>
+  <p><strong>My Book:</strong> <%= @my_tradeline.inventory_own.book.name %> (condition: <%= @my_tradeline.inventory_own.condition.description.downcase %>)</p>
+  <%= form_for @trade_note, :url => url_for(:controller => 'trades', :action => 'create') do |f|  %>
     <%= f.hidden_field :json, :value => @trade.escaped_json %>
-  </p>
-  <p>
-    <%= f.label :place, "Proposed Meeting Place:" %>
-    <%= f.text_field :place %>
-  </p>
-  <p>
-    <%= f.label :comment, "Comments:" %></br>
-    <%= f.text_field :comment %>
-  </p>
 
- 	<%= submit_tag("Propose", class: "button") %>
-<% end %>
+    <p>
+      <%= f.label :meet_time, "Proposed Meeting Date/Time:" %>
+      <%= f.text_field :meet_time %>
+    </p>
+    <p>
+      <%= f.label :place, "Proposed Meeting Place:" %>
+      <%= f.text_field :place %>
+    </p>
+    <p>
+      <%= f.label :comment, "Comments:" %></br>
+      <%= f.text_area :comment, cols: 50, rows: 6 %>
+    </p>
 
+   	<%= submit_tag("Send Trade Proposal", class: "button") %>
+  <% end %>
+</div>
