@@ -8,19 +8,13 @@
   <h1>Proposed Trades</h1>
   <% @book_matches[:active].each do |x| %>
     <% x.trade_lines.each do |y| %>
-      <b>From: </b><%= y.inventory_own.user.username %></br>
-      <b>To: </b><%= y.inventory_need.user.username %></br>
-      <b>Trade Book: </b><%= y.inventory_own.book.name %></br>
-      <%= image_tag y.inventory_own.book.thumbnail %></br>
+	  <b>From: </b><%= y.inventory_own.user.username %></br>
+	  <b>To: </b><%= y.inventory_need.user.username %></br>
+	  <b>Trade Book: </b><%= y.inventory_own.book.name %></br>
+	  <%= image_tag y.inventory_own.book.thumbnail %></br>
     <% end %>
     </br>
-    <h2>Notes</h2>
-    <% x.trade_notes.each do |y| %>
-      <b><%= y.user.username %> said: </b><br>
-      <b>When: </b><%= y.meet_time %>
-      <b>Where: </b><%= y.place %></br>
-      <b>Comments: </b><%= y.comment %></br>
-    <% end %>
+	<%= link_to "View Trade", "/trade_details/" + x.id.to_s %>
   </br>
   <% end %>
   <h1>Possible Trades</h1>

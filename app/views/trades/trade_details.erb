@@ -1,12 +1,17 @@
-<div class="main">
+<script type="text/javascript">
+  jQuery(document).ready(function($) {
+  $('a[rel*=facebox]').facebox() 
+  })
+</script>
+<div id="main">
 	<h2>Trade number: <%= params[:trade_id]%></h2>
 	<br/><br/>
 	<% @trade.trade_lines.each do |y| %>
 		<div style="float:left; padding-right: 20px; width: 150px">
-		<b>From: </b><%= y.inventory_own.user.username %><br/>
-		<b>To: </b><%= y.inventory_need.user.username %><br/>
-		<b>Trade Book: </b><%= y.inventory_own.book.name %><br/>
-		<%= image_tag y.inventory_own.book.thumbnail %><br/>
+			<b>From: </b><%= y.inventory_own.user.username %><br/>
+			<b>To: </b><%= y.inventory_need.user.username %><br/>
+			<b>Trade Book: </b><%= y.inventory_own.book.name %><br/>
+			<%= image_tag y.inventory_own.book.thumbnail %><br/>
 		</div>
 	<% end %>
 	<div style="clear:left">
@@ -15,6 +20,22 @@
 		<b> Suggested Meet Place: </b> <%= @trade.trade_notes[0].place %> <br/>
 		<b> Message: </b> <%= @trade.trade_notes[0].comment %> <br/>
 	</div>
-	
+	<br/><br/>
+	<div>
+		<% @trade.trade_lines.each do |x| %>
+			<% if x.inventory_own.user.id == session[:user_id] %>
+				<% if !x.user_from_accepted %>
+					<%= link_to 'Accept trade', "/accept_trade/" + @trade.id.to_s, :action => :get, :rel => "facebox" %>
+					<%= link_to 'Decline trade', "/decline_trade/" + @trade.id.to_s, :action => :get, :rel => "facebox"  %>
+				<% else %> 
+					<%= link_to "Cancel Trade", "/decline_trade/", :rel => "facebox" %>
+				<% end %>
+				<br/>
+				<%= link_to "Update Meeting Information", "/update_trade/" + @trade.escaped_json,:rel => "facebox" %>
+				
+			<% end %>
+			
+		<% end %>
+	</div>
 	
 </div>

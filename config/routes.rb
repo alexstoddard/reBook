@@ -15,7 +15,7 @@ Rebook::Application.routes.draw do
 
   resources :trade_lines
 
-  resources :trades
+  resources :trades 
 
   resources :conditions
 
@@ -30,8 +30,16 @@ Rebook::Application.routes.draw do
   #matching routes
   get "matches", to: 'trades#matches'
   get "match_details/:id", to: 'trades#match_details'
+  
+  #actions relating to trades
   get "/propose_trade/:json", to: 'trades#propose_trade'
   get "/trade_details/:trade_id", to: 'trades#trade_details'
+  get "/update_trade/:id", to: 'trades#update_show'
+  post "/update_trade/:id", to: 'trade#update'
+  get "/accept_trade/:id", to: 'trade#accept_trade_show'
+  post "/accept_trade/:id", to: 'trade#accept_trade'
+  get "/decline_trade/:id", to: 'trade#decline_trade_show'
+  post "/decline_trade/:id", to: 'trade#decline_trade'
   
   #user routes
   get "/forgot", to: 'users#forgot'

@@ -6,18 +6,33 @@ class Trade < ActiveRecord::Base
   has_many :trade_lines, dependent: :destroy
   has_many :trade_notes, dependent: :destroy
 
-  def user_accept(user_id)
+  def user_accept(user_id, message)
     trade_lines.each do |x|
       if x.inventory_own.user_id == user_id
         x.user_from_accepted = true
       end
     end
+	@note = self.trade_notes.build(message)
+	self.save()
   end
 
-  def user_decline(user_id)
+  def user_decline(user_id, message)
     trade_lines.each { |x| x.user_from_accepted = false }
+	@note = self.trade_notes.build(message)
+	self.save()
   end
-
+  
+  def user_update(user_id, message)
+	trade_lines.each do |x|
+		if x.inventory_own.user_id != user_id
+			x.user_from_accepted = false 
+		else
+			x.user_from_accepted = true
+		end
+	end
+	@note = self.trade_notes.build(message)
+	self.save()
+  end
 
   #get tradelines for a trade excluding the one corresponding 
   #to the given user_id (excluding the tradeline where given user is the one with the inventory_own book)
