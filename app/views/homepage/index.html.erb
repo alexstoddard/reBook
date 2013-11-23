@@ -10,10 +10,11 @@
         <%= submit_tag("Search", id: nil, class: "button") %>
       <% end %>
 
-      <h2 class="tagline">Never spend money on books again!<br />Sign up and start saving!</h2>
+     
       
       <% unless session[:user_id] %>
-      <a class="button" href="/users/new">Create an Account</a>
+        <h2 class="tagline">Never spend money on books again!<br />Sign up and start saving!</h2>
+        <a class="button" href="/users/new">Create an Account</a>
       <% end %>
     </div>
     

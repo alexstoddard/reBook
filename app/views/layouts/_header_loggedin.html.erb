@@ -30,12 +30,20 @@
 			</div>
 		</div>
 	</div>
-		<% unless flash[:notice].nil? %>
-			<div class="error">
-	   			<%= flash[:notice] %>
-				<% flash[:notice] = nil%>
-	   		</div>
-		<% end %>
+	
+	<% unless flash[:notice].nil? %>
+		<div class="error">
+   			<%= flash[:notice] %>
+			<% flash[:notice] = nil%>
+   		</div>
+	<% end %>
+
+	<% unless flash[:success].nil? %>
+		<div class="success">
+   			<%= flash[:success] %>
+			<% flash[:success] = nil%>
+   		</div>
+	<% end %>
 		
 	
 </header>

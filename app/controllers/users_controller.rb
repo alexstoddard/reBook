@@ -25,7 +25,7 @@ class UsersController < ApplicationController
     unless @user.nil?
       UserMailer.reset_email(@user).deliver
       redirect_to root_path
-      flash[:notice] = "An email has been sent to your account, check it to reset your password."
+      flash[:success] = "An email has been sent to your account, check it to reset your password."
     else
       flash[:reset_error] = params[:username] + " does not match an account in our system."
       redirect_to forgot_path

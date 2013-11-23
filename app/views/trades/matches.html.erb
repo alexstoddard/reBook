@@ -72,9 +72,9 @@
 											<%= image_tag @my_tradeline.inventory_own.book.thumbnail, alt: @my_tradeline.inventory_own.book.name %><br />
 										    <p>
 
-										    <strong>Trade Your Book:</strong> <%= @my_tradeline.inventory_own.book.name %><br />
+										    <strong>Trade your book:</strong> <%= @my_tradeline.inventory_own.book.name %><br />
 										    <strong>Trade with:</strong> <%= @from_tradeline.inventory_own.user.username %><br />
-										    Their book is in <%= @from_tradeline.inventory_own.condition.description %> condition.
+										    Their book is in <%= @from_tradeline.inventory_own.condition.description.downcase %> condition.
 										    
 
 										    <% if trade.trade_lines.size > 2 %>
@@ -84,8 +84,10 @@
 									    </li>
 							    	<% end %>
 						    	</ul>
-						    	<% if @possible_count > 0 #3 %>
+						    	<% if @possible_count > 3 %>
 						    		<p class="view-more"><%= link_to "View More Matches »", "/match_details/" + x.id.to_s %></p>
+						    	<% else %>
+						    		<p class="view-more"><%= link_to "Propose a Trade »", "/match_details/" + x.id.to_s %></p>
 						    	<% end %>
 						    <% elsif @pending_count == 0 and @possible_count == 0 and @proposed_count == 0#no possible trades  %>
 						    	<p class="no-matches">Sorry, there are no Trade Matches for this book at the moment. Try adding more books to your Have List or checking back later.</p>

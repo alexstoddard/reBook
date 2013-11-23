@@ -8,8 +8,6 @@ class ApplicationController < ActionController::Base
 
   def validate_user() 
 
-    debugger
-
     if session[:user_id] != nil
       # continue to current_user url
 	  if session[:user_id] != 10 && request.original_url == "http://localhost:3000/users"

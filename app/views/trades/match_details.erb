@@ -1,37 +1,117 @@
 <script type="text/javascript">
   jQuery(document).ready(function($) {
-  $('a[rel*=facebox]').facebox() 
-  })
+    $('a[rel*=facebox]').facebox(); 
+  });
 </script>
+
 <div id="main">
-  </br>
-  <h1>Proposed Trades</h1>
-  <% @book_matches[:active].each do |x| %>
-    <% x.trade_lines.each do |y| %>
-      <b>From: </b><%= y.inventory_own.user.username %></br>
-      <b>To: </b><%= y.inventory_need.user.username %></br>
-      <b>Trade Book: </b><%= y.inventory_own.book.name %></br>
-      <%= image_tag y.inventory_own.book.thumbnail %></br>
-    <% end %>
-    </br>
-    <h2>Notes</h2>
-    <% x.trade_notes.each do |y| %>
-      <b><%= y.user.username %> said: </b><br>
-      <b>When: </b><%= y.meet_time %>
-      <b>Where: </b><%= y.place %></br>
-      <b>Comments: </b><%= y.comment %></br>
-    <% end %>
-  </br>
-  <% end %>
-  <h1>Possible Trades</h1>
-  <% @book_matches[:possible].each do |x| %>
-    <% x.trade_lines.each do |y| %>
-      <b>From: </b><%= y.inventory_own.user.username %></br>
-      <b>To: </b><%= y.inventory_need.user.username %></br>
-      <b>Trade Book: </b><%= y.inventory_own.book.name %></br>
-      <%= image_tag y.inventory_own.book.thumbnail %></br>
-    <% end %>
-  <%= link_to "Propose trade", "/propose_trade/" + x.escaped_json, :rel => "facebox" %>
-  <% end %>
+  <div id="match-details">
+
+  <div class="book-want">
+    <%= image_tag @inventory_need.book.thumbnail, alt: @inventory_need.book.name %>
+    <div class="details">
+      <h2><span>Get this book:</span> <br />
+        <%= @inventory_need.book.name %></h2>
+      <p><strong>Author:</strong> <%= @inventory_need.book.author %><br />
+          <strong>ISBN:</strong> <%= @inventory_need.book.isbn %><br />
+          <strong>Published:</strong> <%= @inventory_need.book.published %></p>
+    </div>
+  </div>
+
+  <% if @book_matches[:active].size > 0 #trades waiting on current user to accept %>
+    <div class="proposed-trades">
+      <h1><%= pluralize(@book_matches[:active].size, "Proposed Trade") %></h1>
+      
+      <ul class="trades">
+        <% @book_matches[:active].each do |trade| %>
+          <% @my_tradeline = trade.get_tradeline_only(session[:user_id]) 
+          @to_tradeline = trade.get_tradeline_to(session[:user_id]) %>
+
+          <li> 
+
+            <div class="thumbnail">
+              <%= image_tag @my_tradeline.inventory_own.book.thumbnail %>
+            </div>
+
+            <div class="details">
+              <p>
+                <strong>Trade your book:</strong> <%= @my_tradeline.inventory_own.book.name %> <br />
+                Your book is in <%= @my_tradeline.inventory_own.condition.description.downcase %> condition. <br />
+                <strong>Trade with:</strong> <%= @to_tradeline.inventory_own.user.username %><br />
+                Their book is in <%= @to_tradeline.inventory_own.condition.description.downcase %> condition.
+              </p>
+
+              <% if trade.trade_lines.size == 3 #three-way trade summary
+                @from_tradeline = trade.get_tradeline_from(session[:user_id]) %>
+                <strong>This is a three way trade.</strong>
+                <% if @to_tradeline.user_from_accepted %>
+                  <%= @to_tradeline.inventory_own.user.username %> has already accepted this trade.
+                <% else %>
+                   <%= @to_tradeline.inventory_own.user.username %> has not yet accepted this trade.
+                <% end  
+                if @from_tradeline.user_from_accepted %>  
+                  <%= @from_tradeline.inventory_own.user.username %> has already accepted this trade.
+                <% else %>
+                  <%= @from_tradeline.inventory_own.user.username %> has not yet accepted this trade.
+                <% end %> 
+
+               <% end#if %>
+              <% @message = trade.trade_notes.last #most recent message %>
+              <p>
+                <strong><%= @message.user.username %> said:</strong><br />
+                <strong>When: </strong><%= @message.meet_time %><br />
+                <strong>Where: </strong><%= @message.place %></br>
+                <strong>Comments: </strong><%= @message.comment %>
+              </p>
+
+              <%= link_to "Accept Trade", "#", class: "accept-trade" %>
+              <%= link_to "Counter Trade", "#", class: "counter-trade" %>
+              <%= link_to "Reject Trade", "#", class: "reject-trade" %>
+            </div>
+
+          </li>
+        <% end#each %>
+      </ul>
+    </div>
+  <% end#if %>
+  
+
+  <% if @book_matches[:possible].size > 0 #all possible trades %>
+    <div class="possible-trades">
+      <h1><%= pluralize(@book_matches[:possible].size, "Possible Trade") %></h1>
+
+      <% @count = 0 %>
+      <ul class="trades">
+      <% @book_matches[:possible].each do |trade| 
+        @count = @count + 1 %>
+          <li>
+            <h2>Trade Option <%= @count %></h2>
+            <% @my_tradeline = trade.get_tradeline_only(session[:user_id])
+            @from_tradeline = trade.get_tradeline_from(session[:user_id]) %>
+              <div class="thumbnail">
+                <%= image_tag @my_tradeline.inventory_own.book.thumbnail %>
+              </div>
+              <div class="details">
+                <p>
+                  <strong>Trade your book:</strong> <%= @my_tradeline.inventory_own.book.name %><br />
+                  Your book is in <%= @my_tradeline.inventory_own.condition.description.downcase %> condition.<br />
+                  <strong>Trade with:</strong> <%= @from_tradeline.inventory_own.user.username %><br />
+                  Their book is in <%= @from_tradeline.inventory_own.condition.description.downcase %> condition.
+                  <% if trade.trade_lines.size > 2 #three way trade %>
+                    <br /><strong>This is a <%= trade.trade_lines.size %>-way trade.</strong><br />
+                    <% @to_tradeline = trade.get_tradeline_to(session[:user_id]) %>
+                    <%= @from_tradeline.inventory_own.user.username %> gets <%= @to_tradeline.inventory_own.user.username %>'s book <%= @to_tradeline.inventory_need.book.name %>.
+                  <% end %>
+                </p>
+                <%= link_to "Propose trade", "/propose_trade/" + trade.escaped_json, :rel => "facebox", class: "propose-trade" %>   
+              </div>
+          </li>
+      <% end#each %>
+      </ul>
+    </div>
+  <% end#if %>
+  
+
+  </div>
 </div>
 
