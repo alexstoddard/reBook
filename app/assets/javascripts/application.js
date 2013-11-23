@@ -35,8 +35,8 @@ $(function() {
 	$('#img').attr("src", '/assets/' + img);
     });
 
-  $('#searcher').keyup { function () {
+  $('#searcher').keyup(function(){
     $('#location_form').submit() 
-  })
+  });
 
 });

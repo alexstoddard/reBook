@@ -18,30 +18,6 @@
 			<p><strong>Username:</strong> <%= @user.username %></p>
 			<p><strong>Email:</strong> <%= @user.email %></p>
 		</div>
-
-		<div class="locations">
-
-			<h2>Locations and Schedules:</h2>
-
-			<%= form_tag locations_path, :method => :get, :remote => true, :id => "location_form" do %>
-		    	<div class="field" id="location-results">
-		        	<%= label_tag :search, "Add locations to your profile:"%>
-		        	<%= hidden_field_tag :user_id, @user.id %>
-		        	<%= text_field_tag :search, params[:search], :id => "searcher", :autocomplete =>"off" %>
-		        	<%= submit_tag "Search", :name => nil, :class => "button" %>
-		      	</div>
-			<% end %>
-
-			<div class="results">
-				<%= render :partial => 'location_results' %>
-			</div>
-
-			 <div class="schedules">
-		    	<%= render :partial => 'user_schedules' %>
-		    </div>
-		</div>
 	    
-	   
-
 	</div>
 </div>

@@ -73,11 +73,29 @@
 	margin-right: 200px;
 }
 
-#user-show .locations form,
-#user-show .locations .results {
+/*********************User Schedules Edit Page **********************/
+/********************************************************************/
+
+#edit-schedule form,
+#edit-schedule #results {
 	margin-bottom:20px;
 }
 
-#user-show .locations .button {
+#edit-schedule form label {
+	margin-right:5px;
+}
+
+#edit-schedule form .button {
 	padding:4px 7px;
+}
+
+#edit-schedule #results li {
+	overflow:hidden;
+	margin-bottom:5px;
+	list-style: none; 
+}
+
+#edit-schedule #results li img {
+	float: left;
+	margin-right: 5px;
 }

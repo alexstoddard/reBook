@@ -52,9 +52,9 @@
 			    		<div class="proposed-trades">
 					    	<% if @proposed_count > 0 #show message for proposed trades %>
 					    		<% if @proposed_count == 1 %>
-					  				<p>1 user has proposed a trade to you. <%= link_to "View Trade »", "/match_details/" + x.id.to_s %></p>
+					  				<p>1 user has proposed a trade to you. <%= link_to "View Trade »", "/match_details/" + x.id.to_s + "#proposed" %></p>
 					  			<% else %>
-					  				<p><% @proposed_count %> users have proposed trades to you. <%= link_to "View Trades »", "/match_details/" + x.id.to_s %></p>
+					  				<p><%= @proposed_count %> users have proposed trades to you. <%= link_to "View Trades »", "/match_details/" + x.id.to_s + "#proposed" %></p>
 					  			<% end %>
 					  			
 					    	<% end %>
