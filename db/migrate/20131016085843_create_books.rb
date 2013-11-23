@@ -8,7 +8,6 @@ class CreateBooks < ActiveRecord::Migration
       t.decimal :price
       t.string :googleId
       t.string :thumbnail
-      t.datetime :published
       t.timestamps
     end
   end
