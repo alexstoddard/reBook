@@ -7,12 +7,55 @@ class Trade < ActiveRecord::Base
   has_many :trade_notes, dependent: :destroy
 
   def user_accept(user_id)
+    
+    user = User.find(user_id)
+
     trade_lines.each do |x|
       if x.inventory_own.user_id == user_id
         x.user_from_accepted = true
         x.save
+        
+        user_own(user_id).inventory_own.trades.each do |y|
+          if y.id != x.id
+            y.trade_lines.each do |z|
+              z.user_from_accepted = false
+              z.save
+            end
+          end
+        end
+
+        user_need(user_id).inventory_need.trades.each do |y|
+          if y.id != x.id
+            y.trade_lines.each do |z|
+              z.user_from_accepted = false
+              z.save
+            end
+          end
+        end
+
       end
     end
+  end
+
+  def user_need(user_id)
+    trade_lines.each do |x|
+      if x.inventory_need.user_id == user_id
+        return x
+      end
+    end
+  end
+
+  def user_own(user_id)
+    trade_lines.each do |x|
+      if x.inventory_own.user_id == user_id
+        return x
+      end
+    end
+  end
+
+  def reset_trades(x, user_id)
+
+
   end
 
   def user_decline(user_id)
@@ -133,15 +176,20 @@ class Trade < ActiveRecord::Base
   end
 
   def self.not_in_owns(owns)
-#    not owns.any? { |x| TradeLine.find_by_inventory_own_id(x.id) }
     not owns.any? do |x| 
-      line = TradeLine.find_by_inventory_own_id(x.id)
-      ( (not line.nil?) and line.user_from_accepted == true)
+      lines = x.trade_lines
+
+      lines.any? do |line|
+        ( (not line.nil?) and line.user_from_accepted == true)
+      end
     end
   end
 
   def self.not_in_needs(needs)
-    not needs.any? { |x| TradeLine.find_by_inventory_need_id(x.id) }
+    not needs.any? do |x|
+      trades = x.trades
+      trades.any? { |y| y.user_own(x.user_id).user_from_accepted }
+    end
   end
 
   # This function returns trades which do not exist yet but are possible given
@@ -157,7 +205,7 @@ class Trade < ActiveRecord::Base
         n1.user_owns.each do | o2 |
           o2.need_matches.each do | n2 |
 #            if n2.user_id == user and not_in_needs [n1, n2] and not_in_owns [o1, o2]
-            if n2.user_id == user and not_in_owns [o1, o2]
+            if n2.user_id == user and not_in_owns [o1, o2] and not_in_needs [n1, n2]
               trade = Trade.new
 
               l1 = trade.trade_lines.build()
@@ -188,7 +236,7 @@ class Trade < ActiveRecord::Base
             n2.user_owns.each do | o3 |
               o3.need_matches.each do | n3 |
 #                if n3.user_id == user and not_in_needs [n1, n2, n3] and not_in_owns [o1, o2, o3]
-                if n3.user_id == user and not_in_owns [o1, o2, o3]
+                if n3.user_id == user and not_in_owns [o1, o2, o3] and not_in_needs [n1, n2, n3]
                   trade = Trade.new
 
                   l1 = trade.trade_lines.build()
@@ -222,7 +270,7 @@ class Trade < ActiveRecord::Base
 
     trades = Trade.includes(:trade_lines)
     needs = InventoryNeed.find_all_by_user_id(user_id)
-    
+
     # These are filters for the various types of situations a trade can exist in
     # To add another type, you need only map a symbol to a proc that returns a filtered
     # version of a trade collection
@@ -235,17 +283,15 @@ class Trade < ActiveRecord::Base
      # This filter returns trades for the user which are active and have been
      # accepted by the user (trades that are waiting on other users to accept)
      :accepted => lambda do |user, trades|
-       a = trades.select do |trade| 
-         trade.trade_lines.any? do |line|
+       trades.select do |trade| 
+         a = trade.trade_lines.any? do |line|
            line.user_from_accepted == true and line.inventory_own.user_id == user
          end
-       end
-       b = trades.select do |trade| 
-         trade.trade_lines.any? do |line|
+         b = trade.trade_lines.any? do |line|
            line.user_from_accepted == false and line.inventory_own.user_id != user
          end
+         (a and b)
        end
-       (a and b)
      end,
      # This filter returns trades for the user which are active and have not
      # been accepted by the user (trades another user proposed)
