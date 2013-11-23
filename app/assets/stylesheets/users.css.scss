@@ -73,19 +73,11 @@
 	margin-right: 200px;
 }
 
-#user-show .locitem {
- float: left;
- margin: 20px 20px;
- text-align: center;
+#user-show .locations form,
+#user-show .locations .results {
+	margin-bottom:20px;
 }
 
-.userlocheader img{
-}
-
-.userlocheader div{
- display: inline-block;
-}
-
-#userlocs {
-clear: both;
+#user-show .locations .button {
+	padding:4px 7px;
 }

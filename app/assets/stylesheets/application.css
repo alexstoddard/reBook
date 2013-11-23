@@ -86,7 +86,7 @@ body {
 /*****************Button and Text Box Styling**********************/
 /******************************************************************/
 .button {
-	background-color: #CCCCFF;
+	background-color: #6897D3;
 	border-radius: 5px;
 	color: white;
 	padding: 8px;
@@ -97,7 +97,7 @@ body {
 }
 
 .button:hover {
-	background-color:#A3A3EC;
+	background-color:#4D7DBB;
 	text-decoration: none;
 }
 
