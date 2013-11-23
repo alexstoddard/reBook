@@ -27,6 +27,8 @@ Rebook::Application.routes.draw do
   
   root 'homepage#index'
 
+  get '*a', to: 'errors#error_404'
+
   #matching routes
   get "matches", to: 'trades#matches'
   get "match_details/:id", to: 'trades#match_details'

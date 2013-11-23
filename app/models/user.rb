@@ -75,28 +75,13 @@ class User < ActiveRecord::Base
   
   # Create a new user with the given location as its initial location
   def self.create_with_location(user_params, location_params)
-    
     User.transaction do
       @user = User.new(user_params)
       @user.activated ||= false
-
-      if @user.save
-
-        @user_location = UserLocation.new(location_params)
-        @user_location.user_id = @user.id
-
-        if @user_location.save
-          return @user
-        else
-          raise ActiveRecord::Rollback
-        end
-      else
-        raise ActiveRecord::Rollback
-      end
+      @user_location = @user.user_locations.build(location_params)
+      @user.save
+      return @user
     end
-
-    return @user
-
   end
 
 end

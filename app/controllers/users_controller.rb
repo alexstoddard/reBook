@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  skip_before_filter :validate_user, except: [:create, :forgot_do]
+  skip_before_filter :validate_user, except: [:show, :update]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :set_locations, only: [:edit, :update, :create, :new]
   before_action :set_params, only: [:update, :create]
@@ -132,7 +132,7 @@ class UsersController < ApplicationController
     end
 
     def set_params
-      @location_params = { :location_id => user_params[:location], :description => user_params[:location_description] }
+      @location_params = { :location_id => user_params[:location].to_i, :description => user_params[:location_description] }
       user_params[:location] = nil
       user_params[:location_description] = nil
     end
@@ -143,5 +143,9 @@ class UsersController < ApplicationController
                                    :passhash_confirmation, :location, :location_description, :terms)
     end
 
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def location_params
+      params.permit(:location_id, :description)
+    end
     
 end
