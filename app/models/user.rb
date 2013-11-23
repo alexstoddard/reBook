@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   # Validation requirements
   validates :first, :presence => true
   validates :last, :presence => true
-  validates :username, :presence => true, :uniqueness => true, :length => { :in => 4..20 }
+  validates :username, :presence => true, :uniqueness => true, :length => { :in => 4..12 }
   validates :email, :presence => true, :uniqueness => true, :format => EMAIL_PATTERN
   validates :passhash, :confirmation => true, :presence => true
   validates :passhash_confirmation, :presence => true
