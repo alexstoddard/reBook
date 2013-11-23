@@ -26,6 +26,8 @@ Rebook::Application.routes.draw do
   resources :locations
   
   root 'homepage#index'
+  #user_routes
+  get "edit_schedule/", to: 'users#edit_schedule'
 
   #matching routes
   get "matches", to: 'trades#matches'

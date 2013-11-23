@@ -3,8 +3,8 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 #jQuery($).ready ->
- # $('#searcher').keyup ->
- #    $('#location_form').submit() 
+#  $('#searcher').keyup ->
+#    $('#location_form').submit() 
 
  # $('#loclist a').click ->
  #   $.getScript(this.href)

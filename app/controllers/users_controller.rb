@@ -13,6 +13,10 @@ class UsersController < ApplicationController
   # GET /forgot.json
   def forgot
   end
+  
+  def edit_schedule
+    @user = User.find(session[:user_id])
+  end
 
   # POST /forgot
   # POST /forgot.json
