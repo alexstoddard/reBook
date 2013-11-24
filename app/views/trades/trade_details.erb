@@ -4,42 +4,78 @@
   })
 </script>
 <div id="main">
-        <h2>Trade number: <%= params[:trade_id]%></h2>
-        <br/><br/>
-        <% @trade.trade_lines.each do |y| %>
-                <div style="float:left; padding-right: 20px; width: 150px">
-                        <b>From: </b><%= y.inventory_own.user.username %><br/>
-                        <b>To: </b><%= y.inventory_need.user.username %><br/>
-                        <b>Trade Book: </b><%= y.inventory_own.book.name %><br/>
-                        <%= image_tag y.inventory_own.book.thumbnail %><br/>
-                </div>
-        <% end %>
-  <% @trade.trade_notes.each do |note| %>
-        <div style="clear:left">
-                <br/>
-                <b> Suggested Meet Time: </b> <%= note.meet_time%> <br/>
-                <b> Suggested Meet Place: </b> <%= note.place %> <br/>
-                <b> <%= note.user.username %> says: </b> <%= note.comment %> <br/>
-        </div>
-  <% end %>
-        <br/><br/>
+	<div id="matches">
+  <% @user_line = @trade.get_tradeline_only(@user.id) %>
+  <% x = @user_line.inventory_own %>
+		<h1>Your Trade Details</h1>
+				<% if @trade.active?(@user.id) %>
+          <h2>This trade is active</h2>
+					<article class="green">
+				<% elsif @trade.accepted?(@user.id) %>
+          <h2>This trade is pending</h2>
+					<article class="grey">
+				<% elsif @trade.declined? %>
+          <h2>This trade has been canceled</h2>
+					<article class="red">
+				<% else #normal->blue header %>
+          <h2>This trade has been completed</h2>
+					<article>
+				<% end %>
+					<h3><span>Get this book:</span><br />
+				    	<%= x.book.name %></h3>
+				    
+				    <div class="need-details">	
+				    	<%= image_tag(x.book.thumbnail, alt: x.book.name, class: "bookcover") %>
+						<p><strong>Author:</strong> <%= x.book.author %><br />
+						<strong>ISBN:</strong> <%= x.book.isbn %><br />
+						<strong>Published:</strong> <%= x.book.published %></p>
+				    </div>
 
-        <div>
-                <% @trade.trade_lines.each do |x| %>
-                        <% if x.inventory_own.user.id == session[:user_id] %>
-                                <% if !x.user_from_accepted %>
-                                        <%= link_to 'Accept trade', "/accept_trade/" + @trade.id.to_s, :action => :get, :rel => "facebox" %>
-          </br>
-                                        <%= link_to 'Decline trade', "/decline_trade/" + @trade.id.to_s, :action => :get, :rel => "facebox"  %>
-                                <% else %> 
-                                        <%= link_to "Cancel Trade", "/decline_trade/" + @trade.id.to_s, :rel => "facebox" %>
-                                <% end %>
-                                <br/>
-                                <%= link_to "Update Meeting Information", "/update_trade/" + @trade.id.to_s, :rel => "facebox" %>
-                                
-                        <% end %>
-                        
-                <% end %>
+						<div class="possible-trades">
+						    	<ul class="trades">
+							    	<% # list first three possible trade
+							    	@trade.rotate_lines(@user.id).each do |tradeline| %>
+							    		<li>
+											<%= image_tag tradeline.inventory_own.book.thumbnail, alt: tradeline.inventory_own.book.name %><br />
+										    <p>
+
+										    <strong>From:</strong> <%= render :partial => 'users/user', locals: { display_user: tradeline.inventory_own.user } %><br/>
+										    Their book is in <%= tradeline.inventory_own.condition.description.downcase %> condition.<br>
+										    <strong>To:</strong> <%= render :partial => 'users/user', locals: { display_user: tradeline.inventory_need.user } %><br/><br/>
+										    </p>
+									    </li>
+							    	<% end %>
+						    	</ul>
+					</div>
+				</article>
+        <div class="messages">
+        <% @trade.trade_notes.each do |note| %>
+                <div> <h2><%= render :partial => 'users/user', locals: { display_user: note.user } %> sent a message about this trade: </h2></div>
+                <div><b> Suggested Meet Time: </b> <%= note.meet_time%></div>
+                <div> <b> Suggested Meet Place: </b> <%= note.place %></div>
+                <div><b> Comments about this trade: </b> <%= note.comment %></div>
+        <% end %>
         </div>
-        
+        </br></br></br>
+          <div class="action_links">
+              <% if @trade.active?(@user.id) %>
+              <%= link_to "Accept Trade", "/accept_trade/" +  @trade.id.to_s, :action => :get, :rel => "facebox", class: "accept-trade" %>
+              <%= link_to "Counter Propose", "/update_trade/" + @trade.id.to_s, :action => :get, :rel => "facebox", class: "counter-trade" %>
+              <% end %>
+              <% if  @trade.accepted?(@user.id) or @trade.completed? %>
+              <%= link_to "Change Trade", "/update_trade/" + @trade.id.to_s, :action => :get, :rel => "facebox", class: "counter-trade" %>
+              <% end %>
+              <% if @trade.declined? %>
+              <%= link_to "Repropose Trade", "/update_trade/" + @trade.id.to_s, :action => :get, :rel => "facebox", class: "counter-trade" %>
+              <% end %>
+              <% if not @trade.declined?%>
+              <% if not @trade.accepted?(@user.id)%>
+              <%= link_to "Reject Trade", "/decline_trade/" + @trade.id.to_s, :action => :get, :rel => "facebox", class: "reject-trade" %>
+              <% else %>
+              <%= link_to "Cancel Trade", "/decline_trade/" + @trade.id.to_s, :action => :get, :rel => "facebox", class: "reject-trade" %>
+              <% end %>
+              <% end %>
+          </div></br></br></br>
+       </div>
+	</div>
 </div>

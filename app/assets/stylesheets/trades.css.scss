@@ -54,7 +54,7 @@
 }
 
 #matches article .proposed-trades {
-	text-align:center;
+	text-align:left;
 }
 
 #matches article .proposed-trades a {
@@ -92,7 +92,7 @@
 }
 
 #matches article .possible-trades .view-more {
-	text-align:right;
+	text-align:left;
 }
 
 #matches article .possible-trades .view-more a {
@@ -105,6 +105,50 @@
 .possible-trades p {
 	overflow:hidden;
 	width:320px;
+}
+
+/******************************************************************/
+/******************trade details page *****************************/
+/******************************************************************/
+#matches .action_links a {
+  border-radius: 5px;
+  color: #FFFFFF;
+  padding: 5px 10px;
+}
+
+#matches .action_links a {
+  border-radius: 5px;
+  color: #FFFFFF;
+  padding: 5px 10px;
+}
+
+#matches .action_links .accept-trade {
+	background-color: #5FBE5F;
+	margin-right:5px;
+}
+
+#matches .action_links .counter-trade {
+	background-color:#3A70B4;
+	margin-right:5px;
+}
+
+#matches .action_links .reject-trade {
+	background-color: #aaa;
+}
+
+#matches .action_links .accept-trade:hover {
+	text-decoration:none;
+	background-color:#3F8D3F;
+}
+
+#matches .action_links .counter-trade:hover {
+	background-color: #345C8F;
+	text-decoration: none;
+}
+
+#matches .action_links .reject-trade:hover {
+	text-decoration: none;
+	background-color: #868686;
 }
 
 /******************************************************************/

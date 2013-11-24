@@ -56,6 +56,12 @@ class Trade < ActiveRecord::Base
     end
   end
 
+  def rotate_lines(user)
+    arr = trade_lines.all
+    idx = arr.index { |x| x.inventory_own.user_id == user }
+    arr = arr.rotate(idx)
+  end
+
   # Examines the trade lines and finds the one corresponding
   # to the line that contains a particular user's need.
   def user_need(user_id)
@@ -238,6 +244,8 @@ class Trade < ActiveRecord::Base
     trade_lines.all? do |x| 
       if (x.inventory_own.user_id == user)
         x.user_from_accepted == true
+      else
+        true
       end 
     end
 
@@ -252,6 +260,8 @@ class Trade < ActiveRecord::Base
     trade_lines.all? do |x| 
       if (x.inventory_own.user_id == user)
         x.user_from_accepted == false
+      else
+        true
       end 
     end
   end

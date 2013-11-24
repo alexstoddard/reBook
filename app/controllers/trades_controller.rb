@@ -59,7 +59,8 @@ class TradesController < ApplicationController
   end
   
   def trade_details
-	@trade = Trade.find_by_id(params[:trade_id])
+    @trade = Trade.find_by_id(params[:trade_id])
+    @user = current_user
   end
 
   # GET /matches_details/1
