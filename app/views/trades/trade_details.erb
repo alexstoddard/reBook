@@ -48,6 +48,16 @@
 						    	</ul>
 					</div>
 				</article>
+        <div class="acceptance">
+         <% @trade.get_tradelines_except(@user.id).each do |line| %>
+                <% if line.user_from_accepted %>
+                  <%= render :partial => 'users/user', locals: { display_user: line.inventory_own.user } %> has already accepted this trade.</br>
+                <% else %>
+                   <%= render :partial => 'users/user', locals: { display_user: line.inventory_own.user } %> has not yet accepted this trade.
+                <% end %>
+         <% end %>
+        </div>
+        </br></br>
         <div class="messages">
         <% @trade.trade_notes.each do |note| %>
                 <div> <h2><%= render :partial => 'users/user', locals: { display_user: note.user } %> sent a message about this trade: </h2></div>
@@ -56,7 +66,7 @@
                 <div><b> Comments about this trade: </b> <%= note.comment %></div>
         <% end %>
         </div>
-        </br></br></br>
+        </br></br>
           <div class="action_links">
               <% if @trade.active?(@user.id) %>
               <%= link_to "Accept Trade", "/accept_trade/" +  @trade.id.to_s, :action => :get, :rel => "facebox", class: "accept-trade" %>

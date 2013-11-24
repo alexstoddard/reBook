@@ -68,7 +68,8 @@ class TradesController < ApplicationController
   def match_details
     need_id = params[:id].to_i
     user_id = session[:user_id]
-    
+
+    @user = current_user
     @inventory_need = InventoryNeed.find(need_id)
     @book_matches = Trade.trades_by_need(user_id, need_id)
 

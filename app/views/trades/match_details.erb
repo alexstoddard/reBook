@@ -3,7 +3,6 @@
     $('a[rel*=facebox]').facebox(); 
   });
 </script>
-
 <div id="main">
   <div id="match-details">
 
@@ -42,21 +41,22 @@
                 Their book is in <%= @to_tradeline.inventory_own.condition.description.downcase %> condition.
               </p>
 
-              <% if trade.trade_lines.size == 3 #three-way trade summary
-                @from_tradeline = trade.get_tradeline_from(session[:user_id]) %>
-                <strong>This is a three way trade.</strong>
+              <% if trade.trade_lines.size == 3 #three-way trade summary %>
+                <% @from_tradeline = trade.get_tradeline_from(session[:user_id]) %>
+                <strong>This is a three way trade.</strong></br>
                 <% if @to_tradeline.user_from_accepted %>
-                  <%= render :partial => 'users/user', locals: { display_user: @to_tradeline.inventory_own.user } %> has already accepted this trade.
+                  <%= render :partial => 'users/user', locals: { display_user: @to_tradeline.inventory_own.user } %> has already accepted this trade.</br>
                 <% else %>
                    <%= render :partial => 'users/user', locals: { display_user: @to_tradeline.inventory_own.user } %> has not yet accepted this trade.
                 <% end  
                 if @from_tradeline.user_from_accepted %>  
                   <%= render :partial => 'users/user', locals: { display_user: @from_tradeline.inventory_own.user } %> has already accepted this trade.
                 <% else %>
-                  <%= render :partial => 'users/user', locals: { display_user: @to_tradeline.inventory_own.user } %> has not yet accepted this trade.
+                  <%= render :partial => 'users/user', locals: { display_user: @from_tradeline.inventory_own.user } %> has not yet accepted this trade.</br>
                 <% end %> 
 
                <% end#if %>
+               </br>
               <% @message = trade.trade_notes.last #most recent message %>
               <p>
                 <strong><%= render :partial => 'users/user', locals: { display_user: @message.user } %> said:</strong><br />
@@ -64,10 +64,24 @@
                 <strong>Where: </strong><%= @message.place %></br>
                 <strong>Comments: </strong><%= @message.comment %>
               </p>
-
-              <%= link_to "Accept Trade", "/accept_trade/" + trade.id.to_s, :action => :get, :rel => "facebox", class: "accept-trade" %>
-              <%= link_to "Counter Trade", "/update_trade/" + trade.id.to_s, :action => :get, :rel => "facebox", class: "counter-trade" %>
+              <%= link_to "Show more details about this trade...", "/trade_details/" + trade.id.to_s %> </br></br>
+              <% if trade.active?(@user.id) %>
+              <%= link_to "Accept Trade", "/accept_trade/" +  trade.id.to_s, :action => :get, :rel => "facebox", class: "accept-trade" %>
+              <%= link_to "Counter Propose", "/update_trade/" + trade.id.to_s, :action => :get, :rel => "facebox", class: "counter-trade" %>
+              <% end %>
+              <% if  trade.accepted?(@user.id) or trade.completed? %>
+              <%= link_to "Change Trade", "/update_trade/" + trade.id.to_s, :action => :get, :rel => "facebox", class: "counter-trade" %>
+              <% end %>
+              <% if trade.declined? %>
+              <%= link_to "Repropose Trade", "/update_trade/" + trade.id.to_s, :action => :get, :rel => "facebox", class: "counter-trade" %>
+              <% end %>
+              <% if not trade.declined?%>
+              <% if not trade.accepted?(@user.id)%>
               <%= link_to "Reject Trade", "/decline_trade/" + trade.id.to_s, :action => :get, :rel => "facebox", class: "reject-trade" %>
+              <% else %>
+              <%= link_to "Cancel Trade", "/decline_trade/" + trade.id.to_s, :action => :get, :rel => "facebox", class: "reject-trade" %>
+              <% end %>
+              <% end %>
             </div>
 
           </li>
