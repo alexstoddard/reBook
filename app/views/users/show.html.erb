@@ -1,21 +1,4 @@
-<<<<<<< HEAD
-<div id="wrapperuserinfo">
 
-	<div id="userinfo">
-
-		 <%= link_to "Edit My Account", edit_user_path, :id => "edit" %>
-		 
-		 <div id="avatar">
-		  <h2>Your Avatar:</h2>
-		  <div id="userimg">
-			<%= link_to(image_tag(@user.image, alt: "userimage", id: 'img'), root_path) %>
-		  </div>
-		</div>
-		
-		<h1>Account Preferences</h1>
-
-		
-=======
 <div id="main">
 	<div id="show-user">
 
@@ -31,7 +14,7 @@
 					<%= image_tag(@user.image, alt: "userimg", class: 'large_pic') %>
 			  	</div>
 			</div>
->>>>>>> 26f547ef90fc2ef793d3b3a109d8378b1e897f32
+
 		
       <% if @is_current_user %>
 			<h1>My Account <span>(<%= link_to "Edit", edit_user_path %>)</span></h1>
