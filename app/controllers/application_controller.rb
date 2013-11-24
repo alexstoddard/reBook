@@ -4,6 +4,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   #before_filter :validate_user
 
+  def is_current_user(user)
+    return session[:user_id].to_i == user.to_i
+  end
+
   private
 
   def admin?

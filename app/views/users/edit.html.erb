@@ -20,7 +20,7 @@
 									 ['Lamb', 'lamb.png'],['Horse', 'horse.png'],['Pig', 'pig.png'],['Mouse', 'mouse.png'],
 									 ['Cow', 'cow.png'],['Tiger', 'tiger.png'],['Monkey', 'monkey.png'],['Chicken', 'chicken.png']] %>	
 		<div class="user_image">
-			<%= link_to(image_tag(@user.image, alt: "userimage", class: 'img'), root_path) %>
+			<%= image_tag(@user.image, alt: "userimage", class: 'img') %>
 		</div>
 	</div>
 	

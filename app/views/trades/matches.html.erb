@@ -6,6 +6,18 @@
 <div id="main">
 	<div id="matches">
 		<h1>Your Trade Matches</h1>
+    <% if @inventory_needs.size == 0 %>
+      <div id="search">
+        <h2>There are no matches because you don't currently have any books in your wanted list.</h2>
+        <h2>Get started by adding books to your <%= link_to "want", inventory_needs_path %> and <%= link_to "have", inventory_owns_path %> lists.</h2>
+        </br>
+        <%= form_tag("/search", method: "get") do %>
+          <%= text_field_tag('search', nil, id: nil, placeholder: "Title, ISBN, Author", class: "text") %>
+          <%= submit_tag("Search", id: nil, class: "button") %>
+        <% end %> 
+      </div>
+
+    <% end %>
 		<% @inventory_needs.each do |x| %>
 			<% if @need_hash[x.id][:completed].size == 0 #do not show complete trades (trades already accepted by all users)%>
 				<% 
@@ -40,9 +52,11 @@
 				    			other_trades = @need_hash[x.id][:accepted].first.get_tradelines_except(session[:user_id])
 				    			other_trades.each do |y| 
 				    				if y.user_from_accepted %>
-				    					<p><%= y.inventory_own.user.username %> has accepted this trade.</p>
+				    					<p><%= image_tag(y.inventory_own.user.image, alt: "userimg", id: "pic") %>
+                         <%= link_to y.inventory_own.user.username, user_path(y.inventory_own.user_id) %> has accepted this trade.</p>
 				    				<% else %>
-				    					<p><%= y.inventory_own.user.username %> has not yet accepted this trade.</p>
+				    					<p><%= image_tag(y.inventory_own.user.image, alt: "userimg", id: "pic") %>
+                         <%= link_to y.inventory_own.user.username, user_path(y.inventory_own.user_id) %> has not yet accepted this trade.</p>
 				    				<% end
 				    			end %>
 								<%= link_to "View Trade", "/trade_details/" + @need_hash[x.id][:accepted][0].id.to_s %>
