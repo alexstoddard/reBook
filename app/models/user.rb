@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   # Validation requirements
   validates :first, :presence => true
   validates :last, :presence => true
-  validates :username, :presence => true, :uniqueness => true, :length => { :in => 4..20 }
+  validates :username, :presence => true, :uniqueness => true, :length => { :in => 4..12 }
   validates :email, :presence => true, :uniqueness => true, :format => EMAIL_PATTERN
   validates :passhash, :confirmation => true, :presence => true
   validates :passhash_confirmation, :presence => true
@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
   has_many :inventory_needs, dependent: :destroy
   has_many :inventory_owns, dependent: :destroy
   has_many :user_locations, dependent: :destroy
-  has_many :user_feedbacks, :class_name => 'UserFeedback', :foreign_key => 'user_from_id', :dependent => :destroy
+#  has_many :user_feedbacks, :class_name => 'UserFeedback', :foreign_key => 'user_from_id', :dependent => :destroy
   has_many :user_feedbacks, :class_name => 'UserFeedback', :foreign_key => 'user_to_id', :dependent => :destroy
   has_many :trade_notes, dependent: :destroy
 
@@ -53,9 +53,23 @@ class User < ActiveRecord::Base
     end
   end
 
+  def feedback_count
+    return user_feedbacks.count
+  end
+
+  def feedback_score
+    x = user_feedbacks.average(:feedback_id)
+    if x.nil?
+      return 3
+    else
+      return ((5.0/3.0)*x).round
+    end
+  end
+
   # Utility method which looks up a user and returns it if
   # the provided password hashes identically to the database
   def self.authenticate(login_username, login_password)
+
     user = User.find_by_username(login_username)
     if user && user.matches_password(login_password)
       return user
@@ -75,28 +89,13 @@ class User < ActiveRecord::Base
   
   # Create a new user with the given location as its initial location
   def self.create_with_location(user_params, location_params)
-    
     User.transaction do
       @user = User.new(user_params)
       @user.activated ||= false
-
-      if @user.save
-
-        @user_location = UserLocation.new(location_params)
-        @user_location.user_id = @user.id
-
-        if @user_location.save
-          return @user
-        else
-          raise ActiveRecord::Rollback
-        end
-      else
-        raise ActiveRecord::Rollback
-      end
+      @user_location = @user.user_locations.build(location_params)
+      @user.save
+      return @user
     end
-
-    return @user
-
   end
 
 end

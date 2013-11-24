@@ -13,7 +13,7 @@
 	font-weight:bold;
 	font-size:1.3em;
 	color:#fff;
-	background:#4093C4;
+	background:#282D80;
 	padding:10px 15px;
 	margin-bottom:12px;
 }
@@ -22,7 +22,7 @@
 }
 
 #matches article.red h3 {
-	background: #CF5353;
+	background: #CC3E47;
 }
 
 #matches article.grey h3 {
@@ -54,7 +54,7 @@
 }
 
 #matches article .proposed-trades {
-	text-align:center;
+	text-align:left;
 }
 
 #matches article .proposed-trades a {
@@ -85,12 +85,14 @@
 	margin-right:2%;
 }
 
-#matches article .possible-trades .trades li img {
+#matches article .possible-trades .trades li img:not(.pic) {
 	max-height: 100px;
+	border: solid #949494 1px;
+	box-shadow: 2px 2px 6px -1px #919191;
 }
 
 #matches article .possible-trades .view-more {
-	text-align:right;
+	text-align:left;
 }
 
 #matches article .possible-trades .view-more a {
@@ -98,4 +100,256 @@
 	font-weight: bold;
 	font-size: 0.9em;
 	color: #2A4EA8;
+}
+
+.possible-trades p {
+	overflow:hidden;
+	width:320px;
+}
+
+/******************************************************************/
+/******************trade details page *****************************/
+/******************************************************************/
+#matches .action_links a {
+  border-radius: 5px;
+  color: #FFFFFF;
+  padding: 5px 10px;
+}
+
+#matches .action_links a {
+  border-radius: 5px;
+  color: #FFFFFF;
+  padding: 5px 10px;
+}
+
+#matches .action_links .accept-trade {
+	background-color: #5FBE5F;
+	margin-right:5px;
+}
+
+#matches .action_links .counter-trade {
+	background-color:#3A70B4;
+	margin-right:5px;
+}
+
+#matches .action_links .reject-trade {
+	background-color: #aaa;
+}
+
+#matches .action_links .accept-trade:hover {
+	text-decoration:none;
+	background-color:#3F8D3F;
+}
+
+#matches .action_links .counter-trade:hover {
+	background-color: #345C8F;
+	text-decoration: none;
+}
+
+#matches .action_links .reject-trade:hover {
+	text-decoration: none;
+	background-color: #868686;
+}
+
+/******************************************************************/
+/******************match details page *****************************/
+/******************************************************************/
+
+#match-details {
+	margin-bottom:20px;
+}
+
+#match-details h1 {
+	font-size:2.3em;
+}
+
+/***** book want box ****/
+
+#match-details .book-want {
+	padding: 10px 15px;
+	background: #B6D4F0;
+	overflow:hidden;
+	margin-bottom:20px;
+}
+
+#match-details .book-want img {
+	max-width:100px;
+	float: left;
+	border: solid #949494 1px;
+	box-shadow: 2px 2px 6px -1px #919191;
+	margin-right:15px;
+	margin-top:6px;
+}
+
+#match-details .book-want .details {
+	float:left;
+}
+
+#match-details .book-want h2 span {
+	font-size: 0.7em;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+#match-details .book-want .details p {
+	display: inline-block;
+	vertical-align: top;
+}
+
+/****** proposed trades *****/
+
+#match-details .proposed-trades .trades li {
+	width:48%;
+	display:inline-block;
+	vertical-align:top;
+	overflow:hidden;
+	border-top: 1px solid #aaa;
+	padding-top: 15px;
+	margin-bottom:25px;
+}
+
+#match-details .proposed-trades .trades li:nth-child(1),
+#match-details .proposed-trades .trades li:nth-child(2) {
+	border-top:0;
+	padding-top:0;
+}
+
+#match-details .proposed-trades .trades li:nth-child(even) {
+	margin-left:3%;
+}
+
+#match-details .proposed-trades .thumbnail {
+	float:left;
+}
+
+#match-details .proposed-trades .thumbnail img {
+	border: solid #949494 1px;
+	box-shadow: 2px 2px 6px -1px #919191;
+	margin-right:15px;
+}
+
+#match-details .proposed-trades .details {
+	display:inline-block;
+	margin-bottom:10px;
+}
+
+#match-details .proposed-trades .accept-trade,
+#match-details .proposed-trades .counter-trade,
+#match-details .proposed-trades .reject-trade {
+	padding: 5px 10px;
+	border-radius: 5px;
+	color:#fff;
+}
+
+#match-details .proposed-trades .accept-trade {
+	background-color: #5FBE5F;
+	margin-right:5px;
+}
+
+#match-details .proposed-trades .counter-trade {
+	background-color:#3A70B4;
+	margin-right:5px;
+}
+
+#match-details .proposed-trades .reject-trade {
+	background-color: #aaa;
+}
+
+#match-details .proposed-trades .accept-trade:hover {
+	text-decoration:none;
+	background-color:#3F8D3F;
+}
+
+#match-details .proposed-trades .counter-trade:hover {
+	background-color: #345C8F;
+	text-decoration: none;
+}
+
+#match-details .proposed-trades .reject-trade:hover {
+	text-decoration: none;
+	background-color: #868686;
+}
+
+/***** possible trades ****/
+
+#match-details .possible-trades .trades li {
+	width:48%;
+	display:inline-block;
+	vertical-align:top;
+	overflow:hidden;
+	border-top: 1px solid #aaa;
+	padding-top: 15px;
+	margin-bottom:25px;
+}
+
+#match-details .possible-trades .trades li:nth-child(1),
+#match-details .possible-trades .trades li:nth-child(2) {
+	border-top:0;
+	padding-top:0;
+}
+
+#match-details .possible-trades .trades li:nth-child(even) {
+	margin-left:3%;
+}
+
+#match-details .possible-trades .trades li .thumbnail {
+	float:left;
+}
+
+#match-details .possible-trades .trades li .thumbnail img {
+	border: solid #949494 1px;
+	box-shadow: 2px 2px 6px -1px #919191;
+	margin-right:15px;
+}
+
+#match-details .possible-trades .trades li .details {
+	display:inline-block;
+	margin-bottom:10px;
+}
+
+#match-details .possible-trades .trades li .propose-trade {
+	padding: 7px 10px;
+	border-radius: 5px;
+	border: 1px solid #eee;
+	text-decoration: none;
+	background-color: #5FBE5F;
+	color: #fff;
+}
+
+#match-details .possible-trades .trades li .propose-trade:hover {
+	background-color:#3F8D3F;
+}
+
+/****************************************************************/
+/********************Propose a Trade form ***********************/
+/****************************************************************/
+
+#propose-trade {
+	width:500px;
+	padding:15px;
+}
+
+#propose-trade .button {
+	padding: 7px 10px;
+	border-radius: 5px;
+	border: 1px solid #eee;
+	text-decoration: none;
+	background-color: #306D27;
+	font-weight: normal;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+}
+
+#propose-trade .button:hover {
+	background-color:#24661A;
+}
+
+#propose-trade label {
+	width: 190px;
+	padding-bottom: 5px;
+}
+
+#propose-trade textarea {
+	width: 430px;
+	padding-bottom: 5px;
 }

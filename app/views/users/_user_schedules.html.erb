@@ -1,0 +1,37 @@
+<script>
+  $(function() {
+    $('#schedules form .datepick').timepicker({ disableTextInput:true });
+  });
+</script>
+
+<% @user.user_locations.each do |x| %>
+  <article>
+    
+    <div class="location">
+  		<%= image_tag x.location.icon %>
+      <h2>Schedule for <%= x.location.name %></h2>
+      (<%= link_to "Remove", user_location_path(x.id), :method => :delete, :remote => true %>)
+    </div>
+
+    <div class="form">
+      <%= form_tag user_schedules_path, :method => :post, :remote => true do %>
+          <%= label_tag :from_standard, "From:" %> <%= text_field_tag :from_standard, nil, :class=>"datepick" %>
+          <%= label_tag :to_standard, "To:" %> <%= text_field_tag :to_standard, nil, :class=>"datepick"%>
+          <%= label_tag :day, "Day of Week:" %> <%= select_tag :day, "<option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option>".html_safe %>
+          <%= hidden_field_tag :user_location_id, x.id %>
+          <%= submit_tag "Add to Schedule", :name => nil %>
+      <% end %>
+    </div>
+
+    <% @user_location = x %>
+    <div class="times">
+      <ul>
+        <% x.user_schedules.each do |y| %>
+      	  <li><strong>From:</strong> <%= y.from_standard %> <strong>To:</strong> <%= y.to_standard %> <strong>Day:</strong> <%= y.day %> (<%= link_to "Remove", user_schedule_path(y.id), :method => :delete, :remote => true %>)</li>
+        <% end#each %>
+      </ul>
+    </div>
+
+  </article>
+<% end#each %>
+

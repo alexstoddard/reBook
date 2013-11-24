@@ -28,7 +28,9 @@
 		   	<p>
 		   		<label for="login_passhash">Password:</label></br>
 		   		<%= password_field_tag("login_passhash") %>
+          <%= hidden_field_tag :referer, @referer %>
 		   	</p>
+
 		   	
 		   	<%= submit_tag("Log In", class: "button") %>
 		<% end %>

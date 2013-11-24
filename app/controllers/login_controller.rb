@@ -1,5 +1,5 @@
 class LoginController < ApplicationController
-  skip_before_filter :validate_user
+  
   def logout 
     session[:user_id] = nil
     session[:user_name] = nil
@@ -7,6 +7,8 @@ class LoginController < ApplicationController
   end
 
   def show
+  @referer = session[:return_to]
+
 	if params[:token] != nil
 		user = User.find_by_token(params[:token])
 		if(not user.nil?)
@@ -21,7 +23,7 @@ class LoginController < ApplicationController
   end
 
   def attempt
-
+    @referer = params[:referer]
     username = params[:login_username]
     password = params[:login_passhash]
     
@@ -40,7 +42,12 @@ class LoginController < ApplicationController
 	else
 	  session[:user_id] = user.id
       session[:user_name] = user.username
-      redirect_to root_path
+      if @referer.nil?
+        redirect_to root_path
+      else
+        session[:return_to] = nil
+        redirect_to @referer
+      end
     end
   end
 end

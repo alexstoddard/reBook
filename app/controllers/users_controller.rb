@@ -1,8 +1,12 @@
 class UsersController < ApplicationController
-  skip_before_filter :validate_user, except: [:create, :forgot_do]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :set_locations, only: [:edit, :update, :create, :new]
   before_action :set_params, only: [:update, :create]
+  before_action :set_is_current_user, only: [:show]
+
+  def set_is_current_user
+    @is_current_user = is_current_user(@user.id)
+  end
 
   # GET /users
   # GET /users.json
@@ -13,6 +17,10 @@ class UsersController < ApplicationController
   # GET /forgot
   # GET /forgot.json
   def forgot
+  end
+  
+  def edit_schedule
+    @user = User.find(session[:user_id])
   end
 
   # POST /forgot
@@ -68,6 +76,7 @@ class UsersController < ApplicationController
   def show
     @user_location = UserLocation.new
     @user_locations = UserLocation.all
+
   end
 
   # GET /users/new
@@ -132,7 +141,7 @@ class UsersController < ApplicationController
     end
 
     def set_params
-      @location_params = { :location_id => user_params[:location], :description => user_params[:location_description] }
+      @location_params = { :location_id => user_params[:location].to_i, :description => user_params[:location_description] }
       user_params[:location] = nil
       user_params[:location_description] = nil
     end
@@ -143,5 +152,9 @@ class UsersController < ApplicationController
                                    :passhash_confirmation, :location, :location_description, :terms)
     end
 
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def location_params
+      params.permit(:location_id, :description)
+    end
     
 end

@@ -1,18 +1,3 @@
-<script>
-	$(function() {
-		
-		$(document).ready(function(){
-			var img = $('#user_image').val();
-			$('#img').attr("src", '/assets/'+ img);
-		});
-		
-		$('#user_image').change(function () {
-			var img = $('#user_image').val();
-			$('#img').attr("src", '/assets/'+ img);
-		});
-	});
-</script>
-
 <div id="main">
 	<div id="create-account">
 		<h1>Create your ReBook Account</h1>
@@ -20,12 +5,14 @@
 			<%= form_for @user do |f| %>
 			
 			<div id="imgsection">
-				<%= f.label :image, "Pick You Avatar" %>
+
+				<%= f.label :image, "Pick Your Avatar" %>
 				<%= f.select :image,[['Dragon', 'dragon.png'],['Bunny', 'bunny.png'],['Snake', 'snake.png'],['Dog', 'dog.png'],
 									 ['Lamb', 'lamb.png'],['Horse', 'horse.png'],['Pig', 'pig.png'],['Mouse', 'mouse.png'],
 									 ['Cow', 'cow.png'],['Tiger', 'tiger.png'],['Monkey', 'monkey.png'],['Chicken', 'chicken.png']] %>
-				<div id="userimg">
-					<%= link_to(image_tag("/assets/" + @user.image.to_s, alt: "userimage", id: 'img'), root_path) %>
+				<div class="user_image">
+					<%= image_tag("/assets/" + @user.image.to_s, alt: "userimage", class: 'img') %>
+
 				</div>
 			</div>
 			
