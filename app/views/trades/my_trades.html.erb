@@ -5,7 +5,6 @@
 </script>
 <div id="main">
 	<div id="matches">
-		<h1>Your Completed Trades</h1>
     <% if @inventory_needs.size == 0 %>
       <div id="search">
         <h2>There are no matches because you don't currently have any books in your wanted list.</h2>
@@ -20,6 +19,9 @@
     <% end %>
 		<% @inventory_needs.each do |x| %>
 			<% @need_hash[x.id][:completed].each do |y| %>
+		  <% if @need_hash[x.id][:completed].size > 0 %>
+      <h1>Your Completed Trades</h1>
+      <% end %>
 			<article class="grey">
 					<h3><span>Get this book:</span><br />
 				    	<%= x.book.name %></h3>
@@ -45,6 +47,38 @@
 				    			end %>
 								<%= link_to "View Trade", "/trade_details/" + @need_hash[x.id][:completed][0].id.to_s %>
 				    			<p><%= link_to "Cancel Trade", "/decline_trade/" + @need_hash[x.id][:completed][0].id.to_s, :rel => "facebox" %></p>
+			    		</div>
+						</div>
+				</article>
+			<% end #each %>
+	  <% if @need_hash[x.id][:declined].size > 0 %>
+		<h1>Your Canceled Trades</h1>
+    <% end %>
+			<% @need_hash[x.id][:declined].each do |y| %>
+			<article class="red">
+					<h3><span>You could not get this book:</span><br />
+				    	<%= x.book.name %></h3>
+				    
+				    <div class="need-details">	
+				    	<%= image_tag(x.book.thumbnail, alt: x.book.name, class: "bookcover") %>
+						<p><strong>Author:</strong> <%= x.book.author %><br />
+						<strong>ISBN:</strong> <%= x.book.isbn %><br />
+						<strong>Published:</strong> <%= x.book.published %></p>
+				    </div>
+
+				    <div class="trade-info">
+			    		<div class="pending-trades">
+				    			<p>This trade was canceled before it was completed.</p>
+				    			<% #don't show trade line corresponding to current user (they were the one who proposed the trade)
+				    			other_trades = @need_hash[x.id][:declined].first.get_tradelines_except(session[:user_id])
+				    			other_trades.each do |y| 
+				    				if y.user_from_accepted %>
+				    					<p><%= render :partial => 'users/user', locals: { display_user: y.inventory_own.user } %> has accepted this trade.</p>
+				    				<% else %>
+				    					<p><%= render :partial => 'users/user', locals: { display_user: y.inventory_own.user } %> has not yet accepted this trade.</p>
+				    				<% end
+				    			end %>
+								<%= link_to "Repropose trade", "/update_trade/" + @need_hash[x.id][:declined][0].id.to_s, :rel => "facebox" %>
 			    		</div>
 						</div>
 				</article>
