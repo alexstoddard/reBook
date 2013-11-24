@@ -65,9 +65,9 @@
                 <strong>Comments: </strong><%= @message.comment %>
               </p>
 
-              <%= link_to "Accept Trade", "#", class: "accept-trade" %>
-              <%= link_to "Counter Trade", "#", class: "counter-trade" %>
-              <%= link_to "Reject Trade", "#", class: "reject-trade" %>
+              <%= link_to "Accept Trade", "/accept_trade/" + trade.id.to_s, :action => :get, :rel => "facebox", class: "accept-trade" %>
+              <%= link_to "Counter Trade", "/update_trade/" + trade.id.to_s, :action => :get, :rel => "facebox", class: "counter-trade" %>
+              <%= link_to "Reject Trade", "/decline_trade/" + trade.id.to_s, :action => :get, :rel => "facebox", class: "reject-trade" %>
             </div>
 
           </li>

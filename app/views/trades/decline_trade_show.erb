@@ -1,10 +1,10 @@
 <%= form_for @trade_note, :url => url_for(:controller => 'trades', :action => 'decline_trade') do |f|  %>
-  <h2>Decline Trade</h2>
+  <h2>Reject Trade</h2>
   <p>
     <%= f.label :comment, "Comments:" %></br>
-    <%= f.text_field :comment %>
+    <%= f.text_area :comment, :style => style="width: 300px; height: 150px;" %>
   </p>
 
- 	<%= submit_tag("Decline", class: "button") %>
+ 	<%= submit_tag("Reject", class: "button") %>
 <% end %>
 
