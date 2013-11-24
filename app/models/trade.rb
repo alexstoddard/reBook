@@ -27,9 +27,11 @@ class Trade < ActiveRecord::Base
         user_own(user_id).inventory_own.trades.each do |y|
           if y.id != x.id
             y.trade_lines.each do |z|
-              if z.trade.id != x.trade.id
-                z.user_from_accepted = false
-                z.save
+              if (not z.nil? and not z.trade.nil? and not x.trade.nil?) 
+                if (z.trade.id != x.trade.id)
+                  z.user_from_accepted = false
+                  z.save
+                end
               end
             end
           end
@@ -40,9 +42,11 @@ class Trade < ActiveRecord::Base
         user_need(user_id).inventory_need.trades.each do |y|
           if y.id != x.id
             y.trade_lines.each do |z|
-              if z.trade.id != x.trade.id
-                z.user_from_accepted = false
-                z.save
+              if (not z.nil? and not z.trade.nil? and not x.trade.nil?) 
+                if (z.trade.id != x.trade.id)
+                  z.user_from_accepted = false
+                  z.save
+                end
               end
             end
           end
@@ -223,6 +227,62 @@ class Trade < ActiveRecord::Base
     
     return trade
 
+  end
+
+  def accepted?(user)
+
+    if completed?
+      return false
+    end
+
+    trade_lines.all? do |x| 
+      if (x.inventory_own.user_id == user)
+        x.user_from_accepted == true
+      end 
+    end
+
+  end
+
+  def active?(user)
+
+    if completed? or declined?
+      return false
+    end
+
+    trade_lines.all? do |x| 
+      if (x.inventory_own.user_id == user)
+        x.user_from_accepted == false
+      end 
+    end
+  end
+
+  def declined?
+    trade_lines.all? { |x| x.user_from_accepted == false }
+  end
+
+  def completed?
+    trade_lines.all? { |x| x.user_from_accepted == true }
+  end
+
+  def possible?
+    return id.nil?
+  end
+
+  def get_status(user)
+    if possible?
+      return :possible
+    end
+    if declined?
+      return :declined
+    end
+    if completed? 
+      return :completed
+    end
+    if accepted?(user)
+       return :accepted
+    end
+
+    return :active
   end
 
   # Determines whether or not the given inventory owns fit our

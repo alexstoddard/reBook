@@ -45,8 +45,8 @@
 				    					<p><%= render :partial => 'users/user', locals: { display_user: y.inventory_own.user } %> has not yet accepted this trade.</p>
 				    				<% end
 				    			end %>
-								<%= link_to "View Trade", "/trade_details/" + @need_hash[x.id][:completed][0].id.to_s %>
 				    			<p><%= link_to "Cancel Trade", "/decline_trade/" + @need_hash[x.id][:completed][0].id.to_s, :rel => "facebox" %></p>
+								  <%= link_to "View Trade Details", "/trade_details/" + @need_hash[x.id][:completed][0].id.to_s %>
 			    		</div>
 						</div>
 				</article>
@@ -75,10 +75,11 @@
 				    				if y.user_from_accepted %>
 				    					<p><%= render :partial => 'users/user', locals: { display_user: y.inventory_own.user } %> has accepted this trade.</p>
 				    				<% else %>
-				    					<p><%= render :partial => 'users/user', locals: { display_user: y.inventory_own.user } %> has not yet accepted this trade.</p>
+				    					<p><%= render :partial => 'users/user', locals: { display_user: y.inventory_own.user } %> was part of this trade.</p>
 				    				<% end
 				    			end %>
-								<%= link_to "Repropose trade", "/update_trade/" + @need_hash[x.id][:declined][0].id.to_s, :rel => "facebox" %>
+								<%= link_to "Repropose Trade", "/update_trade/" + @need_hash[x.id][:declined][0].id.to_s, :rel => "facebox" %></br>
+								<%= link_to "View Trade Details", "/trade_details/" + @need_hash[x.id][:declined][0].id.to_s %>
 			    		</div>
 						</div>
 				</article>
