@@ -52,11 +52,9 @@
 				    			other_trades = @need_hash[x.id][:accepted].first.get_tradelines_except(session[:user_id])
 				    			other_trades.each do |y| 
 				    				if y.user_from_accepted %>
-				    					<p><%= image_tag(y.inventory_own.user.image, alt: "userimg", id: "pic") %>
-                         <%= link_to y.inventory_own.user.username, user_path(y.inventory_own.user_id) %> has accepted this trade.</p>
+				    					<p><%= render :partial => 'users/user', locals: { display_user: y.inventory_own.user } %> has accepted this trade.</p>
 				    				<% else %>
-				    					<p><%= image_tag(y.inventory_own.user.image, alt: "userimg", id: "pic") %>
-                         <%= link_to y.inventory_own.user.username, user_path(y.inventory_own.user_id) %> has not yet accepted this trade.</p>
+				    					<p><%= render :partial => 'users/user', locals: { display_user: y.inventory_own.user } %> has not yet accepted this trade.</p>
 				    				<% end
 				    			end %>
 								<%= link_to "View Trade", "/trade_details/" + @need_hash[x.id][:accepted][0].id.to_s %>
@@ -92,8 +90,8 @@
 											<%= image_tag @my_tradeline.inventory_own.book.thumbnail, alt: @my_tradeline.inventory_own.book.name %><br />
 										    <p>
 
-										    <strong>Trade your book:</strong> <%= @my_tradeline.inventory_own.book.name %><br />
-										    <strong>Trade with:</strong> <%= @from_tradeline.inventory_own.user.username %><br />
+										    <strong>Trade your book:</strong> <%= @my_tradeline.inventory_own.book.name %><br /><br>
+										    <strong>Trade with:</strong> <%= render :partial => 'users/user', locals: { display_user: @from_tradeline.inventory_own.user } %><br/><br/>
 										    Their book is in <%= @from_tradeline.inventory_own.condition.description.downcase %> condition.
 										    
 

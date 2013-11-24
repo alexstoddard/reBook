@@ -22,7 +22,7 @@
 
 		<div id="account-info">
 			<div class="profilepic">
-				<%= image_tag(User.find(session[:user_id]).image, alt: "userimg", id: "pic") %>
+				<%= image_tag(User.find(session[:user_id]).image, alt: "userimg", class: "pic") %>
 			</div>
 			<h1><%= session[:user_name] %></h1>
 			<div id="preferences">
