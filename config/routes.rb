@@ -31,6 +31,7 @@ Rebook::Application.routes.draw do
 
   #matching routes
   get "matches", to: 'trades#matches'
+  get "my_trades", to: 'trades#my_trades'
   get "match_details/:id", to: 'trades#match_details'
   
   #actions relating to trades

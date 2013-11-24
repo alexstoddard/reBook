@@ -27,8 +27,10 @@ class Trade < ActiveRecord::Base
         user_own(user_id).inventory_own.trades.each do |y|
           if y.id != x.id
             y.trade_lines.each do |z|
-              z.user_from_accepted = false
-              z.save
+              if z.trade.id != x.trade.id
+                z.user_from_accepted = false
+                z.save
+              end
             end
           end
         end
@@ -38,8 +40,10 @@ class Trade < ActiveRecord::Base
         user_need(user_id).inventory_need.trades.each do |y|
           if y.id != x.id
             y.trade_lines.each do |z|
-              z.user_from_accepted = false
-              z.save
+              if z.trade.id != x.trade.id
+                z.user_from_accepted = false
+                z.save
+              end
             end
           end
         end

@@ -73,6 +73,17 @@ class TradesController < ApplicationController
 
   end
 
+  # GET /my_trades
+  # GET /my_trades.json
+  def my_trades
+
+    user_id = session[:user_id]
+
+    @inventory_needs = InventoryNeed.find_all_by_user_id(user_id)
+    @need_hash = Trade.trades_by_needs(user_id)
+
+  end
+
   # GET /matches
   # GET /matches.json
   def matches
