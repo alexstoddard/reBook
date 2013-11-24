@@ -263,11 +263,23 @@ header > h4 {
 }
 
 #account-info h1 {
+  display:inline;
 	float:none;
 	font-size:2.5em;
 	margin-bottom:0;
 	text-align:right;
 	color: #636363;
+}
+
+.profilepic {
+	width: 25px;
+  height: 25px;
+	display: inline;
+	overflow: hidden;
+}
+
+#pic {
+	height:25px;
 }
 
 #account-info #avatartop {

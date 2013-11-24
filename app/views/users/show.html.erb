@@ -5,8 +5,8 @@
 			 
 			<div id="avatar">
 				<h2>Your Avatar:</h2>
-			  	<div id="userimg">
-					<%= link_to(image_tag(@user.image, alt: "Bunny", id: 'img'), root_path) %>
+			  	<div class="user_image">
+					<%= link_to(image_tag(@user.image, alt: "userimg", class: 'pic'), root_path) %>
 			  	</div>
 			</div>
 		

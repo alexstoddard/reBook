@@ -28,11 +28,11 @@ $(function() {
     });
 
     var img = $('#user_image').val();
-    $('#img').attr("src", '/assets/'+ img);
+    $('.img').attr("src", '/assets/'+ img);
 
     $('#user_image').change(function () {
 	var img = $('#user_image').val();
-	$('#img').attr("src", '/assets/' + img);
+	$('.img').attr("src", '/assets/' + img);
     });
 
 });
