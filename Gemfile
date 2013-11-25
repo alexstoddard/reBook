@@ -4,11 +4,12 @@ source 'https://rubygems.org'
 gem 'rails', '4.0.0'
 
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3', :group => [:development, :test]
-group :production do
-   gem 'thin'
-   gem 'pg'
-end
+gem 'sqlite3', :group => [:development, :test, :production]
+
+#group :production do
+#   gem 'thin'
+#   gem 'pg'
+#end
 
 gem 'rails_12factor'
 
