@@ -34,7 +34,14 @@ class TradesController < ApplicationController
     @trade.append_note(session[:user_id], @note)
     @trade.save
 
-    redirect_to "/trade_details/" + @trade.id.to_s
+    #redirect to match_details page for the book the user wants
+    redirect_to "/match_details/" + @trade.get_tradeline_from(session[:user_id]).inventory_need.id.to_s
+
+    #respond_to do |format|
+    #  if @trade.save
+    #    format.js {}
+    #  end
+    #end
   end
   
   def update_trade_show

@@ -1,0 +1,30 @@
+<div id="counter-trade">
+  <% if params[:type].eql? 'repropose' %>
+    <h2>Re-propose Trade</h2>
+    <p><em>Propose trade again. Note that one or more users in this trade has previously canceled the trade.</em></p>
+  <% elsif params[:type].eql? 'change' %>
+    <h2>Change Trade Proposal</h2>
+    <p><em>Make a new proposal with a different meeting time/place.</em></p>
+  <% else %>
+    <h2>Counter Trade Proposal</h2>
+    <p><em>Propose a different meeting time/place.</em></p>
+  <% end %>
+
+  <%= form_for @trade_note, :url => url_for(:controller => 'trades', :action => 'update_trade') do |f|  %>
+    <p>
+      <%= f.label :meet_time, "Proposed Meeting Date/Time:" %>
+      <%= f.text_field :meet_time %>
+    </p>
+    <p>
+      <%= f.label :place, "Proposed Meeting Place:" %>
+      <%= f.text_field :place %>
+    </p>
+    <p>
+      <%= f.label :comment, "Comments:" %></br>
+      <%= f.text_area :comment, :rows => 6, :cols => 50 %>
+    </p>
+
+   	<%= submit_tag("Send Trade Proposal", class: "button") %>
+
+  <% end %>
+</div>

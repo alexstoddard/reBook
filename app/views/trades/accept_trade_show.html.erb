@@ -1,0 +1,12 @@
+<div id="accept-trade">
+	<h2>Accept Trade</h2>
+
+	<%= form_for @trade_note, :url => url_for(:controller => 'trades', :action => 'accept_trade') do |f|  %>
+	  <p>
+	    <%= f.label :comment, "Comments:" %></br>
+	    <%= f.text_area :comment, :rows => 6, :cols => 35 %>
+	  </p>
+
+	 	<%= submit_tag("Accept Trade", class: "button") %>
+	<% end %>
+</div>

@@ -1,0 +1,19 @@
+<div id="reject-trade">
+	<% if params[:type].eql? "cancel" %>
+		<h2>Cancel Trade</h2>
+	<% else %>
+		<h2>Reject Trade</h2>
+	<% end %>
+
+	<%= form_for @trade_note, :url => url_for(:controller => 'trades', :action => 'decline_trade', :remote => 'true') do |f|  %>
+	    <p>
+	    	<%= f.label :comment, "Comments:" %></br>
+	    	<%= f.text_area :comment, :rows => 6, :cols => 35 %>
+	    </p>
+	    <% if params[:type].eql? "cancel" %>
+	    	<%= submit_tag("Cancel Trade", class: "button") %>
+	    <% else %>
+	   		<%= submit_tag("Reject Trade", class: "button") %>
+	   	<% end %>
+	<% end %>
+</div>
