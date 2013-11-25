@@ -1,3 +1,4 @@
+
 <div id="main">
 	<div id="show-user">
 
@@ -13,6 +14,7 @@
 					<%= image_tag(@user.image, alt: "userimg", class: 'large_pic') %>
 			  	</div>
 			</div>
+
 		
       <% if @is_current_user %>
 			<h1>My Account <span>(<%= link_to "Edit", edit_user_path %>)</span></h1>
