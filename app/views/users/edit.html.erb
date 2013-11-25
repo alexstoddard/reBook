@@ -19,13 +19,8 @@
 		<%= f.select :image,[['Dragon', 'dragon.png'],['Bunny', 'bunny.png'],['Snake', 'snake.png'],['Dog', 'dog.png'],
 									 ['Lamb', 'lamb.png'],['Horse', 'horse.png'],['Pig', 'pig.png'],['Mouse', 'mouse.png'],
 									 ['Cow', 'cow.png'],['Tiger', 'tiger.png'],['Monkey', 'monkey.png'],['Chicken', 'chicken.png']] %>	
-<<<<<<< HEAD
-		<div id="userimg">
-			<%= link_to(image_tag(@user.image, alt: "userimage", class: 'img'), root_path) %>
-=======
 		<div class="user_image">
 			<%= image_tag(@user.image, alt: "userimage", class: 'img') %>
->>>>>>> 26f547ef90fc2ef793d3b3a109d8378b1e897f32
 		</div>
 	</div>
 	
