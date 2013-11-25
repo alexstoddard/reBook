@@ -257,7 +257,7 @@ header > h4 {
 	float:right;
 	font-size:0.9em;
 	position:absolute;
-	right:100px;
+	right:85px;
 	bottom:20px;
 	text-align:right;
 }
@@ -273,9 +273,11 @@ header > h4 {
 
 .profilepic {
 	width: 25px;
-  height: 25px;
-	display: inline;
+	height: 25px;
 	overflow: hidden;
+	position:absolute;
+	right:-35px;
+	top:5px;
 }
 
 .pic {

@@ -6,10 +6,11 @@
 <div id="main">
 	<div id="matches">
 		<h1>Your Trade Matches</h1>
+
     <% if @inventory_needs.size == 0 %>
       <div id="search">
-        <h2>There are no matches because you don't currently have any books in your wanted list.</h2>
-        <h2>Get started by adding books to your <%= link_to "want", inventory_needs_path %> and <%= link_to "have", inventory_owns_path %> lists.</h2>
+        <h2>There are no matches because you don't currently have any books in your Want List.</h2>
+        <h2>Get started by adding books to your <%= link_to "Want", inventory_needs_path %> and <%= link_to "Have", inventory_owns_path %> Lists.</h2>
         </br>
         <%= form_tag("/search", method: "get") do %>
           <%= text_field_tag('search', nil, id: nil, placeholder: "Title, ISBN, Author", class: "text") %>
@@ -57,8 +58,8 @@
 				    					<p><%= render :partial => 'users/user', locals: { display_user: y.inventory_own.user } %> has not yet accepted this trade.</p>
 				    				<% end
 				    			end %>
-								<%= link_to "View Trade", "/trade_details/" + @need_hash[x.id][:accepted][0].id.to_s %>
-				    			<p><%= link_to "Cancel Trade", "/decline_trade/" + @need_hash[x.id][:accepted][0].id.to_s, :rel => "facebox" %></p>
+								<p><%= link_to "View Trade Details...", "/trade_details/" + @need_hash[x.id][:accepted][0].id.to_s %></p>
+				    			<p><%= link_to "Cancel Trade", "/decline_trade/" + @need_hash[x.id][:accepted][0].id.to_s + "?type=cancel", :class => "cancel-trade", :rel => "facebox" %></p>
 				    		<% end %>
 			    		</div>
 			    		<div class="proposed-trades">
@@ -88,17 +89,14 @@
 							    		 	@from_tradeline  = trade.get_tradeline_from(session[:user_id]) %>
 							    		 	
 											<%= image_tag @my_tradeline.inventory_own.book.thumbnail, alt: @my_tradeline.inventory_own.book.name %><br />
-										    <p>
-
-										    <strong>Trade your book:</strong> <%= @my_tradeline.inventory_own.book.name %><br /><br>
-										    <strong>Trade with:</strong> <%= render :partial => 'users/user', locals: { display_user: @from_tradeline.inventory_own.user } %><br/><br/>
-										    Their book is in <%= @from_tradeline.inventory_own.condition.description.downcase %> condition.
+										    <p><strong>Trade your book:</strong> <%= @my_tradeline.inventory_own.book.name %></p>
+										    <p><strong>Trade with:</strong> <%= render :partial => 'users/user', locals: { display_user: @from_tradeline.inventory_own.user } %></p>
+										    <p>Their book is in <%= @from_tradeline.inventory_own.condition.description.downcase %> condition.</p>
 										    
 
 										    <% if trade.trade_lines.size > 2 %>
-										    	<br /><strong>This is a <%= trade.trade_lines.size %>-way trade.</strong>
+										    	<p><strong>This is a <%= trade.trade_lines.size %>-way trade.</strong></p>
 										    <% end %>
-										    </p>
 									    </li>
 							    	<% end %>
 						    	</ul>
