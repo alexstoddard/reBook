@@ -49,6 +49,7 @@
 			    		<div class="pending-trades">
 			    			<% if @pending_count > 0 %>
 				    			<p>This trade is pending.</p>
+				    			<p>You have accepted this trade.</p>
 				    			<% #don't show trade line corresponding to current user (they were the one who proposed the trade)
 				    			other_trades = @need_hash[x.id][:accepted].first.get_tradelines_except(session[:user_id])
 				    			other_trades.each do |y| 
