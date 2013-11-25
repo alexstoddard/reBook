@@ -4,6 +4,15 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   #before_filter :validate_user
 
+  def is_current_user(user)
+    return session[:user_id].to_i == user.to_i
+  end
+
+  def do_login
+    session[:return_to] = request.path
+    redirect_to login_path
+  end
+
   private
 
   def admin?
@@ -16,9 +25,11 @@ class ApplicationController < ActionController::Base
 
     unless user_id.nil? 
       user_id = user_id.to_i
+      User.find(user_id.to_i)
+    else
+      nil
     end
 
-    User.find(user_id.to_i)
   end
 
   def validate_user() 

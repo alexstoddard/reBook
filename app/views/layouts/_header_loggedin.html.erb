@@ -17,12 +17,12 @@
 	
 		<%= link_to image_tag("rebooklogosmall.png", :alt => "ReBook"), root_path, id: "logo" %>
 		<div id="navbar">
-			<h2><%= link_to "My Matches", matches_path %>  |  <a href="#">My Trades</a>  |  <%= link_to "Want List", inventory_needs_path %>  |  <%= link_to "Have List", inventory_owns_path %></h2>
+			<h2><%= link_to "My Matches", matches_path %>  |  <%= link_to "My Trades", my_trades_path %>  |  <%= link_to "Want List", inventory_needs_path %>  |  <%= link_to "Have List", inventory_owns_path %></h2>
 		</div>
 
 		<div id="account-info">
-			<div id="avatartop">
-				<%= link_to(image_tag(User.find(session[:user_id]).image, alt: "userimg", class: "img"), root_path) %>
+			<div class="profilepic">
+				<%= image_tag(User.find(session[:user_id]).image, alt: "userimg", class: "pic") %>
 			</div>
 			<h1><%= session[:user_name] %></h1>
 			<div id="preferences">

@@ -59,7 +59,12 @@ class TradesController < ApplicationController
   end
   
   def trade_details
-	@trade = Trade.find_by_id(params[:trade_id])
+    @user = current_user
+    if @user.nil?
+      do_login
+    else
+      @trade = Trade.find_by_id(params[:trade_id])
+    end
   end
 
   # GET /matches_details/1
@@ -67,9 +72,21 @@ class TradesController < ApplicationController
   def match_details
     need_id = params[:id].to_i
     user_id = session[:user_id]
-    
+
+    @user = current_user
     @inventory_need = InventoryNeed.find(need_id)
     @book_matches = Trade.trades_by_need(user_id, need_id)
+
+  end
+
+  # GET /my_trades
+  # GET /my_trades.json
+  def my_trades
+
+    user_id = session[:user_id]
+
+    @inventory_needs = InventoryNeed.find_all_by_user_id(user_id)
+    @need_hash = Trade.trades_by_needs(user_id)
 
   end
 

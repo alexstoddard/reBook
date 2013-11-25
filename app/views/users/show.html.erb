@@ -1,23 +1,37 @@
+
 <div id="main">
 	<div id="show-user">
 
 		<div class="user-info">
 			 
 			<div id="avatar">
+      <% if @is_current_user %>
 				<h2>Your Avatar:</h2>
-			  	<div id="userimg">
-					<%= link_to(image_tag(@user.image, alt: "Bunny", id: 'img'), root_path) %>
+      <% else %>
+				<h2><%= @user.username %>'s Avatar:</h2>
+      <% end %>
+			  	<div class="user_image">
+					<%= image_tag(@user.image, alt: "userimg", class: 'large_pic') %>
 			  	</div>
 			</div>
+
 		
+      <% if @is_current_user %>
 			<h1>My Account <span>(<%= link_to "Edit", edit_user_path %>)</span></h1>
+      <% else %>
+			<h1><%= @user.username %>'s Account</h1>
+      <% end %>
 			<p><strong>First Name:</strong> <%= @user.first %></p>
 			<p><strong>Last Name:</strong> <%= @user.last %></p>
 			<p><strong>Email:</strong> <%= @user.email %></p>
 		</div>
 
 		<div class="schedule-info">
+      <% if @is_current_user %>
 			<h1>My Schedules <span>(<%= link_to "Edit", edit_schedule_path %>)</span></h1>
+      <% else %>
+			<h1><%= @user.username %>'s Schedules</h1>
+      <% end %>
 
 			<% @user.user_locations.each do |x| %>
 				<article>

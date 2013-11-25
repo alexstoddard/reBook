@@ -9,9 +9,8 @@
   </p>
   <p>
     <%= f.label :comment, "Comments:" %></br>
-    <%= f.text_field :comment %>
+    <%= f.text_area :comment,:style => "width: 240px; height: 150px;" %>
   </p>
 
  	<%= submit_tag("Update", class: "button") %>
 <% end %>
-
