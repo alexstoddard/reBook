@@ -27,12 +27,12 @@ $(function() {
 	}
     });
 
-    var img = $('#user_image').val();
-    $('.img').attr("src", '/assets/'+ img);
+    var img = $('#imgsection #user_image').val();
+    $('#imgsection .img').attr("src", '/assets/'+ img);
 
-    $('#user_image').change(function () {
-	var img = $('#user_image').val();
-	$('.img').attr("src", '/assets/' + img);
+    $('#imgsection #user_image').change(function () {
+	var img = $('#imgsection #user_image').val();
+	$('#imgsection .img').attr("src", '/assets/' + img);
     });
 
 });

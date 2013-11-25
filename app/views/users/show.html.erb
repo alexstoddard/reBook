@@ -11,7 +11,7 @@
 				<h2><%= @user.username %>'s Avatar:</h2>
       <% end %>
 			  	<div class="user_image">
-					<%= image_tag(@user.image, alt: "userimg", class: 'large_pic') %>
+					<%= image_tag(@user.image, alt: "userimg", class: 'img') %>
 			  	</div>
 			</div>
 
@@ -45,7 +45,7 @@
 				    <div class="times">
 				      <ul>
 				        <% x.user_schedules.each do |y| %>
-				      	  <li><strong>From:</strong> <%= y.from %> <strong>To:</strong> <%= y.to %> <strong>Day:</strong> <%= y.day %></li>
+				      	  <li><strong>From:</strong> <%= y.from_standard %> <strong>To:</strong> <%= y.to_standard %> <strong>Day:</strong> <%= y.day %></li>
 				        <% end#each %>
 				      </ul>
 				    </div>
