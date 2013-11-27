@@ -68,12 +68,27 @@
 	font-size:1.2em;
 }
 
+#matches article .pending-trades p {
+	margin-bottom:8px;
+}
+
+#matches article .pending-trades .counter-trade,
 #matches article .pending-trades .cancel-trade {
 	padding: 5px 10px;
 	border-radius: 5px;
 	color: #fff;
 	background-color:#aaa;
 	display:inline-block;
+}
+
+#matches article .pending-trades .counter-trade {
+	background-color:#3A70B4;
+	margin-right:5px;
+}
+
+#matches article .pending-trades .counter-trade:hover {
+	background-color: #345C8F;
+	text-decoration:none;
 }
 
 #matches article .pending-trades .cancel-trade:hover {
@@ -121,7 +136,7 @@
 }
 
 #matches article .possible-trades .trades p {
-	margin-bottom:10px;
+	margin-bottom:5px;
 }
 
 #matches article .possible-trades .view-more {
@@ -134,6 +149,19 @@
 	font-weight: bold;
 	font-size: 0.9em;
 	color: #2A4EA8;
+}
+
+#matches article .possible-trades .propose-trade {
+	padding: 5px 10px;
+	border-radius: 5px;
+	color: #fff;	
+	background-color: #5FBE5F;
+	display:inline-block;
+}
+
+#matches article .possible-trades .propose-trade:hover {
+	text-decoration: none;
+	background-color: #3F8D3F;
 }
 
 /******************************************************************/

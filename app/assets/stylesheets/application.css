@@ -10,7 +10,7 @@
  *
  *= require_self
  *= require jquery.facebox
- *= require jquery.timepicker
+ *= require jquery.timepicker.css
  */
 
  * {

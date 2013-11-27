@@ -8,50 +8,56 @@
 		<h1>Your Trades</h1>
 
 		<div class="active-trades">
+			<h2>Active Trades</h2>
+			<% if @inventory_needs.all? { |x| @need_hash[x.id][:completed].size == 0} %>
+				<p>You have no active trades.</p>
+			<% else %>
 
-			<% @inventory_needs.each do |x| %>
-				<% if @need_hash[x.id][:completed].size > 0 #trades that have been accepted by all users %>	
-
-					<h2>Your Active Trades</h2>
-
-					<% @need_hash[x.id][:completed].each do |y| %>
-			  		
-						<article>
-						
-							<h3><span>Get this book:</span> <%= x.book.name %></h3>
-						    
-						    <%= image_tag(x.book.thumbnail, alt: x.book.name, class: "bookcover") %>
-						    
-						    <div class="need-details">	
-								<p><strong>Author:</strong> <%= x.book.author %><br />
-								<strong>ISBN:</strong> <%= x.book.isbn %><br />
-								<strong>Published:</strong> <%= x.book.published %></p>
-						    </div>
-
-						    <div class="trade-info">
-				    			<p>This trade is currently active.</p>
+				<% @inventory_needs.each do |x| %>
+					<% if @need_hash[x.id][:completed].size > 0 #trades that have been accepted by all users %>	
 
 
+						<% @need_hash[x.id][:completed].each do |y| %>
+				  		
+							<article>
+							
+								<h3><span>Get this book:</span> <%= x.book.name %></h3>
+							    
+							    <%= image_tag(x.book.thumbnail, alt: x.book.name, class: "bookcover") %>
+							    
+							    <div class="need-details">	
+									<p><strong>Author:</strong> <%= x.book.author %><br />
+									<strong>ISBN:</strong> <%= x.book.isbn %><br />
+									<strong>Published:</strong> <%= x.book.published %></p>
+							    </div>
 
-				    			<p class="action"><%= link_to "View Trade Details", "/trade_details/" + y.id.to_s %></p>
+							    <div class="trade-info">
+					    			<p>This trade is currently active.</p>
 
-				    			<p class="action"><%= link_to "Change Trade", "/update_trade/" + y.id.to_s + '?type=change', :action => :get, :rel => "facebox", :class => "counter-trade" %>
-				    			<%= link_to "Cancel Trade", "/decline_trade/" + y.id.to_s, :rel => "facebox", :class => "cancel-trade" %></p>
-							</div>
-						</article>
-					<% end #each %>
-				<% end #if, [:completed].size %>
-			<% end #each, inventory_needs loop %>
+
+
+					    			<p class="action"><%= link_to "View Trade Details", "/trade_details/" + y.id.to_s %></p>
+
+					    			<p class="action"><%= link_to "Change Trade", "/update_trade/" + y.id.to_s + '?type=change', :action => :get, :rel => "facebox", :class => "counter-trade" %>
+					    			<%= link_to "Cancel Trade", "/decline_trade/" + y.id.to_s, :rel => "facebox", :class => "cancel-trade" %></p>
+								</div>
+							</article>
+						<% end #each %>
+					<% end #if, [:completed].size %>
+				<% end #each, inventory_needs loop %>
+
+			<% end#if %>
 
 		</div>
 
 		<div class="incomplete-trades">
+			<% if @inventory_needs.any? { |x| @need_hash[x.id][:declined].size > 0 } %>
+				<h2>Incomplete Trades</h2>
+			<% end %>
 
 			<% @inventory_needs.each do |x| %>
 				<% if @need_hash[x.id][:declined].size > 0 %>
 					
-					<h2>Your Incomplete Trades</h2>
-
 					<% @need_hash[x.id][:declined].each do |y| %>
 						
 						<article>
