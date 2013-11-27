@@ -74,5 +74,15 @@ describe Trade do
       end
     end
   end
-  	
+  
+  describe "Trade Contents" do
+	it "A user should not be able to trade the same book in want and have list" do
+	  @trade = User.all
+	  @trade.each do |trade|
+	    trade.trade_lines.each do |line|
+		  expect(line.inventory_need.book_id).not_to eq(line.inventory_own.book_id)
+	    end
+	  end
+    end
+  end
 end

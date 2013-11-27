@@ -43,4 +43,49 @@ describe User do
 	expect(User.new).to have(1).error_on(:user_locations)
 	expect(@entries).to eq(User.count)
   end
+  
+  it "Add Two users, with second user violating the validations, so the second user should not be added. " do
+	@entries = User.count()
+	User.enable_mailer = false
+	#Add a valid user
+	User.create(:username=>"username123",
+				 :email => "ahhhahah@gmail.com",
+				 :passhash => "abcdefgh",
+				 :image => "imagessss",
+				 :first => "user name",
+				 :last => "bronze",
+				 :activated => false,
+				 :passhash_confirmation => "abcdefgh",
+				 :terms => "1",
+				 :user_locations=>[UserLocation.new(:location_id => 1, :description => "nice place")])
+	expect(@entries).not_to eq(User.count())
+	#Add a invalid user with not unique username
+	@entries = User.count()
+	expect(User.create(:username=>"username123",
+				 :email => "ahhhahah@gmail.com",
+				 :passhash => "abcdefgh",
+				 :image => "imagessss",
+				 :first => "user name",
+				 :last => "bronze",
+				 :activated => false,
+				 :passhash_confirmation => "abcdefgh",
+				 :terms => "1",
+				 :user_locations=>[UserLocation.new(:location_id => 1, :description => "nice place")])
+			).to have(1).error_on(:username)
+	expect(@entries).to eq(User.count())
+	#Add a invalid user with not unique email
+	@entries = User.count()
+	expect(User.create(:username=>"username1234",
+				 :email => "ahhhahah@gmail.com",
+				 :passhash => "abcdefgh",
+				 :image => "imagessss",
+				 :first => "user name",
+				 :last => "bronze",
+				 :activated => false,
+				 :passhash_confirmation => "abcdefgh",
+				 :terms => "1",
+				 :user_locations=>[UserLocation.new(:location_id => 1, :description => "nice place")])
+			).to have(1).error_on(:email)
+	expect(@entries).to eq(User.count())
+  end
 end
