@@ -17,7 +17,7 @@
 	
 		<%= link_to image_tag("rebooklogosmall.png", :alt => "ReBook"), root_path, id: "logo" %>
 		<div id="navbar">
-			<h2><%= link_to "My Matches", matches_path %>  |  <%= link_to "My Trades", my_trades_path %>  |  <%= link_to "Want List", inventory_needs_path %>  |  <%= link_to "Have List", inventory_owns_path %></h2>
+			<h2><%= link_to "My Matches", matches_path, :class => cp(matches_path) %>  |  <%= link_to "My Trades", my_trades_path, :class => cp(my_trades_path) %>  |  <%= link_to "Want List", inventory_needs_path, :class=> cp(inventory_needs_path) %>  |  <%= link_to "Have List", inventory_owns_path, :class => cp(inventory_owns_path) %></h2>
 		</div>
 
 		<div id="account-info">
