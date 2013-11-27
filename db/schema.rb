@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131121182911) do
+ActiveRecord::Schema.define(version: 20131126201356) do
 
   create_table "books", force: true do |t|
     t.string   "name"
@@ -30,13 +30,6 @@ ActiveRecord::Schema.define(version: 20131121182911) do
 
   create_table "conditions", force: true do |t|
     t.string   "description"
-    t.string   "image"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "feedbacks", force: true do |t|
-    t.string   "type"
     t.string   "image"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -99,11 +92,10 @@ ActiveRecord::Schema.define(version: 20131121182911) do
   create_table "user_feedbacks", force: true do |t|
     t.integer  "user_from_id"
     t.integer  "user_to_id"
-    t.integer  "feedback_id"
-    t.text     "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "trade_id"
+    t.integer  "score"
   end
 
   create_table "user_locations", force: true do |t|

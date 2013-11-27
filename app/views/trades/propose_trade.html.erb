@@ -1,3 +1,20 @@
+<script>
+$(function() {
+  $('#new_trade_note').submit(function() {
+    valid = true;
+    if (!$('#trade_note_meet_time').val()) {
+      $('#meet_time_error').text('Proposed Meeting Date/Time cannot be blank.');
+      valid = false;
+    }
+    if (!$('#trade_note_place').val()) {
+      $('#meet_place_error').text('Proposed Meeting Place cannot be blank.');
+      valid = false;
+    }
+    return valid;
+  });
+});
+</script>
+
 <div id="propose-trade">
   <h2>Propose a Trade</h2>
   <% @my_tradeline = @trade.get_tradeline_only(session[:user_id])
@@ -11,10 +28,12 @@
     <p>
       <%= f.label :meet_time, "Proposed Meeting Date/Time:" %>
       <%= f.text_field :meet_time %>
+      <span id="meet_time_error" class="error"></span>
     </p>
     <p>
       <%= f.label :place, "Proposed Meeting Place:" %>
       <%= f.text_field :place %>
+      <span id="meet_place_error" class="error"></span>
     </p>
     <p>
       <%= f.label :comment, "Comments:" %></br>
