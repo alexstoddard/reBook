@@ -13,8 +13,10 @@ class Trade < ActiveRecord::Base
   # trades, then the other trades are automatically invalidated.
   # That constraint is reflected in this function
   def user_accept(user_id)
-    
+
+    cancels = {}
     user = User.find(user_id)
+
     # For each trade line
     trade_lines.each do |x|
       if x.inventory_own.user_id == user_id
@@ -25,33 +27,31 @@ class Trade < ActiveRecord::Base
         # If this inventory item is involved in other trades
         # then those trades are invalidated
         user_own(user_id).inventory_own.trades.each do |y|
-          if y.id != x.id
-            y.trade_lines.each do |z|
-              if (not z.nil? and not z.trade.nil? and not x.trade.nil?) 
-                if (z.trade.id != x.trade.id)
-                  z.user_from_accepted = false
-                  z.save
-                end
-              end
-            end
+          if y.id != x.trade_id
+            cancels[y.id] = y
           end
         end
 
         # If this inventory item is involved in other trades
         # then those trades are invalidated
         user_need(user_id).inventory_need.trades.each do |y|
-          if y.id != x.id
-            y.trade_lines.each do |z|
-              if (not z.nil? and not z.trade.nil? and not x.trade.nil?) 
-                if (z.trade.id != x.trade.id)
-                  z.user_from_accepted = false
-                  z.save
-                end
-              end
-            end
+          if y.id != x.trade_id
+            cancels[y.id] = y
           end
         end
+        
+        cancels.keys.each do |z|
+          trade = cancels[z]
 
+          unless trade.declined?
+            trade.trade_lines.each { |w| w.user_from_accepted = false }
+            trade.trade_lines.each { |w| w.save }
+            note = trade.trade_notes.build
+            note.comment = "Sorry, I accepted another trade"
+            note.user_id = user_id
+            trade.save
+          end
+        end
       end
     end
   end
@@ -110,6 +110,18 @@ class Trade < ActiveRecord::Base
         x.user_from_accepted = true
       end
       x.save
+    end
+  end
+
+  def proposable?
+    trade_lines.all? do |x|
+      a = x.inventory_own.trades.none? do |y|
+        y.accepted?(x.inventory_own.user_id)
+      end
+      b = x.inventory_need.trades.none? do |y|
+        y.accepted?(x.inventory_need.user_id)
+      end
+      (a and b)
     end
   end
 
@@ -473,6 +485,7 @@ class Trade < ActiveRecord::Base
     filters.keys.each do |filter|
       proc = filters[filter]
       passed = proc.call(user_id, trades)
+      trades = trades - passed
       self.hash_trades(need_hash, passed, filter, user_id)
     end
 
