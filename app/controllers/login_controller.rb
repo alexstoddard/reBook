@@ -43,7 +43,7 @@ class LoginController < ApplicationController
 	  session[:user_id] = user.id
       session[:user_name] = user.username
       if @referer.nil?
-        redirect_to root_path
+        redirect_to "/my_trades/"
       else
         session[:return_to] = nil
         redirect_to @referer
