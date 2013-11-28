@@ -96,6 +96,22 @@ class Trade < ActiveRecord::Base
     trade_lines.each { |x| x.save }
   end
   
+  def self.order_needs_by_status(needs, need_hash)
+    output = []
+    selected = needs.select { |x| need_hash[x.id][:active].size > 0 }
+    needs = needs - selected
+    output += selected
+    selected = needs.select { |x| need_hash[x.id][:accepted].size > 0 }
+    needs = needs - selected
+    output += selected
+    selected = needs.select { |x| need_hash[x.id][:possible].size > 0 }
+    needs = needs - selected
+    output += selected
+    output += needs
+
+    return output
+  end
+
   # This function perfoms the user update of a trade
   # Its meanin is a little tricky. When a user declines,
   # all prior user's acceptances cease to matter. The terms

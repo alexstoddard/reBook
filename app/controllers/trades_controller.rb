@@ -108,7 +108,8 @@ class TradesController < ApplicationController
 
     @inventory_needs = InventoryNeed.find_all_by_user_id(user_id)
     @need_hash = Trade.trades_by_needs(user_id)
-
+    @inventory_needs = Trade.order_needs_by_status(@inventory_needs, @need_hash)
+    
   end
 
   # GET /trades/1
