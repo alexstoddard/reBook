@@ -1,12 +1,20 @@
-<div id="accept-trade">
+<div id="accept-trade" class="trade-form">
 	<h2>Accept Trade</h2>
+
+	<div class="trade-details">
+    <%= render :partial => 'form_trade_details' %>
+    <p>
+      <strong>Proposed Meeting Date/Time: </strong> <%= @trade.trade_notes.last.meet_time %><br />
+      <strong>Proposed Meeting Location: </strong>  <%= @trade.trade_notes.last.place %> 
+    </p>
+  </div>
 
 	<%= form_for @trade_note, :url => url_for(:controller => 'trades', :action => 'accept_trade') do |f|  %>
 	  <p>
 	    <%= f.label :comment, "Comments:" %></br>
-	    <%= f.text_area :comment, :rows => 6, :cols => 35 %>
+	    <%= f.text_area :comment, :rows => 6, :cols => 50 %>
 	  </p>
 
-	 	<%= submit_tag("Accept Trade", class: "button") %>
+	 	<%= submit_tag("Accept Trade", class: "button accept-trade") %>
 	<% end %>
 </div>

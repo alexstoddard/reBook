@@ -10,7 +10,7 @@
  *
  *= require_self
  *= require jquery.facebox
- *= require jquery.timepicker
+ *= require jquery.timepicker.css
  */
 
  * {
@@ -312,6 +312,10 @@ header > h4 {
 #navbar h2 {
 	font-size:1.3em;
 	margin-bottom:0;
+}
+
+#navbar a.current {
+	color:#002BB3;
 }
 
 /**************************Footer Section**************************/

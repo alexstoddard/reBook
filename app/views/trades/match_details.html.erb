@@ -47,13 +47,13 @@
                   Your book is in <%= @my_tradeline.inventory_own.condition.description.downcase %> condition.<br />
                   <strong>Trade with:</strong> <%= render :partial => 'users/user', locals: { display_user: @from_tradeline.inventory_own.user } %> <br />
                   Their book is in <%= @from_tradeline.inventory_own.condition.description.downcase %> condition.
-                  <% if trade.trade_lines.size > 2 #three way trade %>
+                  <% if trade.trade_lines.size == 3 #three way trade %>
                     <br /><strong>This is a <%= trade.trade_lines.size %>-way trade.</strong><br />
                     <% @to_tradeline = trade.get_tradeline_to(session[:user_id]) %>
                     <%= render :partial => 'users/user', locals: { display_user: @from_tradeline.inventory_own.user } %> gets <%= render :partial => 'users/user', locals: { display_user: @to_tradeline.inventory_own.user } %>'s book <%= @to_tradeline.inventory_own.book.name %>.
                   <% end %>
                 </p>
-                <%= link_to "Propose trade", "/propose_trade/" + trade.escaped_json, :rel => "facebox", class: "propose-trade" %>   
+                <%= render partial: 'propose_trade_button', locals: { trade: trade } %>
               </div>
           </li>
       <% end#each %>

@@ -51,20 +51,22 @@
 				    			<p>This trade is pending.</p>
 				    			<p>You have accepted this trade.</p>
 				    			<% #don't show trade line corresponding to current user (they were the one who proposed the trade)
-				    			other_trades = @need_hash[x.id][:accepted].first.get_tradelines_except(session[:user_id])
-				    			other_trades.each do |y| 
+				    			@pending_trade = @need_hash[x.id][:accepted].first
+				    			other_tradelines = @pending_trade.get_tradelines_except(session[:user_id])
+				    			other_tradelines.each do |y| 
 				    				if y.user_from_accepted %>
 				    					<p><%= render :partial => 'users/user', locals: { display_user: y.inventory_own.user } %> has accepted this trade.</p>
 				    				<% else %>
 				    					<p><%= render :partial => 'users/user', locals: { display_user: y.inventory_own.user } %> has not yet accepted this trade.</p>
 				    				<% end
 				    			end %>
-								<p><%= link_to "View Trade Details...", "/trade_details/" + @need_hash[x.id][:accepted][0].id.to_s %></p>
-				    			<p><%= link_to "Cancel Trade", "/decline_trade/" + @need_hash[x.id][:accepted][0].id.to_s + "?type=cancel", :class => "cancel-trade", :rel => "facebox" %></p>
+								<p><%= link_to "View Trade Details...", "/trade_details/" + @pending_trade.id.to_s %></p>
+				    			<p><%= render partial: "change_trade_button", locals: { trade: @pending_trade } %>
+				    			<%= render partial: "cancel_trade_button", locals: { trade: @pending_trade } %></p>
 				    		<% end %>
 			    		</div>
 			    		<div class="proposed-trades">
-					    	<% if @proposed_count > 0 #show message for proposed trades %>
+					    	<% if @pending_count == 0 && @proposed_count > 0 #show message for proposed trades %>
 					    		<% if @proposed_count == 1 %>
 					  				<p>1 user has proposed a trade to you. <%= link_to "View Trade »", "/match_details/" + x.id.to_s + "#proposed" %></p>
 					  			<% else %>
@@ -98,16 +100,17 @@
 										    <% if trade.trade_lines.size > 2 %>
 										    	<p><strong>This is a <%= trade.trade_lines.size %>-way trade.</strong></p>
 										    <% end %>
+
+										    <p><%= render partial: "propose_trade_button", locals: { trade: trade } %>
+										    </p>  
 									    </li>
 							    	<% end %>
 						    	</ul>
 						    	<% if @possible_count > 3 %>
 						    		<p class="view-more"><%= link_to "View More Matches »", "/match_details/" + x.id.to_s %></p>
-						    	<% else %>
-						    		<p class="view-more"><%= link_to "Propose a Trade »", "/match_details/" + x.id.to_s %></p>
 						    	<% end %>
 						    <% elsif @pending_count == 0 and @possible_count == 0 and @proposed_count == 0#no possible trades  %>
-						    	<p class="no-matches">Sorry, there are no trade matches for this book at the moment. Try adding more books to your <%= link_to "have list", inventory_owns_path %> or checking back later.</p>
+						    	<p class="no-matches">Sorry, there are no trade matches for this book at the moment. Try adding more books to your <%= link_to "Have List", inventory_owns_path %> or checking back later.</p>
 						    <% end %>
 					    </div>
 					</div>

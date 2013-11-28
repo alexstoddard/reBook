@@ -100,26 +100,7 @@
       </div>
 
       <div class="action_links">
-        <% if @trade.active?(@user.id) %>
-          <%= link_to "Accept Trade", "/accept_trade/" +  @trade.id.to_s, :action => :get, :rel => "facebox", class: "accept-trade" %>
-          <%= link_to "Counter Propose", "/update_trade/" + @trade.id.to_s, :action => :get, :rel => "facebox", class: "counter-trade" %>
-        <% end %>
-
-        <% if  @trade.accepted?(@user.id) or @trade.completed? %>
-         <%= link_to "Change Trade", "/update_trade/" + @trade.id.to_s + '?type=change', :action => :get, :rel => "facebox", class: "counter-trade" %>
-        <% end %>
-
-        <% if @trade.declined? %>
-          <%= link_to "Re-propose Trade", "/update_trade/" + @trade.id.to_s + '?type=repropose', :action => :get, :rel => "facebox", class: "counter-trade" %>
-        <% end %>
-
-        <% if not @trade.declined?%>
-          <% if not @trade.accepted?(@user.id)%>
-           <%= link_to "Reject Trade", "/decline_trade/" + @trade.id.to_s, :action => :get, :rel => "facebox", class: "reject-trade" %>
-          <% else %>
-            <%= link_to "Cancel Trade", "/decline_trade/" + @trade.id.to_s, :action => :get, :rel => "facebox", class: "reject-trade" %>
-          <% end %>
-        <% end %>
+        <%= render partial: 'trade_buttons_logic', locals: { trade: @trade, user: @user } %>
     </div>
 
 	</div>

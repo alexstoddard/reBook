@@ -8,6 +8,7 @@ class TradesController < ApplicationController
   end
   
   def accept_trade_show
+    @trade = Trade.find_by_id(params[:id])
     @trade_note = TradeNote.new
     render :layout => "facebox"
   end
@@ -24,6 +25,7 @@ class TradesController < ApplicationController
   end
   
   def decline_trade_show
+    @trade = Trade.find_by_id(params[:id])
     @trade_note = TradeNote.new
     render :layout => "facebox"
   end
@@ -45,6 +47,7 @@ class TradesController < ApplicationController
   end
   
   def update_trade_show
+    @trade = Trade.find_by_id(params[:id])
     @trade_note = TradeNote.new
     render :layout => "facebox"
   end
