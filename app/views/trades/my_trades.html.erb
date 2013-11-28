@@ -38,8 +38,11 @@
 
 					    			<p class="action"><%= link_to "View Trade Details", "/trade_details/" + y.id.to_s %></p>
 
-					    			<p class="action"><%= link_to "Change Trade", "/update_trade/" + y.id.to_s + '?type=change', :action => :get, :rel => "facebox", :class => "counter-trade" %>
-					    			<%= link_to "Cancel Trade", "/decline_trade/" + y.id.to_s, :rel => "facebox", :class => "cancel-trade" %></p>
+					    			<p class="action">
+					    				<%= render partial: 'change_trade_button', locals: { trade: y } %>
+					    				<%= render partial: 'cancel_trade_button', locals: { trade: y } %>
+					    			</p>
+
 								</div>
 							</article>
 						<% end #each %>
@@ -84,7 +87,9 @@
 				    			end %>
 
 								<p class="action"><%= link_to "View Trade Details", "/trade_details/" + y.id.to_s %></p>
-								<p class="action"><%= link_to "Re-propose Trade", "/update_trade/" + y.id.to_s + '?type=repropose', :rel => "facebox", :class => "repropose-trade" %></p>
+								<p class="action">
+									<%= render partial: 'repropose_trade_button', locals: { trade: y } %>
+								</p>
 							</div>
 						</article>
 					<% end #each %>

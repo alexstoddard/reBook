@@ -15,13 +15,19 @@ $(function() {
 });
 </script>
 
-<div id="propose-trade">
+<div id="propose-trade" class="trade-form">
   <h2>Propose a Trade</h2>
-  <% @my_tradeline = @trade.get_tradeline_only(session[:user_id])
-  @from_tradeline = @trade.get_tradeline_from(session[:user_id]) %>
-  <p><strong>To:</strong> <%= @from_tradeline.inventory_own.user.username %></p>
-  <p><strong>Their Book:</strong> <%= @from_tradeline.inventory_own.book.name %> (condition: <%= @from_tradeline.inventory_own.condition.description.downcase %>)</p>
-  <p><strong>My Book:</strong> <%= @my_tradeline.inventory_own.book.name %> (condition: <%= @my_tradeline.inventory_own.condition.description.downcase %>)</p>
+
+  <div class="trade-details">
+    <%= render :partial => 'form_trade_details' %>
+  </div>
+
+  <p>
+    <strong>Send Message To:</strong> <%= @from_tradeline.inventory_own.user.username %>
+      <% if @trade.trade_lines.size == 3 #three way trade %>
+        and <%= @to_tradeline.inventory_own.user.username %>
+      <% end %>
+  </p>
   <%= form_for @trade_note, :url => url_for(:controller => 'trades', :action => 'create') do |f|  %>
     <%= f.hidden_field :json, :value => @trade.escaped_json %>
 
@@ -40,6 +46,6 @@ $(function() {
       <%= f.text_area :comment, cols: 50, rows: 6 %>
     </p>
 
-   	<%= submit_tag("Send Trade Proposal", class: "button") %>
+   	<%= submit_tag("Send Trade Proposal", class: "button propose-trade") %>
   <% end %>
 </div>

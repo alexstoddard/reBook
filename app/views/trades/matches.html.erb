@@ -61,7 +61,8 @@
 				    				<% end
 				    			end %>
 								<p><%= link_to "View Trade Details...", "/trade_details/" + @pending_trade.id.to_s %></p>
-				    			<p> <%= link_to "Change Trade", "/update_trade/" + @pending_trade.id.to_s + '?type=change', :action => :get, :rel => "facebox", class: "counter-trade" %><%= link_to "Cancel Trade", "/decline_trade/" + @need_hash[x.id][:accepted][0].id.to_s + "?type=cancel", :class => "cancel-trade", :rel => "facebox" %></p>
+				    			<p><%= render partial: "change_trade_button", locals: { trade: @pending_trade } %>
+				    			<%= render partial: "cancel_trade_button", locals: { trade: @pending_trade } %></p>
 				    		<% end %>
 			    		</div>
 			    		<div class="proposed-trades">
@@ -100,7 +101,8 @@
 										    	<p><strong>This is a <%= trade.trade_lines.size %>-way trade.</strong></p>
 										    <% end %>
 
-										    <p><%= link_to "Propose trade", "/propose_trade/" + trade.escaped_json, :rel => "facebox", class: "propose-trade" %></p>  
+										    <p><%= render partial: "propose_trade_button", locals: { trade: trade } %>
+										    </p>  
 									    </li>
 							    	<% end %>
 						    	</ul>

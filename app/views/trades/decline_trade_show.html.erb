@@ -1,19 +1,27 @@
-<div id="reject-trade">
+<div id="reject-trade" class="trade-form">
 	<% if params[:type].eql? "cancel" %>
 		<h2>Cancel Trade</h2>
 	<% else %>
 		<h2>Reject Trade</h2>
 	<% end %>
 
+	<div class="trade-details">
+		<%= render :partial => 'form_trade_details' %>
+		<p>
+			<strong>Proposed Meeting Date/Time: </strong> <%= @trade.trade_notes.last.meet_time %><br />
+			<strong>Proposed Meeting Location: </strong>  <%= @trade.trade_notes.last.place %> 
+		</p>
+	</div>
+
 	<%= form_for @trade_note, :url => url_for(:controller => 'trades', :action => 'decline_trade', :remote => 'true') do |f|  %>
 	    <p>
 	    	<%= f.label :comment, "Comments:" %></br>
-	    	<%= f.text_area :comment, :rows => 6, :cols => 35 %>
+	    	<%= f.text_area :comment, :rows => 6, :cols => 50 %>
 	    </p>
 	    <% if params[:type].eql? "cancel" %>
-	    	<%= submit_tag("Cancel Trade", class: "button") %>
+	    	<%= submit_tag("Cancel Trade", class: "button cancel-trade") %>
 	    <% else %>
-	   		<%= submit_tag("Reject Trade", class: "button") %>
+	   		<%= submit_tag("Reject Trade", class: "button reject-trade") %>
 	   	<% end %>
 	<% end %>
 </div>

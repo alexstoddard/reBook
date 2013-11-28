@@ -3,6 +3,57 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
  
 
+/********************************************************/
+/************ Common Button Styles **********************/
+/********************************************************/
+
+.button {
+	padding: 5px 10px;
+	border-radius: 5px;
+	color: #fff;
+	display:inline-block;
+	font-weight:normal;
+	font-size:13px;
+}
+
+.button:hover {
+	text-decoration: none
+}
+
+.button.cancel-trade,
+.button.reject-trade {
+	background-color:#aaa;
+}
+
+.button.cancel-trade:hover,
+.button.reject-trade:hover {
+	background-color: #868686;
+}
+
+.button.counter-trade,
+.button.repropose-trade {
+	background-color:#3A70B4;
+}
+
+.button.counter-trade:hover,
+.button.repropose-trade:hover {
+	background-color: #345C8F;
+}
+
+.button.propose-trade,
+.button.accept-trade {	
+	background-color: #5FBE5F;
+}
+
+.button.propose-trade:hover,
+.button.accept-trade:hover {
+	background-color: #3F8D3F;
+}
+
+/******************************************************/
+/************* My Matches Page ************************/
+/******************************************************/
+
 #matches #search input[type="text"] {
 	width: 640px;
 	font-size: 1.2em;
@@ -72,30 +123,6 @@
 	margin-bottom:8px;
 }
 
-#matches article .pending-trades .counter-trade,
-#matches article .pending-trades .cancel-trade {
-	padding: 5px 10px;
-	border-radius: 5px;
-	color: #fff;
-	background-color:#aaa;
-	display:inline-block;
-}
-
-#matches article .pending-trades .counter-trade {
-	background-color:#3A70B4;
-	margin-right:5px;
-}
-
-#matches article .pending-trades .counter-trade:hover {
-	background-color: #345C8F;
-	text-decoration:none;
-}
-
-#matches article .pending-trades .cancel-trade:hover {
-	text-decoration: none;
-	background-color: #868686;
-}
-
 #matches article .proposed-trades {
 	text-align:left;
 }
@@ -149,19 +176,6 @@
 	font-weight: bold;
 	font-size: 0.9em;
 	color: #2A4EA8;
-}
-
-#matches article .possible-trades .propose-trade {
-	padding: 5px 10px;
-	border-radius: 5px;
-	color: #fff;	
-	background-color: #5FBE5F;
-	display:inline-block;
-}
-
-#matches article .possible-trades .propose-trade:hover {
-	text-decoration: none;
-	background-color: #3F8D3F;
 }
 
 /******************************************************************/
@@ -261,47 +275,10 @@
 	background-color: #FCFCFC;
 	padding: 5px 12px;
 	border-radius: 5px;
-	margin-bottom: 10px;
+	margin:10px 0;
 }
 
 #match-details .proposed-trades a.show-more {
-}
-
-#match-details .proposed-trades .accept-trade,
-#match-details .proposed-trades .counter-trade,
-#match-details .proposed-trades .reject-trade {
-	padding: 5px 10px;
-	border-radius: 5px;
-	color:#fff;
-}
-
-#match-details .proposed-trades .accept-trade {
-	background-color: #5FBE5F;
-	margin-right:5px;
-}
-
-#match-details .proposed-trades .counter-trade {
-	background-color:#3A70B4;
-	margin-right:5px;
-}
-
-#match-details .proposed-trades .reject-trade {
-	background-color: #aaa;
-}
-
-#match-details .proposed-trades .accept-trade:hover {
-	text-decoration:none;
-	background-color:#3F8D3F;
-}
-
-#match-details .proposed-trades .counter-trade:hover {
-	background-color: #345C8F;
-	text-decoration: none;
-}
-
-#match-details .proposed-trades .reject-trade:hover {
-	text-decoration: none;
-	background-color: #868686;
 }
 
 /***** possible trades ****/
@@ -344,19 +321,6 @@
 	max-width:350px;
 }
 
-#match-details .possible-trades .trades li .propose-trade {
-	padding: 7px 10px;
-	border-radius: 5px;
-	border: 1px solid #eee;
-	text-decoration: none;
-	background-color: #5FBE5F;
-	color: #fff;
-	display:inline-block;
-}
-
-#match-details .possible-trades .trades li .propose-trade:hover {
-	background-color:#3F8D3F;
-}
 
 /*******************************************************************/
 /******************* Trade Details Page ****************************/
@@ -476,41 +440,6 @@
 	margin: 30px 0;
 }
 
-#trade-details .action_links a {
-  border-radius: 5px;
-  color: #FFFFFF;
-  padding: 5px 10px;
-}
-
-#trade-details .action_links .accept-trade {
-	background-color: #5FBE5F;
-	margin-right:5px;
-}
-
-#trade-details .action_links .counter-trade {
-	background-color:#3A70B4;
-	margin-right:5px;
-}
-
-#trade-details .action_links .reject-trade {
-	background-color: #aaa;
-}
-
-#trade-details .action_links .accept-trade:hover {
-	text-decoration:none;
-	background-color:#3F8D3F;
-}
-
-#trade-details .action_links .counter-trade:hover {
-	background-color: #345C8F;
-	text-decoration: none;
-}
-
-#trade-details .action_links .reject-trade:hover {
-	text-decoration: none;
-	background-color: #868686;
-}
-
 /**********************************************************************************/
 /****************************** My Trades Page ************************************/
 /**********************************************************************************/
@@ -582,122 +511,55 @@
 	font-size:0.85em;
 }
 
-#my-trades article .cancel-trade,
-#my-trades article .repropose-trade,
-#my-trades article .counter-trade {
-	padding: 4px 6px;
-	border-radius: 5px;
-	color: #fff;
-	background-color:#3A70B4;
-	display:inline-block;
+/****************************************************************/
+/***************** Trade Forms Common Styles ********************/
+/****************************************************************/
+
+.trade-form {
+	padding:15px;
+	width:500px;
 }
 
-#my-trades article .counter-trade:hover {
-	text-decoration:none;
+.trade-form .trade-details {
+	margin-left: 10px;
+	background: #FCFCFC;
+	padding: 10px 15px;
+	border-radius:5px;
+	margin-bottom:15px;
 }
 
-#my-trades article .cancel-trade {
-	background-color:#aaa;
-	margin-left:3px;
+.trade-form .trade-details h3 {
+	margin-bottom:5px;
 }
 
-#my-trades article .cancel-trade:hover {
-	text-decoration: none;
-	background-color: #868686;
+.trade-form .trade-details p:last-child {
+	margin-bottom:0;
 }
 
-#my-trades article .repropose-trade:hover {
-	text-decoration: none;
-	background-color: #345C8F;
+.trade-form label {
+	width: 190px;
+	padding-bottom: 5px;
+	font-weight:bold;
 }
 
 /****************************************************************/
 /********************Propose a Trade form ***********************/
 /****************************************************************/
 
-#propose-trade {
-	width:500px;
-	padding:15px;
-}
-
-#propose-trade .button {
-	padding: 7px 10px;
-	border-radius: 5px;
-	border: 1px solid #eee;
-	text-decoration: none;
-	background-color: #549E49;
-	font-weight: normal;
-	text-transform: uppercase;
-	letter-spacing: 0.03em;
-}
-
-#propose-trade .button:hover {
-	background-color:#449438;
-}
-
-#propose-trade label {
-	width: 190px;
-	padding-bottom: 5px;
-}
-
-#propose-trade textarea {
-	width: 430px;
-	padding-bottom: 5px;
-}
-
 
 /********************************************************************/
 /********************* Reject a Trade Form **************************/
 /********************************************************************/
 
-#reject-trade {
-	padding:15px;
-}
-
-#reject-trade label {
-	padding-bottom:5px;
-}
 
 /*********************************************************************/
 /*****************Accept a Trade Form ********************************/
 /*********************************************************************/
 
-#accept-trade {
-	padding:15px;
-}
-
-#accept-trade label {
-	padding-bottom:5px;
-}
 
 /*********************************************************************/
 /************************ Counter a Trade Form *************************/
 /*********************************************************************/
-
-#counter-trade {
-	width:500px;
-	padding: 15px;
-}
-
-#counter-trade .button {
-	padding: 7px 10px;
-	border-radius: 5px;
-	border: 1px solid #eee;
-	text-decoration: none;
-	font-weight: normal;
-	text-transform: uppercase;
-	letter-spacing: 0.03em;
-}
-
-#counter-trade label {
-	width: 190px;
-	padding-bottom: 5px;
-}
-
-#counter-trade textarea {
-	width: 430px;
-	padding-bottom: 5px;
-}
 
 /***************************************************/
 /*************** form error ************************/
