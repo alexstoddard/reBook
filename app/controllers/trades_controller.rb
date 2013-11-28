@@ -180,7 +180,7 @@ class TradesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def trade_params
-      params.require(:trade).permit(:status)
+      params.require(:trade).permit(:status, :location_id)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

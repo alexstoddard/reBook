@@ -5,6 +5,7 @@ class Trade < ActiveRecord::Base
   has_many :user_feedbacks, dependent: :destroy
   has_many :trade_lines, dependent: :destroy
   has_many :trade_notes, dependent: :destroy
+  belongs_to :location
 
   # This function performs user acceptance of a trade.
   # In our system this has possible outside consequence.
@@ -65,22 +66,6 @@ class Trade < ActiveRecord::Base
   end
 
   def self.order_needs_by_status(needs, need_hash)
-    output = []
-    selected = needs.select { |x| need_hash[x.id][:active].size > 0 }
-    needs = needs - selected
-    output += selected
-    selected = needs.select { |x| need_hash[x.id][:accepted].size > 0 }
-    needs = needs - selected
-    output += selected
-    selected = needs.select { |x| need_hash[x.id][:possible].size > 0 }
-    needs = needs - selected
-    output += selected
-    output += needs
-
-    return output
-  end
-
-  def self.order_needs_by_date(needs, need_hash)
     output = []
     selected = needs.select { |x| need_hash[x.id][:active].size > 0 }
     needs = needs - selected
@@ -276,6 +261,8 @@ class Trade < ActiveRecord::Base
     json = JSON.parse(CGI.unescape(text))
     trade = Trade.new
 
+    trade.location_id = json["location_id"]
+
     json["trade_lines"].each do |x|
       line = trade.trade_lines.build()
       line.inventory_need_id = x["inventory_need_id"]
@@ -379,29 +366,35 @@ class Trade < ActiveRecord::Base
 
     # Available 2 person trades
     x = InventoryOwn.where(:user_id => user).includes(:need_matches => {:user_owns => :need_matches })
-
+    
     # This is a big ol' join. We have a large opportunity to optimize this if needed
     x.each do | o1 |
       o1.need_matches.each do | n1 |
         n1.user_owns.each do | o2 |
           o2.need_matches.each do | n2 |
-            if n2.user_id == user and not_in_owns [o1, o2] and not_in_needs [n1, n2]
-              # If here this means that the combination of needs and wants does not break
-              # any of our restrictions. We can call this a possible trade.
-              trade = Trade.new
+            p1 = o1.user.user_locations.collect { |l| l.location.id }
+            p2 = o2.user.user_locations.collect { |l| l.location.id }
+            p = p1 & p2
 
-              l1 = trade.trade_lines.build()
-              l2 = trade.trade_lines.build()
-              
-              l1.inventory_own_id = o1.id
-              l1.inventory_need_id = n1.id
-              l1.user_from_accepted = false
+            p.each do |location_id|
+              if n2.user_id == user and not_in_owns [o1, o2] and not_in_needs [n1, n2]
+                # If here this means that the combination of needs and wants does not break
+                # any of our restrictions. We can call this a possible trade.
+                trade = Trade.new
+                trade.location_id = location_id
 
-              l2.inventory_own_id = o2.id
-              l2.inventory_need_id = n2.id
-              l2.user_from_accepted = false
+                l1 = trade.trade_lines.build()
+                l2 = trade.trade_lines.build()
+                l1.inventory_own_id = o1.id
+                l1.inventory_need_id = n1.id
+                l1.user_from_accepted = false
 
-              trades = trades << trade
+                l2.inventory_own_id = o2.id
+                l2.inventory_need_id = n2.id
+                l2.user_from_accepted = false
+
+                trades = trades << trade
+              end
             end
           end
         end
@@ -421,24 +414,33 @@ class Trade < ActiveRecord::Base
                 if n3.user_id == user and not_in_owns [o1, o2, o3] and not_in_needs [n1, n2, n3]
                   # If here this means that the combination of needs and wants does not break
                   # any of our restrictions. We can call this a possible trade.
-                  trade = Trade.new
 
-                  l1 = trade.trade_lines.build()
-                  l2 = trade.trade_lines.build()
-                  l3 = trade.trade_lines.build()
+                  p1 = o1.user.user_locations.collect { |l| l.location.id }
+                  p2 = o2.user.user_locations.collect { |l| l.location.id }
+                  p3 = o2.user.user_locations.collect { |l| l.location.id }
 
-                  l1.inventory_own_id = o1.id
-                  l1.inventory_need_id = n1.id
-                  l1.user_from_accepted = false
+                  p = p1 & p2 & p3
+                  
+                  p.each do |location_id|
+                    trade = Trade.new
+                    trade.location_id = location_id
+                    l1 = trade.trade_lines.build()
+                    l2 = trade.trade_lines.build()
+                    l3 = trade.trade_lines.build()
 
-                  l2.inventory_own_id = o2.id
-                  l2.inventory_need_id = n2.id
-                  l2.user_from_accepted = false
+                    l1.inventory_own_id = o1.id
+                    l1.inventory_need_id = n1.id
+                    l1.user_from_accepted = false
 
-                  l3.inventory_own_id = o3.id
-                  l3.inventory_need_id = n3.id
-                  l3.user_from_accepted = false
-                  trades = trades << trade
+                    l2.inventory_own_id = o2.id
+                    l2.inventory_need_id = n2.id
+                    l2.user_from_accepted = false
+
+                    l3.inventory_own_id = o3.id
+                    l3.inventory_need_id = n3.id
+                    l3.user_from_accepted = false
+                    trades = trades << trade
+                  end
                 end
               end
             end
