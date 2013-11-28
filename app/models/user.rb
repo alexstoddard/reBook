@@ -25,15 +25,21 @@ class User < ActiveRecord::Base
   has_many :inventory_needs, dependent: :destroy
   has_many :inventory_owns, dependent: :destroy
   has_many :user_locations, dependent: :destroy
-#  has_many :user_feedbacks, :class_name => 'UserFeedback', :foreign_key => 'user_from_id', :dependent => :destroy
   has_many :user_feedbacks, :class_name => 'UserFeedback', :foreign_key => 'user_to_id', :dependent => :destroy
   has_many :trade_notes, dependent: :destroy
 
   # Triggers to be run in certain situations
-  before_save :encrypt_passhash, :send_activation
+  before_save :encrypt_passhash, :pre_activation
+  after_save :send_activation
 
   def self.initialize
     enable_mailer = true
+  end
+
+  def pre_activation
+    if email_changed? and enable_mailer
+      generate_token
+    end
   end
 
   # Need to send activation email when user changes their address

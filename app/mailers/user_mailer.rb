@@ -3,8 +3,6 @@ class UserMailer < ActionMailer::Base
   
   def welcome_email(user)
     @user = user
-    @user.generate_token
-
     @url = Rebook::Application::REBOOK_DOMAIN + '/login?token='"#{@user.token}"
 
     mail(to: @user.email, subject: 'ReBook: Validate Email')
