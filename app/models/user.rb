@@ -3,7 +3,7 @@ require 'bcrypt'
 class User < ActiveRecord::Base
 
   # Member fields
-  attr_accessor :location, :location_description
+  attr_accessor :location, :location_description, :old_passhash
   cattr_accessor :enable_mailer do
     true
   end

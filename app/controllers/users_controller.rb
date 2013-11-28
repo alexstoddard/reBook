@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_update_user, only: [:update]
   before_action :set_locations, only: [:edit, :update, :create, :new]
   before_action :set_params, only: [:update, :create]
   before_action :set_is_current_user, only: [:show]
@@ -109,11 +110,44 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { head :no_content }
+
+    @authenticated_user = User.authenticate(@user.username, @update_user.old_passhash)
+
+    if not @authenticated_user.nil? and @authenticated_user.id == @user.id
+      @user.first = @update_user.first
+      @user.last = @update_user.last
+      @user.image = @update_user.image
+
+      if @update_user.passhash == "" and @update_user.passhash_confirmation ==""
+        @user.passhash_confirmation = @user.passhash
       else
+        @user.passhash = @update_user.passhash
+        @user.passhash_confirmation = @update_user.passhash_confirmation
+      end
+
+      if @update_user.email != @user.email
+        @user.email = @update_user.email
+        activate = true
+      end
+      
+      respond_to do |format|
+        if @user.save
+          if activate
+            format.html { redirect_to @user, notice: 'User was successfully updated. Please activate your new email.' }
+            format.json { head :no_content }
+          else
+            format.html { redirect_to @user, notice: 'User was successfully updated.' }
+            format.json { head :no_content }
+          end
+        else
+          format.html { render action: 'edit' }
+          format.json { render json: @user.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      @user.errors[:old_password] = "is incorrect"
+
+      respond_to do |format|
         format.html { render action: 'edit' }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
@@ -136,6 +170,17 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
     end
 
+    def set_update_user
+      @update_user = User.new
+      @update_user.old_passhash = params[:user][:old_passhash]
+      @update_user.passhash = params[:user][:passhash]
+      @update_user.passhash_confirmation = params[:user][:passhash_confirmation]
+      @update_user.image = params[:user][:image]
+      @update_user.email = params[:user][:email]
+      @update_user.first = params[:user][:first]
+      @update_user.last = params[:user][:last]
+    end
+
     def set_locations
       @locations = Location.all
     end
@@ -150,6 +195,10 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:first, :last, :username, :email, :passhash, :image, :activated, 
                                    :passhash_confirmation, :location, :location_description, :terms)
+    end
+
+    def user_update_params
+      params.require(:user).permit(:first, :last, :email, :passhash, :image, :passhash_confirmation, :old_passhash)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

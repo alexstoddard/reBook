@@ -28,13 +28,13 @@
   <%= f.text_field :first, placeholder: "First", class: "text" %>
   <%= f.text_field :last, placeholder: "Last", class: "text" %>
 
-	<h3>Choose your username</h3>
-  <%= f.text_field :username, class: "text" %>
+	<h3>Old password</h3>
+  <%= f.password_field :old_passhash, class: "text" %>
 
-	<h3>Create a password</h3>
+	<h3>Create a new password</h3>
   <%= f.password_field :passhash, class: "text" %>
 
-	<h3>Confirm your password</h3>
+	<h3>Confirm your new password</h3>
   <%= f.password_field :passhash_confirmation, class: "text" %>
   
 	<h3>Your current email address</h3>
