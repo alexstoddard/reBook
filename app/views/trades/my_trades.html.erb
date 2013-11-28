@@ -9,16 +9,12 @@
 
 		<div class="active-trades">
 			<h2>Active Trades</h2>
-			<% if @inventory_needs.all? { |x| @need_hash[x.id][:completed].size == 0} %>
+			<% if @trade_hash[:completed].size == 0 %>
 				<p>You have no active trades.</p>
 			<% else %>
-
-				<% @inventory_needs.each do |x| %>
-					<% if @need_hash[x.id][:completed].size > 0 #trades that have been accepted by all users %>	
-
-
-						<% @need_hash[x.id][:completed].each do |y| %>
-				  		
+        <% debugger %>
+				<% @trade_hash[:completed].each do |y| %>
+        <% x = y.user_need(@user.id).inventory_need %>
 							<article>
 							
 								<h3><span>Get this book:</span> <%= x.book.name %></h3>
@@ -45,23 +41,17 @@
 
 								</div>
 							</article>
-						<% end #each %>
-					<% end #if, [:completed].size %>
-				<% end #each, inventory_needs loop %>
-
+				<% end #each, trade_hash loop %>
 			<% end#if %>
 
 		</div>
 
 		<div class="incomplete-trades">
-			<% if @inventory_needs.any? { |x| @need_hash[x.id][:declined].size > 0 } %>
+			<% if @trade_hash[:declined].size == 0 %>
 				<h2>Incomplete Trades</h2>
 			<% end %>
-
-			<% @inventory_needs.each do |x| %>
-				<% if @need_hash[x.id][:declined].size > 0 %>
-					
-					<% @need_hash[x.id][:declined].each do |y| %>
+			<% @trade_hash[:declined].each do |y| %>
+      <% x = y.user_need(@user.id).inventory_need %>
 						
 						<article>
 							<h3><span>Did not get this book:</span> <%= x.book.name %></h3>
@@ -92,10 +82,7 @@
 								</p>
 							</div>
 						</article>
-					<% end #each %>
-				<% end #if, [:declined].size %>
  			<% end #each, inventory_needs loop %>
  		</div>
-
 	</div>
 </div>

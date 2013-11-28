@@ -95,8 +95,9 @@ class TradesController < ApplicationController
 
     user_id = session[:user_id]
 
+    @user = User.find(user_id)
     @inventory_needs = InventoryNeed.find_all_by_user_id(user_id)
-    @need_hash = Trade.trades_by_needs(user_id)
+    @trade_hash = Trade.trades_by_status(user_id)
 
   end
 

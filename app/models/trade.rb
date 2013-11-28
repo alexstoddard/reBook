@@ -55,6 +55,46 @@ class Trade < ActiveRecord::Base
       end
     end
   end
+  
+  def last_activity
+    last_note = trade_notes.last
+    unless last_note.nil? 
+      return last_note.created_at
+    end
+    return nil
+  end
+
+  def self.order_needs_by_status(needs, need_hash)
+    output = []
+    selected = needs.select { |x| need_hash[x.id][:active].size > 0 }
+    needs = needs - selected
+    output += selected
+    selected = needs.select { |x| need_hash[x.id][:accepted].size > 0 }
+    needs = needs - selected
+    output += selected
+    selected = needs.select { |x| need_hash[x.id][:possible].size > 0 }
+    needs = needs - selected
+    output += selected
+    output += needs
+
+    return output
+  end
+
+  def self.order_needs_by_date(needs, need_hash)
+    output = []
+    selected = needs.select { |x| need_hash[x.id][:active].size > 0 }
+    needs = needs - selected
+    output += selected
+    selected = needs.select { |x| need_hash[x.id][:accepted].size > 0 }
+    needs = needs - selected
+    output += selected
+    selected = needs.select { |x| need_hash[x.id][:possible].size > 0 }
+    needs = needs - selected
+    output += selected
+    output += needs
+
+    return output
+  end
 
   def rotate_lines(user)
     arr = trade_lines.all
@@ -96,22 +136,6 @@ class Trade < ActiveRecord::Base
     trade_lines.each { |x| x.save }
   end
   
-  def self.order_needs_by_status(needs, need_hash)
-    output = []
-    selected = needs.select { |x| need_hash[x.id][:active].size > 0 }
-    needs = needs - selected
-    output += selected
-    selected = needs.select { |x| need_hash[x.id][:accepted].size > 0 }
-    needs = needs - selected
-    output += selected
-    selected = needs.select { |x| need_hash[x.id][:possible].size > 0 }
-    needs = needs - selected
-    output += selected
-    output += needs
-
-    return output
-  end
-
   # This function perfoms the user update of a trade
   # Its meanin is a little tricky. When a user declines,
   # all prior user's acceptances cease to matter. The terms
@@ -426,14 +450,12 @@ class Trade < ActiveRecord::Base
     return trades
   end
 
-  # Divides a list of trades into different categories. The way it does this is 
-  # highly dependent on our definitions of trades and therefore can be changed
-  # easily if we change those definitions.
-  def self.trades_by_needs(user_id) 
+  def self.trades_by_status(user_id)
 
     trades = Trade.includes(:trade_lines)
-    needs = InventoryNeed.find_all_by_user_id(user_id)
+    trades = trades.select { |x| x.trade_lines.any? { |y| y.inventory_own.user_id == user_id } }
 
+    results = {}
     # These are filters for the various types of situations a trade can exist in
     # To add another type, you need only map a symbol to a proc that returns a filtered
     # version of a trade collection
@@ -488,13 +510,32 @@ class Trade < ActiveRecord::Base
      end
     }
 
-    # Initialize the hash to avoid constantly checking for nil-ness in collections
-    need_hash = create_need_hash(needs, filters.keys)
-
+    # These are filters for the various types of situations a trade can exist in
+    # To add another type, you need only map a symbol to a proc that returns a filtered
+    # version of a trade collection
+    sorts = {
+      :possible => lambda do |user, trades|
+        return trades
+      end,
+      :accepted => lambda do |user, trades|
+        return trades
+      end,
+      :active => lambda do |user, trades|
+        return trades
+      end,
+      :declined => lambda do |user, trades|
+        return trades.sort_by { |x| x.last_activity }.reverse
+      end,
+      :completed =>  lambda do |user, trades|
+        return trades.sort_by { |x| x.last_activity }.reverse
+      end
+    }
+ 
     # Magic happens here
     # 1) For each category we have defined to have a filter, we iterate on the category
     # 2) We grab the filtering procedure which defines this category from the hash
     # 3) We filter our list of trades by calling the procedure
+    # 4) We sort this list by calling a sorting filter as wel
     # 4) We take the resultant list and we hash the trades according to the inventory_need
     #    of the user, since this is how we need to access it from the user's point of 
     #    view
@@ -502,6 +543,25 @@ class Trade < ActiveRecord::Base
       proc = filters[filter]
       passed = proc.call(user_id, trades)
       trades = trades - passed
+      proc = sorts[filter]
+      passed = proc.call(user_id, passed)
+      results[filter] = passed
+    end
+
+    return results
+  end
+
+  # Divides a list of trades into different categories. The way it does this is 
+  # highly dependent on our definitions of trades and therefore can be changed
+  # easily if we change those definitions.
+  def self.trades_by_needs(user_id) 
+
+    needs = InventoryNeed.find_all_by_user_id(user_id)
+    results = trades_by_status(user_id)
+    need_hash = create_need_hash(needs, results.keys)
+
+    results.keys.each do |filter|
+      passed = results[filter]
       self.hash_trades(need_hash, passed, filter, user_id)
     end
 
