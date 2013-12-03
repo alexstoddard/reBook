@@ -15,10 +15,26 @@ class TradesController < ApplicationController
   
   def accept_trade
 
-    @note = TradeNote.new(trade_note_params)
-    @trade.user_accept(session[:user_id].to_i)
-    @trade.append_note(session[:user_id], @note)
-    @trade.save
+    success = true
+
+    Trade.transaction do
+
+      @note = TradeNote.new(trade_note_params)
+      @trade.user_accept(session[:user_id].to_i)
+      @trade.append_note(session[:user_id], @note)
+
+      if not @trade.proposable?
+        success = false
+        raise ActiveRecord::Rollback, "Cannot accept"
+      end
+
+      success = @trade.save
+
+    end
+    
+    if not success
+      flash[:notice] = "Failed accepting trade."
+    end
 
     redirect_to "/trade_details/" + @trade.id.to_s
 
@@ -53,10 +69,25 @@ class TradesController < ApplicationController
   end
   
   def update_trade 
-    @note = TradeNote.new(trade_note_params)
-    @trade.user_update(session[:user_id].to_i)
-    @trade.append_note(session[:user_id], @note)
-    @trade.save
+    success = true
+
+    Trade.transaction do
+
+      @note = TradeNote.new(trade_note_params)
+      @trade.user_update(session[:user_id].to_i)
+      @trade.append_note(session[:user_id], @note)
+
+      if not @trade.proposable?
+        success = false
+        raise ActiveRecord::Rollback, "Cannot update"
+      end
+
+      success = @trade.save
+    end
+
+    if not success
+      flash[:notice] = "Failed updating trade."
+    end
 
     redirect_to "/trade_details/" + @trade.id.to_s
   end
@@ -130,14 +161,26 @@ class TradesController < ApplicationController
   # POST /trades
   # POST /trades.json
   def create
+    success = true
 
-    @trade = Trade.json_to_trade(params[:trade_note][:json])
-    @note = TradeNote.new(trade_note_params)
-    @trade.user_accept(session[:user_id])
-    @trade.append_note(session[:user_id], @note)
+    Trade.transaction do
+      
+      @trade = Trade.json_to_trade(params[:trade_note][:json])
+
+      if not @trade.proposable?
+        success = false
+        raise ActiveRecord::Rollback, "Cannot propose"
+      end
+
+      @note = TradeNote.new(trade_note_params)
+      @trade.user_accept(session[:user_id])
+      @trade.append_note(session[:user_id], @note)
+      success = @trade.save
+
+    end
 
     respond_to do |format|
-      if @trade.save
+      if success
         UserMailer.trade_email(@trade).deliver
         format.html { 
           redirect_to Rebook::Application::REBOOK_DOMAIN + '/trade_details/'"#{@trade.id}"
@@ -145,7 +188,7 @@ class TradesController < ApplicationController
         }
         format.json { render action: 'show', status: :created, location: @trade }
       else
-        format.html { render action: 'new' }
+        format.html { redirect_to matches_path, notice: 'Trade could not be proposed.' }
         format.json { render json: @trade.errors, status: :unprocessable_entity }
       end
     end

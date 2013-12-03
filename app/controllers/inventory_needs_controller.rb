@@ -7,7 +7,7 @@ class InventoryNeedsController < ApplicationController
     if session[:user_id].nil?
       @inventory_needs = InventoryNeed.all
     else
-      @inventory_needs = InventoryNeed.find_all_by_user_id(session[:user_id])
+      @inventory_needs = InventoryNeed.where(deleted: false).find_all_by_user_id(session[:user_id])
     end
   end
 
@@ -35,7 +35,8 @@ class InventoryNeedsController < ApplicationController
       @inventory_need = InventoryNeed.new
       @inventory_need.book_id = @book.id
       @inventory_need.user_id = session[:user_id]
-      
+      @inventory_need.deleted = false
+
       respond_to do |format|
         if @inventory_need.save
           format.html { redirect_to search_path + "?" + params[:search].to_query("search")  }
@@ -67,7 +68,19 @@ class InventoryNeedsController < ApplicationController
   # DELETE /inventory_needs/1
   # DELETE /inventory_needs/1.json
   def destroy
-    @inventory_need.destroy
+
+    @inventory_need.deleted = true
+    @inventory_need.save
+
+    @trade_line = TradeLine.find_by_inventory_need_id(@inventory_need.id)
+    if(!@trade_line.nil?)
+      @trade = Trade.find(@trade_line.trade_id)
+      @trade_lines = @trade.get_tradelines_except(session[:user_id])
+      @trade_lines.each do |x|
+        UserMailer.trade_destroyed(x.inventory_own.user, @trade).deliver
+      end
+    end
+
     respond_to do |format|
       format.html { redirect_to inventory_needs_url }
       format.json { head :no_content }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131203182416) do
+ActiveRecord::Schema.define(version: 20131203193953) do
 
   create_table "books", force: true do |t|
     t.string   "name"
@@ -35,11 +35,20 @@ ActiveRecord::Schema.define(version: 20131203182416) do
     t.datetime "updated_at"
   end
 
+  create_table "inventory_haves", force: true do |t|
+    t.integer  "book_id"
+    t.integer  "user_id"
+    t.string   "condition_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "inventory_needs", force: true do |t|
     t.integer  "book_id"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "deleted"
   end
 
   create_table "inventory_owns", force: true do |t|
@@ -48,6 +57,7 @@ ActiveRecord::Schema.define(version: 20131203182416) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "condition_id"
+    t.boolean  "deleted"
   end
 
   create_table "locations", force: true do |t|
@@ -80,7 +90,7 @@ ActiveRecord::Schema.define(version: 20131203182416) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "note_type"
+    t.string   "type"
   end
 
   create_table "trades", force: true do |t|

@@ -141,10 +141,10 @@ class Trade < ActiveRecord::Base
   def proposable?
     trade_lines.all? do |x|
       a = x.inventory_own.trades.none? do |y|
-        y.accepted?(x.inventory_own.user_id)
+        y.accepted?(x.inventory_own.user_id) and y.id != id
       end
       b = x.inventory_need.trades.none? do |y|
-        y.accepted?(x.inventory_need.user_id)
+        y.accepted?(x.inventory_need.user_id) and y.id != id
       end
       (a and b)
     end
