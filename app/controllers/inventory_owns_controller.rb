@@ -71,8 +71,19 @@ class InventoryOwnsController < ApplicationController
   # DELETE /inventory_owns/1
   # DELETE /inventory_owns/1.json
   def destroy
+
     @inventory_own.deleted = true
     @inventory_own.save
+
+    @trade_line = TradeLine.find_by_inventory_own_id(@inventory_own.id)
+    if(!@trade_line.nil?)
+      @trade = Trade.find(@trade_line.trade_id)
+      @trade_lines = @trade.get_tradelines_except(session[:user_id])
+      @trade_lines.each do |x|
+        UserMailer.trade_destroyed(x.inventory_own.user, @trade).deliver
+      end
+    end
+    @inventory_own.destroy
 
     respond_to do |format|
 #      format.html { redirect_to inventory_owns_url }

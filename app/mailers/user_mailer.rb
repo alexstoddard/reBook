@@ -9,7 +9,7 @@ class UserMailer < ActionMailer::Base
   end
 
   def reset_email(user)
-    @user = user;
+    @user = user
     @user.generate_token
     @user.save(:validate => false)
     
@@ -17,8 +17,14 @@ class UserMailer < ActionMailer::Base
       mail(to: @user.email, subject: 'ReBook: Reset Password')
   end
   
+  def trade_destroyed(user,trade)
+	@user = user
+	@trade = trade
+	mail(to: @user.email, subject: 'ReBook: A trade has been cancelled')
+  end
+  
   def trade_email(trade)
-    @trade = trade;
+    @trade = trade
     @url = Rebook::Application::REBOOK_DOMAIN + '/trade_details/'"#{@trade.id}"
       @trade.trade_lines[1..-1].each do |x|
         email_trade_to_users(x.inventory_own.user.email).deliver

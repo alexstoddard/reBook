@@ -72,6 +72,15 @@ class InventoryNeedsController < ApplicationController
     @inventory_need.deleted = true
     @inventory_need.save
 
+    @trade_line = TradeLine.find_by_inventory_need_id(@inventory_need.id)
+    if(!@trade_line.nil?)
+      @trade = Trade.find(@trade_line.trade_id)
+      @trade_lines = @trade.get_tradelines_except(session[:user_id])
+      @trade_lines.each do |x|
+        UserMailer.trade_destroyed(x.inventory_own.user, @trade).deliver
+      end
+    end
+
     respond_to do |format|
       format.html { redirect_to inventory_needs_url }
       format.json { head :no_content }
