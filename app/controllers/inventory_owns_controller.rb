@@ -8,7 +8,7 @@ class InventoryOwnsController < ApplicationController
       @inventory_owns = InventoryOwn.all
     else
       @conditions = Condition.all
-      @inventory_owns = InventoryOwn.find_all_by_user_id(session[:user_id])
+      @inventory_owns = InventoryOwn.where(deleted: false).find_all_by_user_id(session[:user_id])
     end
   end
 
@@ -38,7 +38,8 @@ class InventoryOwnsController < ApplicationController
       @inventory_own.book_id = @book.id
       @inventory_own.user_id = session[:user_id]
       @inventory_own.condition_id = params[:condition_id]
-      
+      @inventory_own.deleted = false
+
       respond_to do |format|
         if @inventory_own.save
           format.html { redirect_to search_path + "?" + params[:search].to_query("search") }
@@ -70,7 +71,9 @@ class InventoryOwnsController < ApplicationController
   # DELETE /inventory_owns/1
   # DELETE /inventory_owns/1.json
   def destroy
-    @inventory_own.destroy
+    @inventory_own.deleted = true
+    @inventory_own.save
+
     respond_to do |format|
 #      format.html { redirect_to inventory_owns_url }
       format.json { head :no_content }

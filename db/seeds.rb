@@ -211,3 +211,6 @@ UserSchedule.create!([
   { :id => 10, :created_at => "2013-11-26 04:43:00", :updated_at => "2013-11-26 04:43:00", :from => 0, :to => 2330, :day => "Wednesday", :user_location_id => 18 },
   { :id => 11, :created_at => "2013-11-26 19:51:40", :updated_at => "2013-11-26 19:51:40", :from => 230, :to => 300, :day => "Monday", :user_location_id => 4 }
 ])
+
+InventoryNeed.update_all(:deleted => false)
+InventoryOwn.update_all(:deleted => false)
