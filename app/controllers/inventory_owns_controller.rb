@@ -74,16 +74,18 @@ class InventoryOwnsController < ApplicationController
 
     @inventory_own.deleted = true
     @inventory_own.save
-
-    @trade_line = TradeLine.find_by_inventory_own_id(@inventory_own.id)
+	#If the book being removed is involved in a trade, email other users involved in trade that the trade
+	#has been cancelled
+    @all_trade_lines = TradeLine.find_all_inventory_own_id(@inventory_own.id)
     if(!@trade_line.nil?)
-      @trade = Trade.find(@trade_line.trade_id)
-      @trade_lines = @trade.get_tradelines_except(session[:user_id])
-      @trade_lines.each do |x|
-        UserMailer.trade_destroyed(x.inventory_own.user, @trade).deliver
-      end
+	  @all_trade_lines.each do |y|
+		  @trade = Trade.find(y.trade_id)
+		  @trade_lines = @trade.get_tradelines_except(session[:user_id])
+		  @trade_lines.each do |x|
+			UserMailer.trade_destroyed(x.inventory_own.user, @trade).deliver
+		  end
+	  end
     end
-    @inventory_own.destroy
 
     respond_to do |format|
 #      format.html { redirect_to inventory_owns_url }
