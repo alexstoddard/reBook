@@ -92,9 +92,6 @@
 							    		 	@from_tradeline  = trade.get_tradeline_from(session[:user_id]) %>
 							    		 	
 											<%= image_tag @my_tradeline.inventory_own.book.thumbnail, alt: @my_tradeline.inventory_own.book.name %><br />
-                      <% if trade.location %> 
-                      <strong>Trade Location:</strong> <%= trade.location.name %><br/>
-                      <% end %>
 										    <p><strong>Trade your book:</strong> <%= @my_tradeline.inventory_own.book.name %></p>
 										    <p><strong>Trade with:</strong> <%= render :partial => 'users/user', locals: { display_user: @from_tradeline.inventory_own.user } %></p>
 										    <p>Their book is in <%= @from_tradeline.inventory_own.condition.description.downcase %> condition.</p>
@@ -103,6 +100,10 @@
 										    <% if trade.trade_lines.size > 2 %>
 										    	<p><strong>This is a <%= trade.trade_lines.size %>-way trade.</strong></p>
 										    <% end %>
+
+										    <% if trade.location %> 
+						                    	<p><strong>Trade Location:</strong> <%= trade.location.name %></p>
+						                    <% end %>
 
 										    <p><%= render partial: "propose_trade_button", locals: { trade: trade } %>
 										    </p>  
