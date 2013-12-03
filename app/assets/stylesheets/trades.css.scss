@@ -432,7 +432,10 @@
 }
 
 #trade-details .message-thread h3 span {
-	font-size:0.9em;
+	font-size: 0.8em;
+	display: inline-block;
+	float: right;
+	color: #B3B3B3;
 }
 
 #trade-details .message-thread .message {
@@ -609,6 +612,14 @@
 
 .trade-form #trade_note_time_2 {
 	width:125px;
+}
+
+.trade-form #trade_note_place {
+	width:211px;
+}
+
+.trade-form #trade_note_comment {
+	width:416px;
 }
 
 /****************************************************************/

@@ -9,18 +9,24 @@
 
 	<div class="trade-details">
 		<%= render :partial => 'form_trade_details' %>
-		<p>
-			<strong>Proposed Meeting Date/Time: </strong> <%= @trade.trade_notes.last.meet_time %><br />
-			<strong>Proposed Meeting Location: </strong>  <%= @trade.trade_notes.last.place %> 
-				<% if @trade.location %> 
-		        	(<%= @trade.location.name %>)
-		        <% end %>
-		</p>
+		<% #find latest trade note with time and locationn
+		@trade.trade_notes.reverse.each do |note| 
+			if (note.meet_time && note.place) %>
+				<p>
+					<strong>Proposed Meeting Time/Date:</strong> <%= note.meet_time %><br />
+					<strong>Proposed Meeting Location:</strong> <%= note.place %> 
+						<% if @trade.location %>
+							(<%= @trade.location.name %>)
+						<% end %>
+				</p>
+				<% break %>
+			<% end %>
+		<% end %>
 	</div>
 
 	<%= form_for @trade_note, :url => url_for(:controller => 'trades', :action => 'decline_trade', :remote => 'true') do |f|  %>
 
-		<%= f.hidden_field :type, :value => @note_type %>
+		<%= f.hidden_field :note_type, :value => @note_type %>
 	    <p>
 	    	<%= f.label :comment, "Comments:" %></br>
 	    	<%= f.text_area :comment, :rows => 6, :cols => 50 %>

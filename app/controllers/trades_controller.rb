@@ -139,7 +139,10 @@ class TradesController < ApplicationController
     respond_to do |format|
       if @trade.save
         UserMailer.trade_email(@trade).deliver
-        format.html { redirect_to Rebook::Application::REBOOK_DOMAIN + '/trade_details/'"#{@trade.id}", notice: 'Trade was successfully created.' }
+        format.html { 
+          redirect_to Rebook::Application::REBOOK_DOMAIN + '/trade_details/'"#{@trade.id}"
+          flash[:success] = 'Trade was successfully created.' 
+        }
         format.json { render action: 'show', status: :created, location: @trade }
       else
         format.html { render action: 'new' }
@@ -153,7 +156,10 @@ class TradesController < ApplicationController
   def update
     respond_to do |format|
       if @trade.update(trade_params)
-        format.html { redirect_to @trade, notice: 'Trade was successfully updated.' }
+        format.html { 
+          redirect_to @trade
+          flash[:success] = 'Trade was successfully updated.' 
+        }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -185,6 +191,6 @@ class TradesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def trade_note_params
-      params.require(:trade_note).permit(:meet_time, :place, :comment)
+      params.require(:trade_note).permit(:meet_time, :place, :comment, :note_type)
     end
 end

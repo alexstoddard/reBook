@@ -88,13 +88,31 @@
                 <% else %>
                   <%= render :partial => 'users/user', locals: { display_user: note.user } %>
                 <% end %>
-                <% if note.type %>
-                  <%= note.type %>
+                <% if note.note_type %>
+                  <% case note.note_type 
+                    when "propose" %>
+                      proposed the trade and 
+                    <% when "accept" %>
+                      accepted the trade and 
+                    <% when "cancel" %>
+                      canceled the trade and 
+                    <% when "reject" %>
+                      rejected the trade and 
+                    <% when "repropose" %>
+                      re-proposed the trade and 
+                   <% when "change" %>
+                      changed the trade and 
+                    <% when "counter" %>
+                      countered the trade and 
+                    <% else
+                  
+                    end %>
                 <% end %>
-                said <span>on <%= note.created_at.in_time_zone(@user.timezone).strftime("%d %B %Y at %I:%M%p") %>:</span></h2>
+                said:
+                <span><%= note.created_at.in_time_zone(@user.timezone).strftime("%d %B %Y %I:%M%P") %></span></h2>
               <p class="message">
                 <% unless note.meet_time.nil? %>
-                  <strong>Suggested Meet Time: </strong> <%= note.meet_time%><br />
+                  <strong>Suggested Meet Time/Date: </strong> <%= note.meet_time%><br />
                 <% end %>
                 <% unless note.place.nil? %>
                   <strong>Suggested Meet Location: </strong> <%= note.place %><br />

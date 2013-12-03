@@ -42,6 +42,20 @@
 					    <div class="trade-info">
 			    			<p>This trade is currently active.</p>
 
+			    			<% #find latest trade note with time and locationn
+			    			y.trade_notes.reverse.each do |note| 
+			    				if (note.meet_time && note.place) %>
+			    					<p>
+				    					Meet Time/Date: <%= note.meet_time %><br />
+				    					Meet Location: <%= note.place %> 
+				    						<% if y.location %>
+				    							(<%= y.location.name %>)
+				    						<% end %>
+				    				</p>
+			    					<% break %>
+			    				<% end %>
+			    			<% end %>
+
 			    			<p class="action"><%= link_to "View Trade Details", "/trade_details/" + y.id.to_s %></p>
 
 			    			<p class="action">
