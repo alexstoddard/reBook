@@ -5,7 +5,7 @@ $(function() {
     time = $('#trade_note_time_1').val();
     date = $('#trade_note_time_2').val();
     if (!time || !date) {
-      $('#meet_time_error').text('Proposed Meeting Date/Time cannot be blank.');
+      $('#meet_time_error').text('Proposed Meeting Time/Date cannot be blank.');
       valid = false;
     }
     if (!$('#trade_note_place').val()) {
@@ -43,9 +43,9 @@ $(function() {
   </p>
   <%= form_for @trade_note, :url => url_for(:controller => 'trades', :action => 'create') do |f|  %>
     <%= f.hidden_field :json, :value => @trade.escaped_json %>
-    <%= f.hidden_field :type, :value => "propose" %>
+    <%= f.hidden_field :note_type, :value => "propose" %>
     <p>
-      <%= f.label :meet_time, "Proposed Meeting Date/Time:" %>
+      <%= f.label :meet_time, "Proposed Meeting Time/Date:" %>
       <%= text_field_tag :time_1, "",  :id => "trade_note_time_1" %>
       <%= text_field_tag :time_2, "", :id => "trade_note_time_2" %>
       <%= f.hidden_field :meet_time, :value => "" %>

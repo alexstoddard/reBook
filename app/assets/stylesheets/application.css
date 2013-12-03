@@ -140,6 +140,7 @@ header .success {
 #wrapperheader {
 	padding: 10px 0;
 	position:relative;
+	height:90px;
 }
 
 header #logo {

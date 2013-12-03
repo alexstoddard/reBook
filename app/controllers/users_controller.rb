@@ -98,7 +98,10 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.errors.size == 0
-        format.html { redirect_to root_path, notice: 'Account has been created. Check your email to activate.' }
+        format.html { 
+          redirect_to root_path
+          flash[:success] = 'Account has been created. Please check your email to activate your account.' 
+        }
         format.json { render action: 'show', status: :created, location: @user }
       else
         format.html { render action: 'new' }
@@ -137,10 +140,16 @@ class UsersController < ApplicationController
       respond_to do |format|
         if @user.save
           if activate
-            format.html { redirect_to @user, notice: 'User was successfully updated. Please activate your new email.' }
+            format.html { 
+              redirect_to @user
+              flash[:success] = 'User was successfully updated. Please activate your new email.' 
+            }
             format.json { head :no_content }
           else
-            format.html { redirect_to @user, notice: 'User was successfully updated.' }
+            format.html { 
+              redirect_to @user
+              flash[:success] = 'User was successfully updated.' 
+            }
             format.json { head :no_content }
           end
         else
