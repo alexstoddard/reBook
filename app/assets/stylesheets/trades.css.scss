@@ -345,6 +345,14 @@
 	background:#8F8F8F;
 }
 
+#trade-details > h2 span {
+	display: inline-block;
+	float: right;
+	font-size: 0.8em;
+	vertical-align: middle;
+	line-height: 26px;
+}
+
 /***** trade details box  ****/
 
 #trade-details .trade {
@@ -448,8 +456,9 @@
 	margin-bottom:15px;
 }
 
-#my-trades .active-trades {
-	margin-bottom:40px;
+#my-trades h3 span {
+	font-size:0.8em;
+	text-transform: uppercase;
 }
 
 #my-trades article {
@@ -464,19 +473,6 @@
 	color:#fff;
 	padding:10px 15px;
 	margin-bottom:12px;
-}
-
-#my-trades .active-trades article h3 {
-	background-color: #60964C;
-}
-
-#my-trades .incomplete-trades article h3 {
-	background-color:#8F8F8F;
-}
-
-#my-trades h3 span {
-	font-size:0.8em;
-	text-transform: uppercase;
 }
 
 #my-trades article  img.bookcover {
@@ -510,6 +506,71 @@
 #my-trades article .action a {
 	font-size:0.85em;
 }
+
+#my-trades .active-trades {
+	margin-bottom:40px;
+}
+
+#my-trades .active-trades article h3 {
+	background-color: #60964C;
+}
+
+#my-trades .pending-trades {
+	margin-bottom:40px;
+}
+
+#my-trades .pending-trades article h3 {
+	background-color:#8F8F8F;
+}
+
+#my-trades .incomplete-trades {
+	margin-top:80px;
+	margin-bottom:20px;
+}
+
+#my-trades .incomplete-trades h3 {
+	text-align:center;
+}
+
+#my-trades .incomplete-trades h3 a {
+	display:block;
+	padding:12px;
+	background:#eee;
+	text-decoration: none;
+	color:#361FAD;
+}
+
+#my-trades .incomplete-trades h3 a:hover {
+	background:#e7e7e7;
+}
+
+#my-trades .incomplete-trades .trades {
+	display:none;
+}
+
+#my-trades .incomplete-trades h2 span {
+	font-size:0.8em;
+}
+
+#my-trades .incomplete-trades .trades article {
+	background: #eee;
+	margin-bottom: 0;
+	padding: 5px 10px;
+}
+
+#my-trades .incomplete-trades .trades article:nth-child(even) {
+	background: #E2E2E2;
+}
+
+#my-trades .incomplete-trades article h3 {
+	background-color:none;
+	text-align:left;
+	color:#3c3c3c;
+	padding:0;
+}
+
+
+
 
 /****************************************************************/
 /***************** Trade Forms Common Styles ********************/

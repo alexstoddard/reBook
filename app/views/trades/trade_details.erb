@@ -8,14 +8,18 @@
 		<h1>Trade Details</h1>
 
 			<% if @trade.active?(@user.id) #trade is waiting for current user to accept/reject/counter %>
-        <h2 class="yellow">This trade is waiting on your action.</h2>
+        <h2 class="yellow">This trade is waiting on your action.
 			<% elsif @trade.accepted?(@user.id) #current user has accepted, waiting on other users' actions %>
-        <h2 class="grey">This trade is pending.</h2>
+        <h2 class="grey">This trade is pending.
 			<% elsif @trade.declined? %>
-        <h2 class="red">This trade has been canceled.</h2>
+        <h2 class="red">This trade has been canceled.
 			<% else #normal->green header ****TO DO: COMPLETED VS. IN PROGRESS?? %>
-        <h2>This trade has been accepted by all users. </h2>
+        <h2>This trade has been accepted by all users.
 			<% end %>
+        <% if @trade.location %> 
+          <span><strong>Trade Location:</strong> <%= @trade.location.name %></span>
+        <% end %>
+      </h2>
 
       <div class="trade">
         <% @my_trade = @trade.get_tradeline_only(@user.id)
@@ -84,7 +88,10 @@
                 <% else %>
                   <%= render :partial => 'users/user', locals: { display_user: note.user } %>
                 <% end %>
-                said <span>on <%= note.created_at.strftime("%d %B %Y at %I:%M%p") %>:</span></h2>
+                <% if note.type %>
+                  <%= note.type %>
+                <% end %>
+                said <span>on <%= note.created_at.in_time_zone(@user.timezone).strftime("%d %B %Y at %I:%M%p") %>:</span></h2>
               <p class="message">
                 <% unless note.meet_time.nil? %>
                   <strong>Suggested Meet Time: </strong> <%= note.meet_time%><br />

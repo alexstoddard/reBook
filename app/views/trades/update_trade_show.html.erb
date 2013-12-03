@@ -29,23 +29,32 @@ $(function() {
   <% if params[:type].eql? 'repropose' %>
     <h2>Re-propose Trade</h2>
     <p><em>Propose trade again. Note that one or more users in this trade has previously canceled the trade.</em></p>
+    <% @note_type = "repropose" %>
   <% elsif params[:type].eql? 'change' %>
     <h2>Change Trade Proposal</h2>
     <p><em>Make a new proposal with a different meeting time/place.</em></p>
+    <% @note_type = "change" %>
   <% else %>
     <h2>Counter Trade Proposal</h2>
     <p><em>Propose a different meeting time/place.</em></p>
+    <% @note_type = "counter" %>
   <% end %>
 
   <div class="trade-details">
     <%= render :partial => 'form_trade_details' %>
-    <p>
-      <strong>Previously proposed Meeting Date/Time: </strong> <%= @trade.trade_notes.last.meet_time %><br />
-      <strong>Previously proposed Meeting Location: </strong>  <%= @trade.trade_notes.last.place %> 
-    </p>
+    <% if @trade.trade_notes.last.meet_time %>
+      <p>
+        <strong>Previously proposed Meeting Date/Time: </strong> <%= @trade.trade_notes.last.meet_time %><br />
+        <strong>Previously proposed Meeting Location: </strong>  <%= @trade.trade_notes.last.place %> 
+          <% if @trade.location %> 
+            (<%= @trade.location.name %>)
+          <% end %>
+      </p>
+    <% end %>
   </div>
 
   <%= form_for @trade_note, :url => url_for(:controller => 'trades', :action => 'update_trade') do |f|  %>
+    <%= f.hidden_field :type, :value => @note_type %>
     <p>
       <%= f.label :meet_time, "Proposed Meeting Date/Time:" %>
       <%= text_field_tag :time_1, "",  :id => "trade_note_time_1" %>

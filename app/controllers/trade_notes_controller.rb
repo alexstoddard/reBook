@@ -69,6 +69,6 @@ class TradeNotesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def trade_note_params
-      params.require(:trade_note).permit(:trade_id, :meet_time, :place, :comment, :user_id)
+      params.require(:trade_note).permit(:trade_id, :meet_time, :place, :comment, :user_id, :type)
     end
 end

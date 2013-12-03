@@ -30,6 +30,9 @@ $(function() {
 
   <div class="trade-details">
     <%= render :partial => 'form_trade_details' %>
+    <% if @trade.location %>
+      <strong>Trade Location:</strong> <%= @trade.location.name %>
+    <% end %>
   </div>
 
   <p>
@@ -40,7 +43,7 @@ $(function() {
   </p>
   <%= form_for @trade_note, :url => url_for(:controller => 'trades', :action => 'create') do |f|  %>
     <%= f.hidden_field :json, :value => @trade.escaped_json %>
-
+    <%= f.hidden_field :type, :value => "propose" %>
     <p>
       <%= f.label :meet_time, "Proposed Meeting Date/Time:" %>
       <%= text_field_tag :time_1, "",  :id => "trade_note_time_1" %>
@@ -50,7 +53,7 @@ $(function() {
     </p>
     <p>
       <%= f.label :place, "Proposed Meeting Place:" %>
-      <%= f.text_field :place %>
+      <%= f.text_field :place %>  
       <span id="meet_place_error" class="error"></span>
     </p>
     <p>

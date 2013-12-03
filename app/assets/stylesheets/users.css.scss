@@ -50,11 +50,12 @@
 	background-color: white;
 	margin: auto;
 	text-align: center;
-	border-radius: 15px;
-	border: black solid 1px;
+	border-radius: 10px;
+	border: #CCC solid 1px;
 	overflow: hidden;
-	margin-top: 5px;
+	margin-top: 15px;
 	line-height: 205px;	
+	padding:10px;
 }
 
 /********************User Preferences Page (show.html.erb) ***************************/
@@ -72,6 +73,22 @@
 	float: right;
 	clear: right;
 	margin-right: 200px;
+}
+
+/******************Edit User Preference Page ***********************************/
+/*******************************************************************************/
+
+#edit-user label {
+	width:180px;
+}
+
+#edit-user #choose-avatar-label {
+	width:130px;
+}
+
+#edit-user input[type="text"],
+#edit-user input[type="password"] {
+	width:200px;
 }
 
 /*********************User Schedules Edit Page **********************/

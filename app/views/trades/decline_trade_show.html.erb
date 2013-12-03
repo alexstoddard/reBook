@@ -1,8 +1,10 @@
 <div id="reject-trade" class="trade-form">
 	<% if params[:type].eql? "cancel" %>
 		<h2>Cancel Trade</h2>
+		<% @note_type = "cancel" %>
 	<% else %>
 		<h2>Reject Trade</h2>
+		<% @note_type = "reject" %>
 	<% end %>
 
 	<div class="trade-details">
@@ -10,10 +12,15 @@
 		<p>
 			<strong>Proposed Meeting Date/Time: </strong> <%= @trade.trade_notes.last.meet_time %><br />
 			<strong>Proposed Meeting Location: </strong>  <%= @trade.trade_notes.last.place %> 
+				<% if @trade.location %> 
+		        	(<%= @trade.location.name %>)
+		        <% end %>
 		</p>
 	</div>
 
 	<%= form_for @trade_note, :url => url_for(:controller => 'trades', :action => 'decline_trade', :remote => 'true') do |f|  %>
+
+		<%= f.hidden_field :type, :value => @note_type %>
 	    <p>
 	    	<%= f.label :comment, "Comments:" %></br>
 	    	<%= f.text_area :comment, :rows => 6, :cols => 50 %>

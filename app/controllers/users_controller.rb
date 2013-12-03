@@ -129,6 +129,10 @@ class UsersController < ApplicationController
         @user.email = @update_user.email
         activate = true
       end
+
+      if @update_user.timezone != @user.timezone
+        @user.timezone = @update_user.timezone
+      end
       
       respond_to do |format|
         if @user.save
@@ -179,6 +183,7 @@ class UsersController < ApplicationController
       @update_user.email = params[:user][:email]
       @update_user.first = params[:user][:first]
       @update_user.last = params[:user][:last]
+      @update_user.timezone = params[:user][:timezone]
     end
 
     def set_locations
@@ -194,11 +199,11 @@ class UsersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:first, :last, :username, :email, :passhash, :image, :activated, 
-                                   :passhash_confirmation, :location, :location_description, :terms)
+                                   :passhash_confirmation, :location, :location_description, :terms, :timezone)
     end
 
     def user_update_params
-      params.require(:user).permit(:first, :last, :email, :passhash, :image, :passhash_confirmation, :old_passhash)
+      params.require(:user).permit(:first, :last, :email, :passhash, :image, :passhash_confirmation, :old_passhash, :timezone)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

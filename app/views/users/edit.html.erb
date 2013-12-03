@@ -1,21 +1,22 @@
-<div id="wrappermain">
-	<div id="main">
-		<h1>Update your ReBook Account</h1>
-<%= form_for(@user) do |f| %>
-  <% if @user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+<div id="main">
+  <div id="edit-user">
+		<h1>Update Your Account Information</h1>
 
-      <ul>
-      <% @user.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+    <%= form_for(@user) do |f| %>
+      <% if @user.errors.any? %>
+        <div class="error">
+          <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+          <ul>
+          <% @user.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
 
 	<div id="imgsection">
-		<%= f.label :image, "Pick Your Avatar" %>
+		<%= f.label :image, "Choose Your Avatar:", id: "choose-avatar-label" %>
 		<%= f.select :image,[['Dragon', 'dragon.png'],['Bunny', 'bunny.png'],['Snake', 'snake.png'],['Dog', 'dog.png'],
 									 ['Lamb', 'lamb.png'],['Horse', 'horse.png'],['Pig', 'pig.png'],['Mouse', 'mouse.png'],
 									 ['Cow', 'cow.png'],['Tiger', 'tiger.png'],['Monkey', 'monkey.png'],['Chicken', 'chicken.png'],['Miley', 'miley.png']] %>	
@@ -24,25 +25,28 @@
 		</div>
 	</div>
 	
-  <h3>Name</h3>
-  <%= f.text_field :first, placeholder: "First", class: "text" %>
-  <%= f.text_field :last, placeholder: "Last", class: "text" %>
+  <p><%= f.label :first, "First Name" %>
+  <%= f.text_field :first %></p>
 
-	<h3>Old password</h3>
-  <%= f.password_field :old_passhash, class: "text" %>
+  <p><%= f.label :last, "Last Name" %>
+  <%= f.text_field :last %></p>
 
-	<h3>Create a new password</h3>
-  <%= f.password_field :passhash, class: "text" %>
+	<p><%= f.label :old_passhash, "Old Password" %>
+  <%= f.password_field :old_passhash  %></p>
 
-	<h3>Confirm your new password</h3>
-  <%= f.password_field :passhash_confirmation, class: "text" %>
+	<p><%= f.label :passhash, "Create a New Password" %>
+  <%= f.password_field :passhash %></p>
+
+	<p><%= f.label :passhash_confirmation, "Confirm Your New Password" %>
+  <%= f.password_field :passhash_confirmation %></p>
   
-	<h3>Your current email address</h3>
-  <%= f.text_field :email, class: "text" %>
+	<p><%= f.label :email, "Email Address" %>
+  <%= f.text_field :email %></p>
 
-  <br />
-  <br />
-  <%= f.submit %>
+  <p><%= f.label :timezone, "Time Zone" %>
+  <%= select(:user, :timezone, time_zone_options_for_select(selected = @user.timezone) ) %></p>
+  
+  <%= f.submit "Update", class: "button" %>
 <% end %>
   </div>
 </div>

@@ -20,7 +20,7 @@
 
     <% end %>
 		<% @inventory_needs.each do |x| %>
-			<% if @need_hash[x.id][:completed].size == 0 #do not show complete trades (trades already accepted by all users)%>
+			<% if @need_hash[x.id][:completed].size == 0 && @need_hash[x.id][:accepted].size == 0 #do not show complete trades (trades already accepted by all users), do not show pending trades %>
 				<% 
 				@pending_count = @need_hash[x.id][:accepted].size #number of users who have accepted this trade 
 				@proposed_count = @need_hash[x.id][:active].size #number of trades proposed by another user to this current user
@@ -28,8 +28,6 @@
 				
 				if @proposed_count > 0 #at least one proposed trade-> green header %>
 					<article class="green">
-				<% elsif @pending_count > 0 #pending trade-> grey header %>
-					<article class="grey">
 				<% elsif @possible_count == 0 #no possible trades-> red header %>
 					<article class="red">
 				<% else #normal->blue header %>
@@ -46,25 +44,6 @@
 				    </div>
 
 				    <div class="trade-info">
-			    		<div class="pending-trades">
-			    			<% if @pending_count > 0 %>
-				    			<p>This trade is pending.</p>
-				    			<p>You have accepted this trade.</p>
-				    			<% #don't show trade line corresponding to current user (they were the one who proposed the trade)
-				    			@pending_trade = @need_hash[x.id][:accepted].first
-				    			other_tradelines = @pending_trade.get_tradelines_except(session[:user_id])
-				    			other_tradelines.each do |y| 
-				    				if y.user_from_accepted %>
-				    					<p><%= render :partial => 'users/user', locals: { display_user: y.inventory_own.user } %> has accepted this trade.</p>
-				    				<% else %>
-				    					<p><%= render :partial => 'users/user', locals: { display_user: y.inventory_own.user } %> has not yet accepted this trade.</p>
-				    				<% end
-				    			end %>
-								<p><%= link_to "View Trade Details...", "/trade_details/" + @pending_trade.id.to_s %></p>
-				    			<p><%= render partial: "change_trade_button", locals: { trade: @pending_trade } %>
-				    			<%= render partial: "cancel_trade_button", locals: { trade: @pending_trade } %></p>
-				    		<% end %>
-			    		</div>
 			    		<div class="proposed-trades">
 					    	<% if @pending_count == 0 && @proposed_count > 0 #show message for proposed trades %>
 					    		<% if @proposed_count == 1 %>

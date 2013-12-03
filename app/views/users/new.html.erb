@@ -83,6 +83,11 @@
 			</div>
 
 			<div>
+			  <%= f.label :timezone, "Time Zone" %>
+			  <%= time_zone_select :user, :timezone %>
+			 </div>
+
+			<div>
 				<%= f.check_box :terms %> I agree to the <%= link_to 'Rebook Terms of Service', terms_path %>
 				<% if @user.errors[:terms].present? %>
 			  		<span class="error">You must accept the terms of service</span>

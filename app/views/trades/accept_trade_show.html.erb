@@ -5,12 +5,19 @@
     <%= render :partial => 'form_trade_details' %>
     <p>
       <strong>Proposed Meeting Date/Time: </strong> <%= @trade.trade_notes.last.meet_time %><br />
-      <strong>Proposed Meeting Location: </strong>  <%= @trade.trade_notes.last.place %> 
+      <strong>Proposed Meeting Location: </strong>  <%= @trade.trade_notes.last.place %>  
+      	<% if @trade.location %> 
+          (<%= @trade.location.name %>)
+        <% end %>
     </p>
   </div>
 
 	<%= form_for @trade_note, :url => url_for(:controller => 'trades', :action => 'accept_trade') do |f|  %>
+	  
+	  <% f.hidden_field :type, :value => "accept" %>
+	  
 	  <p>
+
 	    <%= f.label :comment, "Comments:" %></br>
 	    <%= f.text_area :comment, :rows => 6, :cols => 50 %>
 	  </p>
