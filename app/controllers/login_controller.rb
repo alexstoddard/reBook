@@ -42,7 +42,8 @@ class LoginController < ApplicationController
 	else
 	  session[:user_id] = user.id
       session[:user_name] = user.username
-      if @referer.nil?
+
+      if @referer.nil? or @referer == ""
         redirect_to "/my_trades/"
       else
         session[:return_to] = nil
