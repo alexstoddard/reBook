@@ -1,4 +1,5 @@
 class InventoryNeedsController < ApplicationController
+  load_and_authorize_resource
   before_action :set_inventory_need, only: [:show, :edit, :update, :destroy]
 
   # GET /inventory_needs
@@ -7,7 +8,8 @@ class InventoryNeedsController < ApplicationController
     if session[:user_id].nil?
       @inventory_needs = InventoryNeed.all
     else
-      @inventory_needs = InventoryNeed.where(deleted: false).find_all_by_user_id(session[:user_id])
+      #@inventory_needs = InventoryNeed.where(deleted: false).find_all_by_user_id(session[:user_id])
+	  @inventory_needs = InventoryNeed.find_all_by_user_id(session[:user_id])
     end
   end
 

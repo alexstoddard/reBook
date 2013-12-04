@@ -32,6 +32,10 @@ class User < ActiveRecord::Base
   before_save :encrypt_passhash, :pre_activation
   after_save :send_activation
 
+  def admin?
+	id == 16
+  end
+  
   def self.initialize
     enable_mailer = true
   end

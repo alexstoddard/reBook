@@ -1,6 +1,7 @@
 require 'rubygems'
 
 class BooksController < ApplicationController
+  load_and_authorize_resource
   before_action :set_book, only: [:show, :edit, :update, :destroy]
 
   # GET /books
@@ -58,8 +59,8 @@ class BooksController < ApplicationController
   # GET /search
   # GET /search.json
 	def search
-
-		query = params[:search] || ""
+	  authorize! :search, Book
+	  query = params[:search] || ""
 
     @conditions = Condition.all
 	  @result = Book.search(query, 40)

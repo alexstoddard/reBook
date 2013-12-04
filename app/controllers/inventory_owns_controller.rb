@@ -1,4 +1,5 @@
 class InventoryOwnsController < ApplicationController
+  load_and_authorize_resource
   before_action :set_inventory_own, only: [:show, :edit, :update, :destroy]
 
   # GET /inventory_owns
@@ -8,7 +9,8 @@ class InventoryOwnsController < ApplicationController
       @inventory_owns = InventoryOwn.all
     else
       @conditions = Condition.all
-      @inventory_owns = InventoryOwn.where(deleted: false).find_all_by_user_id(session[:user_id])
+      #@inventory_owns = InventoryOwn.where(deleted: false).find_all_by_user_id(session[:user_id])
+	  @inventory_owns = InventoryOwn.find_all_by_user_id(session[:user_id])
     end
   end
 
