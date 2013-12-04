@@ -1,4 +1,5 @@
 class TradeNotesController < ApplicationController
+  load_and_authorize_resource
   before_action :set_trade_note, only: [:show, :edit, :update, :destroy]
 
   # GET /trade_notes

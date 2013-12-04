@@ -1,4 +1,5 @@
 class TradeLinesController < ApplicationController
+  load_and_authorize_resource
   before_action :set_trade_line, only: [:show, :edit, :update, :destroy]
 
   # GET /trade_lines

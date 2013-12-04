@@ -4,17 +4,19 @@ class TradesController < ApplicationController
   # GET /trades
   # GET /trades.json
   def index
+    authorize! :index, Trade
     @trades = Trade.all
   end
   
   def accept_trade_show
+    authorize! :accept_trade_show, Trade
     @trade = Trade.find_by_id(params[:id])
     @trade_note = TradeNote.new
     render :layout => "facebox"
   end
   
   def accept_trade
-
+	authorize! :accept_trade, Trade
     success = true
 
     Trade.transaction do
@@ -41,12 +43,14 @@ class TradesController < ApplicationController
   end
   
   def decline_trade_show
+    authorize! :decline_trade_show, Trade
     @trade = Trade.find_by_id(params[:id])
     @trade_note = TradeNote.new
     render :layout => "facebox"
   end
   
   def decline_trade
+    authorize! :decline_trade, Trade
     @note = TradeNote.new(trade_note_params)
     @trade.user_decline(session[:user_id].to_i)
     @trade.append_note(session[:user_id], @note)
@@ -63,12 +67,14 @@ class TradesController < ApplicationController
   end
   
   def update_trade_show
+    authorize! :update_trade_show, Trade
     @trade = Trade.find_by_id(params[:id])
     @trade_note = TradeNote.new
     render :layout => "facebox"
   end
   
   def update_trade 
+    authorize! :update_trade , Trade
     success = true
 
     Trade.transaction do
@@ -93,6 +99,7 @@ class TradesController < ApplicationController
   end
   
   def propose_trade
+    authorize! :propose_trade, Trade
     @trade = Trade.json_to_trade(params[:json])
     @trade_note = TradeNote.new
     @trade_note.user_id = params[:user_id]
@@ -100,17 +107,25 @@ class TradesController < ApplicationController
   end
   
   def trade_details
+    #BETWEEN HERE 
+	#authorize! :trade_details, Trade
     @user = current_user
     if @user.nil?
       do_login
     else
       @trade = Trade.find_by_id(params[:trade_id])
+	  #AND HERE, if trade_id is NOT in database, then we have problem. 
+	  #If exist, but its someone else id, will appropriately block access. 
+	  if @trade == nil
+		authorize! :trade_details, Trade
+	  end
     end
   end
 
   # GET /matches_details/1
   # GET /matches_details/1.json
   def match_details
+    authorize! :match_details, Trade
     need_id = params[:id].to_i
     user_id = session[:user_id]
 
@@ -123,7 +138,7 @@ class TradesController < ApplicationController
   # GET /my_trades
   # GET /my_trades.json
   def my_trades
-
+    authorize! :my_trades, Trade
     user_id = session[:user_id]
 
     @user = User.find(user_id)
@@ -135,7 +150,7 @@ class TradesController < ApplicationController
   # GET /matches
   # GET /matches.json
   def matches
-
+    authorize! :matches, Trade
     user_id = session[:user_id]
 
     @inventory_needs = InventoryNeed.find_all_by_user_id(user_id)
@@ -147,20 +162,24 @@ class TradesController < ApplicationController
   # GET /trades/1
   # GET /trades/1.json
   def show
+    authorize! :show, Trade
   end
 
   # GET /trades/new
   def new
+    authorize! :index, Trade
     @trade = Trade.new
   end
 
   # GET /trades/1/edit
   def edit
+    authorize! :edit, Trade
   end
 
   # POST /trades
   # POST /trades.json
   def create
+    authorize! :create, Trade
     success = true
 
     Trade.transaction do
@@ -197,6 +216,7 @@ class TradesController < ApplicationController
   # PATCH/PUT /trades/1
   # PATCH/PUT /trades/1.json
   def update
+    authorize! :update, Trade
     respond_to do |format|
       if @trade.update(trade_params)
         format.html { 
@@ -214,6 +234,7 @@ class TradesController < ApplicationController
   # DELETE /trades/1
   # DELETE /trades/1.json
   def destroy
+    authorize! :destroy, Trade
     @trade.destroy
     respond_to do |format|
       format.html { redirect_to trades_url }
@@ -224,6 +245,7 @@ class TradesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_trade
+	  authorize! :set_trade, Trade
       @trade = Trade.find(params[:id].to_i)
     end
 

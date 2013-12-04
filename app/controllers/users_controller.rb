@@ -6,28 +6,32 @@ class UsersController < ApplicationController
   before_action :set_is_current_user, only: [:show]
 
   def set_is_current_user
+    	authorize! :set_is_current_user, User
     @is_current_user = is_current_user(@user.id)
   end
 
   # GET /users
   # GET /users.json
   def index
+    authorize! :index, User
     @users = User.all
   end
 
   # GET /forgot
   # GET /forgot.json
   def forgot
+    authorize! :forgot, User
   end
   
   def edit_schedule
+	authorize! :edit_schedule, User
     @user = User.find(session[:user_id])
   end
 
   # POST /forgot
   # POST /forgot.json
   def forgot_do
-
+    authorize! :forgot_do, User
     @user = User.find_by_username(params[:username])
     @user ||= User.find_by_email(params[:username])
     
@@ -45,6 +49,7 @@ class UsersController < ApplicationController
   # GET /reset
   # GET /reset.json
   def reset
+	authorize! :reset, User
     if params[:token] != nil
       @user = User.find_by_token(params[:token])
       if @user.nil?
@@ -57,7 +62,7 @@ class UsersController < ApplicationController
   # patch /reset
   # patch /reset.json
   def reset_do
-
+	authorize! :reset_do, User
     @user = User.find(params[:post][:id])
     @user.passhash = params[:post][:passhash]
     @user.passhash_confirmation = params[:post][:passhash_confirmation]
@@ -75,6 +80,9 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    if session[:user_id] && session[:user_id].to_s!=params[:id].to_s
+		authorize! :show, User
+	end
     @user_location = UserLocation.new
     @user_locations = UserLocation.all
 
@@ -82,11 +90,17 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
+    authorize! :new, User
     @user = User.new
   end
 
   # GET /users/1/edit
   def edit
+    #EDIT USES ANOTHER FUNCTION TO DISPLAY THE PAGE????????
+	#authorize! :edit, User
+    if session[:user_id].to_s != params[:id].to_s
+		redirect_to root_url
+	end
     @user.location = UserLocation.find_by_user_id(params[:id]).location_id
     @user.location_description = UserLocation.find_by_user_id(params[:id]).description
   end
@@ -94,6 +108,7 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
+    authorize! :create, User
     @user = User.create_with_location(user_params, @location_params)
 
     respond_to do |format|
@@ -113,7 +128,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-
+    authorize! :update, User
     @authenticated_user = User.authenticate(@user.username, @update_user.old_passhash)
 
     if not @authenticated_user.nil? and @authenticated_user.id == @user.id
@@ -170,6 +185,7 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
+    authorize! :destroy, User
     @user.destroy
     respond_to do |format|
       format.html { redirect_to users_url }

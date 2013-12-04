@@ -23,7 +23,10 @@
 
     /*jquery time and date pickers */ 
     $('#trade_note_time_1').timepicker({ disableTextInput:true, step: 15 });
-    $('#trade_note_time_2').datepicker();
+    var today = new Date();
+    $('#trade_note_time_2').datepicker({
+      minDate : today
+    });
 
   });
 </script>
