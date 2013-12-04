@@ -14,6 +14,10 @@ class InventoryOwn < ActiveRecord::Base
 
   before_destroy :destroy_trades
 
+  scope :need_matches_scope, -> { joins(:need_matches).where('inventory_needs.deleted = ?', false) }
+  scope :active, -> { where(deleted: false) }
+  scope :user, -> (user) { where(:user_id => user) }
+
   def destroy_trades
     @trades = trades.all
     @trades.each { |x| x.destroy }

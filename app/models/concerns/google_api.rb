@@ -7,13 +7,45 @@ require 'json'
 class GoogleApi
 
   def search(terms, limit)
-    search = prepare_search_string(terms, limit)
-    json = connect(search)
-    books = parse(json, false)
+    # Try 3 times and if fail, stop trying
+    3.times do
+      search = prepare_search_string(terms, limit)
+      json = connect(search)
+      books = parse(json, false)
 
+      if books[:status] == :response_ok
+          return books
+      end
+    end
+
+    # Go to the database instead
+    books = search_database(terms, limit)
     return books
+
   end
-  
+
+  def search_database(terms, limit) 
+    response = { }
+    response[:status] = :response_ok
+    response[:books] = []
+    
+    books = Book.where("name LIKE ?", terms)
+    
+    books.each do |result|
+      book = {}
+      book[:name] = result.name
+      book[:thumbnail] = result.thumbnail
+      book[:googleId] = result.googleId
+      book[:author] = result.author
+      book[:isbn] = result.isbn
+      book[:description] = result.description
+      book[:published] = result.published
+      response[:books] <<= book
+    end
+
+    return response
+  end
+
   def search_book(id)
     search = prepare_book_string(id)
     json = connect(search)
