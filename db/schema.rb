@@ -131,6 +131,7 @@ ActiveRecord::Schema.define(version: 20131205041108) do
     t.string   "first"
     t.string   "last"
     t.string   "token"
+    t.string   "user_role"
     t.string   "timezone"
     t.boolean  "admin"
   end
