@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131203193953) do
+ActiveRecord::Schema.define(version: 20131204183040) do
 
   create_table "books", force: true do |t|
     t.string   "name"
@@ -140,6 +140,7 @@ ActiveRecord::Schema.define(version: 20131203193953) do
     t.string   "token"
     t.string   "user_role"
     t.string   "timezone"
+    t.boolean  "admin"
   end
 
 end
