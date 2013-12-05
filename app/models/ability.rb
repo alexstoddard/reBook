@@ -48,6 +48,9 @@ class Ability
 		
 		#Book Controller Restriction. 
 		can :search, Book
+
+		#User Feedback Restriction
+		can :create, UserFeedback
 	  end
 	else
 	  can :create, User

@@ -70,6 +70,6 @@ class TradeLinesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def trade_line_params
-      params.require(:trade_line).permit(:user_from_id, :book_id, :user_to_id, :user_from_accepted)
+      params.require(:trade_line).permit(:user_from_id, :book_id, :user_to_id, :user_from_accepted, :status)
     end
 end

@@ -7,6 +7,20 @@ class Trade < ActiveRecord::Base
   has_many :trade_notes, dependent: :destroy
   belongs_to :location
 
+
+  # Set the tradeline feedback status for a given user
+  # If all tradelines for this trade have feedback, mark it as complete (status = 1)
+  def set_feedback_status(user_id)
+    @tradeline = get_tradeline_only(user_id)
+    @tradeline.status = 1
+    @tradeline.save
+
+    if trade_lines.all? { |x| x.status == 1 }
+      self.status = 1
+      self.save
+    end
+  end
+
   # This function performs user acceptance of a trade.
   # In our system this has possible outside consequence.
   # If a user accepts a trade, and any of the books that
@@ -213,6 +227,7 @@ class Trade < ActiveRecord::Base
   # :active => These are trades which involve the user, but they haven't confirmed.
   # :declined => These are trades which the user has indicated they don't want.
   # :completed => These are trades which everyone has accepted.
+  # :finished => These are trades that have been done irl and all users have provided feedback. 
   # Access the categories like this Trade.trades_by_need(user, need)[:accepted]
   def self.trades_by_need(user_id, need_id) 
     need_hash = trades_by_needs(user_id)
@@ -313,6 +328,10 @@ class Trade < ActiveRecord::Base
     trade_lines.all? { |x| x.user_from_accepted == true }
   end
 
+  def finished?(user)
+    get_tradeline_only(user).status == 1
+  end
+
   def possible?
     return id.nil?
   end
@@ -323,6 +342,9 @@ class Trade < ActiveRecord::Base
     end
     if declined?
       return :declined
+    end
+    if finished?
+      return :finished
     end
     if completed? 
       return :completed
@@ -505,10 +527,19 @@ class Trade < ActiveRecord::Base
      # This filter returns trades for the user which are accepted by all parties.
      :completed =>  lambda do |user, trades|
        trades.select do |trade| 
-         trade.trade_lines.all? do |line|
-           line.user_from_accepted == true
-         end
+        a = trade.get_tradeline_only(user).status != 1 #exclude trades that this user has already provided feedback on
+        b = (trade.trade_lines.all? do |line|
+           line.user_from_accepted == true 
+         end)
+        (a and b)
        end
+     end,
+     # This filter returns trades for the user which have been finished (past the time/date)
+     # and the current user has provided feedback
+     :finished => lambda do |user, trades|
+        trades.select do |trade|
+          trade.get_tradeline_only(user).status == 1
+        end
      end
     }
 
@@ -529,6 +560,9 @@ class Trade < ActiveRecord::Base
         return trades.sort_by { |x| x.last_activity }.reverse
       end,
       :completed =>  lambda do |user, trades|
+        return trades.sort_by { |x| x.last_activity }.reverse
+      end,
+      :finished => lambda do |user, trades|
         return trades.sort_by { |x| x.last_activity }.reverse
       end
     }
