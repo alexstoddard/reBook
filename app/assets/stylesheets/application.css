@@ -84,7 +84,10 @@ body {
 	position:static;
 }
 
-
+/*.hidden {
+	display: none;
+}
+*/
 /*****************Button and Text Box Styling**********************/
 /******************************************************************/
 .button {
