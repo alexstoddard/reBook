@@ -155,10 +155,10 @@ class Trade < ActiveRecord::Base
   def proposable?
     trade_lines.all? do |x|
       a = x.inventory_own.trades.none? do |y|
-        y.accepted?(x.inventory_own.user_id) and y.id != id
+        (y.accepted?(x.inventory_own.user_id) and y.id != id) or (x.inventory_own.deleted == true)
       end
       b = x.inventory_need.trades.none? do |y|
-        y.accepted?(x.inventory_need.user_id) and y.id != id
+        (y.accepted?(x.inventory_need.user_id) and y.id != id) or (x.inventory_need.deleted == true)
       end
       (a and b)
     end
@@ -363,10 +363,11 @@ class Trade < ActiveRecord::Base
   def self.not_in_owns(owns)
     not owns.any? do |x| 
       lines = x.trade_lines
-
-      lines.any? do |line|
+      a = lines.any? do |line|
         ( (not line.nil?) and line.user_from_accepted == true)
       end
+      b = (x.deleted == true)
+      (a or b)
     end
   end
 
@@ -377,7 +378,11 @@ class Trade < ActiveRecord::Base
   def self.not_in_needs(needs)
     not needs.any? do |x|
       trades = x.trades
-      trades.any? { |y| y.user_own(x.user_id).user_from_accepted }
+      a = trades.any? do |y| 
+        y.user_own(x.user_id).user_from_accepted
+      end
+      b = (x.deleted == true)
+      (a or b)
     end
   end
 

@@ -32,7 +32,10 @@ class InventoryNeedsController < ApplicationController
     @book = Book.new(book_params)
     @book.save_book
 
-    unless InventoryNeed.find_by_book_id_and_user_id(@book.id, session[:user_id]) or InventoryOwn.find_by_book_id_and_user_id(@book.id, session[:user_id]) 
+    need = InventoryNeed.find_by_book_id_and_user_id(@book.id, session[:user_id])
+    own = InventoryOwn.find_by_book_id_and_user_id(@book.id, session[:user_id])
+
+    unless (need and need.deleted == false) or (own and own.deleted == false)
       @inventory_need = InventoryNeed.new
       @inventory_need.book_id = @book.id
       @inventory_need.user_id = session[:user_id]
