@@ -1,17 +1,20 @@
-<% if trade.active?(user.id) %>
-  <%= render partial: 'accept_trade_button', locals: { trade: trade } %>
-  <%= render partial: 'counter_trade_button', locals: { trade: trade } %>
-<% end %>
-<% if  trade.accepted?(user.id) or trade.completed? %>
-  <%= render partial: 'change_trade_button', locals: { trade: trade } %>
-<% end %>
-<% if trade.declined? %>
-  <%= render partial: 'repropose_trade_button', locals: { trade: trade } %>
-<% end %>
-<% if not trade.declined?%>
-  <% if not trade.accepted?(user.id)%>
-    <%= render partial: 'reject_trade_button', locals: { trade: trade } %>
-  <% else %>
-    <%= render partial: 'cancel_trade_button', locals: { trade: trade } %>
-  <% end %>
+<% if !trade.finished?(user.id) #don't show any buttons if the trade is already finished for the user%>
+
+	<% if trade.active?(user.id) %>
+	  <%= render partial: 'accept_trade_button', locals: { trade: trade } %>
+	  <%= render partial: 'counter_trade_button', locals: { trade: trade } %>
+	<% end %>
+	<% if  trade.accepted?(user.id) or trade.completed? %>
+	  <%= render partial: 'change_trade_button', locals: { trade: trade } %>
+	<% end %>
+	<% if trade.declined? %>
+	  <%= render partial: 'repropose_trade_button', locals: { trade: trade } %>
+	<% end %>
+	<% if not trade.declined?%>
+	  <% if not trade.accepted?(user.id)%>
+	    <%= render partial: 'reject_trade_button', locals: { trade: trade } %>
+	  <% else %>
+	    <%= render partial: 'cancel_trade_button', locals: { trade: trade } %>
+	  <% end %>
+	<% end %>
 <% end %>

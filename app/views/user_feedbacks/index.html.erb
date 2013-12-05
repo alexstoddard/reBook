@@ -5,8 +5,8 @@
     <tr>
       <th>User from</th>
       <th>User to</th>
-      <th>Feedback</th>
-      <th>Comment</th>
+      <th>Trade id</th>
+      <th>Score</th>
       <th></th>
       <th></th>
       <th></th>
@@ -18,8 +18,8 @@
       <tr>
         <td><%= user_feedback.user_from_id %></td>
         <td><%= user_feedback.user_to_id %></td>
-        <td><%= user_feedback.feedback_id %></td>
-        <td><%= user_feedback.comment %></td>
+        <td><%= user_feedback.trade_id %></td>
+        <td><%= user_feedback.score %></td>
         <td><%= link_to 'Show', user_feedback %></td>
         <td><%= link_to 'Edit', edit_user_feedback_path(user_feedback) %></td>
         <td><%= link_to 'Destroy', user_feedback, method: :delete, data: { confirm: 'Are you sure?' } %></td>

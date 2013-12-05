@@ -7,7 +7,9 @@
 	<div id="trade-details">
 		<h1>Trade Details</h1>
 
-			<% if @trade.active?(@user.id) #trade is waiting for current user to accept/reject/counter %>
+      <% if @trade.finished?(@user.id) %>
+        <h2 class="purple">This trade is finished.
+			<% elsif @trade.active?(@user.id) #trade is waiting for current user to accept/reject/counter %>
         <h2 class="yellow">This trade is waiting on your action.
 			<% elsif @trade.accepted?(@user.id) #current user has accepted, waiting on other users' actions %>
         <h2 class="grey">This trade is pending.
@@ -32,7 +34,7 @@
             <%= @from_trade.inventory_own.book.name %>
           </h2>
           <p>
-            <strong>From: </strong> <%= render :partial => 'users/user', locals: { display_user: @from_trade.inventory_own.user } %><br />
+            <strong>From: </strong> <%= render :partial => 'users/user_with_ratings', locals: { display_user: @from_trade.inventory_own.user } %><br />
             Their book is in <%= @from_trade.inventory_own.condition.description.downcase %> condition.
           </p>
           <%= image_tag @from_trade.inventory_own.book.thumbnail, alt: @from_trade.inventory_own.book.name, class: "thumbnail" %>

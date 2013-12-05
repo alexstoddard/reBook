@@ -63,16 +63,27 @@ class User < ActiveRecord::Base
     end
   end
 
+
+  # User feedbacks methods
+
   def feedback_count
     return user_feedbacks.count
   end
 
+  def feedback_positive
+    return user_feedbacks.where('score = 1').count
+  end
+
+  def feedback_negative
+    return user_feedbacks.where('score = 0').count
+  end
+
   def feedback_score
-    x = user_feedbacks.average(:feedback_id)
+    x = user_feedbacks.average(:score)
     if x.nil?
-      return 3
+      return 0
     else
-      return ((5.0/3.0)*x).round
+      return x.round
     end
   end
 

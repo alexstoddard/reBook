@@ -10,15 +10,5 @@
   <%= @user_feedback.user_to_id %>
 </p>
 
-<p>
-  <strong>Feedback:</strong>
-  <%= @user_feedback.feedback_id %>
-</p>
-
-<p>
-  <strong>Comment:</strong>
-  <%= @user_feedback.comment %>
-</p>
-
 <%= link_to 'Edit', edit_user_feedback_path(@user_feedback) %> |
 <%= link_to 'Back', user_feedbacks_path %>

@@ -25,6 +25,10 @@
 			<p><strong>Last Name:</strong> <%= @user.last %></p>
 			<p><strong>Email:</strong> <%= @user.email %></p>
 			<p><strong>Timezone:</strong> <%= @user.timezone %></p>
+
+			<h2>My Ratings:</h2>
+			<p>Positive feedback: <%= @user.feedback_positive %><br />
+			Negative feedback: <%= @user.feedback_negative %></p>
 		</div>
 
 		<div class="schedule-info">
