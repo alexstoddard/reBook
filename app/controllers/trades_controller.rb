@@ -1,6 +1,15 @@
 class TradesController < ApplicationController
   before_action :set_trade, only: [:show, :edit, :update, :destroy, :accept_trade, :decline_trade, :update_trade, :accept_trade_show, :accept_trade]
-
+  before_action :authorize_trade, except: [:my_trades, :matches, :propose_trade, :create]
+  
+  def authorize_trade
+	@trade = Trade.find_by_id(params[:trade_id])
+	
+	if not @trade.trade_lines.any?{|x| x.inventory_own.user_id == session[:user_id]}
+		redirect_to root_url
+	end
+  end
+  
   # GET /trades
   # GET /trades.json
   def index
