@@ -35,6 +35,14 @@ ActiveRecord::Schema.define(version: 20131203193953) do
     t.datetime "updated_at"
   end
 
+  create_table "inventory_haves", force: true do |t|
+    t.integer  "book_id"
+    t.integer  "user_id"
+    t.string   "condition_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "inventory_needs", force: true do |t|
     t.integer  "book_id"
     t.integer  "user_id"
@@ -130,6 +138,7 @@ ActiveRecord::Schema.define(version: 20131203193953) do
     t.string   "first"
     t.string   "last"
     t.string   "token"
+    t.string   "user_role"
     t.string   "timezone"
   end
 

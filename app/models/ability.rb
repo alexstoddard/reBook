@@ -52,6 +52,9 @@ class Ability
 	else
 	  can :create, User
 	  can :forgot, User
+	  can :set_is_current_user, User
+	  can :new, User
+	  can :update, User
 	  can :search, Book
 	end
   end
