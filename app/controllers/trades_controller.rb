@@ -144,7 +144,7 @@ class TradesController < ApplicationController
     @user = User.find(user_id)
     @inventory_needs = InventoryNeed.find_all_by_user_id(user_id)
     @trade_hash = Trade.trades_by_status(user_id)
-
+    @user_feedback = UserFeedback.new
   end
 
   # GET /matches

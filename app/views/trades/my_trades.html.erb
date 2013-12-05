@@ -12,7 +12,40 @@
   		e.preventDefault();
   		$('.incomplete-trades .trades').hide();
   		$('#show-incomplete-trades').show();
-  	})
+  	});
+
+  	$('form .thumbs-up, form .thumbs-down').click(function() {
+	    var form = $(this).parent('form');
+
+	    if ($(this).hasClass('thumbs-up')) {
+		    //thumbs up, set score to 1
+		    form.find('#user_feedback_score').val(1);
+		} else {
+			//thumbs down, set score to 0
+			form.find('#user_feedback_score').val(0);
+		}
+
+	    $.ajax({
+            type: 'POST',
+            url: form.attr('action'),
+            data: form.serialize(),
+            error: function(data){
+              //error! show message
+              form.parent('.feedback').append('<p class="error">Sorry! An error occured. <br />Please try again.</p>');
+            },
+            success: function(data){
+              	//success! hide form
+              	if (form.parent('.feedback').siblings('.feedback').length == 0) {
+              		//no more feedbacks to provide
+              		form.parents('.trade-info').append('<p>Thanks for rating your trade!</p>');
+              		form.parent('.feedback').remove();
+              	} else {
+              		//still have to provide feedback on another user
+      				form.parent('.feedback').remove();
+      			}
+            }
+        });
+	});
 
   });
 </script>
@@ -31,15 +64,18 @@
 					
 						<h3><span>Get this book:</span> <%= x.book.name %></h3>
 					    
-					    <%= image_tag(x.book.thumbnail, alt: x.book.name, class: "bookcover") %>
-					    
 					    <div class="need-details">	
+					    	<div class="thumbnail">
+					    		<%= image_tag(x.book.thumbnail, alt: x.book.name, class: "bookcover") %>
+							</div>
+
 							<p><strong>Author:</strong> <%= x.book.author %><br />
 							<strong>ISBN:</strong> <%= x.book.isbn %><br />
 							<strong>Published:</strong> <%= x.book.published %></p>
 					    </div>
 
 					    <div class="trade-info">
+
 					    	<% #find latest trade note with time and locationn
 			    			y.trade_notes.reverse.each do |note| 
 			    				if (!note.meet_time.nil? && !note.place.nil? && !note.meet_time.empty? && !note.place.empty?) %>
@@ -52,7 +88,7 @@
 				    				</p>
 
 				    				<% #check to see if current time/date is past the trade time/date %> 
-				    				<% @now = Time.strptime("5:30am 12/05/2013", "%l:%M%P %m/%d/%Y") 
+				    				<% @now = Time.strptime("5:31pm 12/05/2013", "%l:%M%P %m/%d/%Y") 
 				    				#@now = Time.now.in_time_zone(@user.timezone)
 				    				#@now = @now - 15*60 #(15 minutes from now)
 				    				@trade_time = Time.strptime(note.meet_time, "%l:%M%P %m/%d/%Y") 
@@ -65,7 +101,24 @@
 			    			<% end %>
 
 			    			<% if @complete # trade is complete %>
-			    				<p>Trade has been completed. Please provide feedback. 
+			    				<p>Trade has been completed. Please rate your trade experience.</p>
+
+			    				<% @my_tradeline = y.get_tradeline_only(@user.id)
+			    				other_tradelines = y.get_tradelines_except(@user.id)
+			    				other_tradelines.each do |tradeline| #user feedbacks %>
+			    					<div class="feedback">
+			    						<% @other_user = tradeline.inventory_own.user %>
+			    						<p>Rate <%= render :partial => 'users/user_with_ratings', locals: { display_user: @other_user } %></p>
+					    				<%= form_for @user_feedback do |f|  %>
+										    <%= f.hidden_field :user_from_id, :value => @user.id %>
+										    <%= f.hidden_field :user_to_id, :value => @other_user.id %>
+										    <%= f.hidden_field :trade_id, :value => y.id %>
+										    <%= f.hidden_field :score, :value => 0 %>
+										    <%= image_tag("thumbs_up.png", alt: "Thumbs Up", class: 'thumbs-up') %>
+					    					<%= image_tag("thumbs_down.png", alt: "Thumbs Down", class: "thumbs-down") %>
+										<% end %>
+			    					</div>
+			    				<% end %>
 			    			<% else # active trade, not yet complete %>
 				    			<p>This trade is currently active.</p>
 
@@ -91,10 +144,12 @@
 					<% x = y.user_need(@user.id).inventory_need %>
 					<article>
 						<h3><span>Trying to Get this book:</span> <%= x.book.name %></h3>
-					    
-					    <%= image_tag(x.book.thumbnail, alt: x.book.name, class: "bookcover") %>
-					    
+					    					    
 					    <div class="need-details">	
+					    	<div class="thumbnail">
+					    		<%= image_tag(x.book.thumbnail, alt: x.book.name, class: "bookcover") %>
+					    	</div>
+
 							<p><strong>Author:</strong> <%= x.book.author %><br />
 							<strong>ISBN:</strong> <%= x.book.isbn %><br />
 							<strong>Published:</strong> <%= x.book.published %></p>
@@ -103,7 +158,7 @@
 					    <div class="trade-info">
 			    			<p>This trade is pending.</p>
 			    			<p>You have accepted this trade.</p>
-			    			<% other_tradelines = y.get_tradelines_except(session[:user_id])
+			    			<% other_tradelines = y.get_tradelines_except(@user.id)
 			    			other_tradelines.each do |tradeline| 
 			    				if tradeline.user_from_accepted %>
 			    					<p><%= render :partial => 'users/user', locals: { display_user: tradeline.inventory_own.user } %> has accepted this trade.</p>
@@ -124,6 +179,36 @@
 			</div>
 		<% end %>
 
+		<div class="trade-history">
+			<h2>Finished Trades</h2>
+			<% if @trade_hash[:finished].size == 0 %>
+				<p>You have no finished trades.</p>
+			<% else %>
+				<% @trade_hash[:finished].each do |y| 
+					x = y.user_need(@user.id).inventory_need %>
+					<article>
+						<h3><span>Got this book:</span> <%= x.book.name %></h3>
+
+						<div class="need-details">	
+					    	<div class="thumbnail">
+					    		<%= image_tag(x.book.thumbnail, alt: x.book.name, class: "bookcover") %>
+					    	</div>
+
+							<p><strong>Author:</strong> <%= x.book.author %><br />
+							<strong>ISBN:</strong> <%= x.book.isbn %><br />
+							<strong>Published:</strong> <%= x.book.published %></p>
+					    </div>
+
+					    <div class="trade-info">
+			    			<p>This trade is finished.</p>
+			    			<p class="action"><%= link_to "View Trade Details", "/trade_details/" + y.id.to_s %></p>
+						</div>
+
+					</article>
+				<% end#each %>
+			<% end#if  %>
+		</div>
+
 		<% if @trade_hash[:declined].size != 0 %>
 			<div class="incomplete-trades">
 				<h3><a href="#" id="show-incomplete-trades">View Incomplete Trades</a></h3>
@@ -136,9 +221,11 @@
 						<article>
 							<h3><span>Did not get this book:</span> <%= x.book.name %></h3>
 						    
-						    <%= image_tag(x.book.thumbnail, alt: x.book.name, class: "bookcover") %>
-
 						    <div class="need-details">	
+						    	<div class="thumbnail">
+						    		<%= image_tag(x.book.thumbnail, alt: x.book.name, class: "bookcover") %>
+						    	</div>
+
 								<p><strong>Author:</strong> <%= x.book.author %><br />
 								<strong>ISBN:</strong> <%= x.book.isbn %><br />
 								<strong>Published:</strong> <%= x.book.published %></p>
@@ -147,7 +234,7 @@
 						    <div class="trade-info">
 				    			<p>This trade was canceled before it was completed.</p>
 				    			<% #list other users involved in the trade
-				    			other_trades = y.get_tradelines_except(session[:user_id])
+				    			other_trades = y.get_tradelines_except(@user.id)
 				    			other_trades.each do |z| 
 				    				if z.user_from_accepted %>
 				    					<p><%= render :partial => 'users/user', locals: { display_user: z.inventory_own.user } %> has accepted this trade.</p>

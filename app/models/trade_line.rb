@@ -10,4 +10,5 @@ class TradeLine < ActiveRecord::Base
   belongs_to :inventory_need
   belongs_to :inventory_own
 
+
 end

@@ -35,13 +35,13 @@ class Book < ActiveRecord::Base
 			books[:books].each do |x|
 
 				user_owns.each do |y|
-					if y.book.googleId == x.googleId
+					if y.book.googleId == x.googleId and y.deleted == false
 						x.hide_own = true
 					end        
 				end
 
 				user_needs.each do |y|
-					if y.book.googleId == x.googleId
+					if y.book.googleId == x.googleId and y.deleted == false
 						x.hide_need = true
 					end        
 				end
