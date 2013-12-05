@@ -7,32 +7,30 @@
 	});	
 </script>
 
-<!-- Add jQuery library
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>-->
-
-<!-- Add fancyBox -->
-<%= link_to "", "/assets/fancyBox/source/jquery.fancybox.css?v=2.1.5", :rel=>"stylesheet", :type=>"text/css", :media=>"screen" %>
-<!--<link rel="stylesheet" href="/assets/fancyBox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />-->
-<script type="text/javascript" src="/assets/fancyBox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
 
 <div id="wrapper">
 	<div id="main">
 		<h1>Frequently Asked Questions</h1>
 		
-		<a class="fancybox" rel="gallery1" href="/assets/signup.png" title="Sign Up for an Account">
-			<img src="/assets/signup.png" alt="" />
+		<a class="fancybox" rel="gallery1" href="/assets/intro.png" data-fancybox-width="200" data-fancybox-height="500">
+			<h2>Click here to take a ReBook tutorial!</h2>
 		</a>
 		
-		
+		<div class="hidden">
+			<a class="fancybox" rel="gallery1" href="/assets/start.png" title="Eamil Verification">
+				<img src="/assets/start.png" alt="" />
+			</a>
+			
+			<a class="fancybox" rel="gallery1" href="/assets/signup.png" title="Eamil Verification">
+				<img src="/assets/signup.png" alt="" />
+			</a>
 			<a class="fancybox" rel="gallery1" href="/assets/email.png" title="Eamil Verification">
 				<img src="/assets/email.png" alt="" />
 			</a>
 			<a class="fancybox" rel="gallery1" href="/assets/searchforbooks.png" title="Search for Books">
 				<img src="/assets/searchforbooks.png" alt="" />	
 			</a>
-		
+		</div>
 
 		
 		<h2>Q: "How do I add books to my Have or Want list?"</h2>

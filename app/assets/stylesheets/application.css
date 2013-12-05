@@ -12,6 +12,8 @@
  *= require jquery.facebox
  *= require jquery.timepicker.css
  *= require jquery-ui-1.10.3.custom.css
+ *= require fancybox
+
  */
 
  * {
@@ -84,10 +86,10 @@ body {
 	position:static;
 }
 
-/*.hidden {
+.hidden {
 	display: none;
 }
-*/
+
 /*****************Button and Text Box Styling**********************/
 /******************************************************************/
 .button {
