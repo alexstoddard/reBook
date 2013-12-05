@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
   after_save :send_activation
 
   def admin?
-	id == 16
+    id == 16
   end
   
   def self.initialize
