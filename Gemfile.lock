@@ -69,6 +69,8 @@ GEM
       railties (>= 3.0.0)
     faker (1.2.0)
       i18n (~> 0.5)
+    fancybox-rails (0.2.1)
+      railties (>= 3.1.0)
     faraday (0.8.8)
       multipart-post (~> 1.2.0)
     ffi (1.9.0)
@@ -224,6 +226,7 @@ DEPENDENCIES
   facebox-rails
   factory_girl_rails
   faker
+  fancybox-rails
   guard-rspec
   jbuilder (~> 1.2)
   jquery-rails
