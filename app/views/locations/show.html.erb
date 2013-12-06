@@ -178,12 +178,15 @@
 
 									<%= hidden_field_tag :search, params[:search] %>
 									<%= submit_tag "Add to Want List", :name => nil %>
+
 								<% end %>
 
 								<div class="message"><!-- for error/success messages --></div>
 							<% end %>
 					    <% end %>
 					</div> <!-- /.actions -->
+				<%= x.needs_in_location(@location.id) %> people need this book.</br>
+				<%= x.owns_in_location(@location.id) %> people own this book.</br>
 			  	</div>
 
 			  	<div class="details">

@@ -20,20 +20,21 @@ class LocationsController < ApplicationController
   # GET /locations/1
   # GET /locations/1.json
   def show
-    @result = {}
+    @books = {}
 
-    @result[:books] = Book.location_search(@location.id, "")
+    @books[:books] = Book.location_search(@location.id, "")
+    @result = Book.calculate_hidden(@books, session[:user_id])
 
     @conditions = Condition.all
   end
 
   def location_books
-    @result = {}
+    @books = {}
 
-    @books = Book.query(@location.id, "")
-    @result[:books] = Book.calculate_hidden(@books, session[:user_id])
+    @books[:books] = Book.location_search(@location.id, "")
+    @result = Book.calculate_hidden(@books, session[:user_id])
   end
-
+  
   # GET /locations/new
   def new
     @location = Location.new
