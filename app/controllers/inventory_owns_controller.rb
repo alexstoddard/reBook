@@ -76,23 +76,31 @@ class InventoryOwnsController < ApplicationController
   # DELETE /inventory_owns/1.json
   def destroy
 
-    @inventory_own.deleted = true
-    @inventory_own.save
-	#If the book being removed is involved in a trade, email other users involved in trade that the trade
-	#has been cancelled
-    @all_trade_lines = TradeLine.find_all_inventory_own_id(@inventory_own.id)
-    if(!@trade_line.nil?)
-	  @all_trade_lines.each do |y|
-		  @trade = Trade.find(y.trade_id)
-		  @trade_lines = @trade.get_tradelines_except(session[:user_id])
-		  @trade_lines.each do |x|
-			UserMailer.trade_destroyed(x.inventory_own.user, @trade).deliver
-		  end
-	  end
+    InventoryOwn.transaction do
+      @inventory_own.deleted = true
+      @inventory_own.save
+
+      user_id = @inventory_own.user_id
+
+      #If the book being removed is involved in a trade, email other users involved in trade that the trade
+      #has been cancelled
+      @trades = @inventory_own.trades
+      debugger
+        @trades.each do |trade|
+
+          if not trade.declined?
+            trade.user_decline(user_id, "Sorry, I removed this item from my have list.")
+
+            @trade_lines = trade.get_tradelines_except(user_id)
+            @trade_lines.each do |line|
+              UserMailer.trade_destroyed(line.inventory_own.user, trade).deliver
+            end
+          end
+        end
+
     end
 
     respond_to do |format|
-#      format.html { redirect_to inventory_owns_url }
       format.json { head :no_content }
     end
   end
