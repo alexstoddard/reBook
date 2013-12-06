@@ -14,7 +14,7 @@
 
 	<%= form_for @trade_note, :url => url_for(:controller => 'trades', :action => 'accept_trade') do |f|  %>
 	  
-	  <% f.hidden_field :note_type, :value => "accept" %>
+	  <%= f.hidden_field :note_type, :value => "accept" %>
 	  
 	  <p>
 
