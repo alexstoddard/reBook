@@ -130,9 +130,16 @@ class Trade < ActiveRecord::Base
   # This function perfoms the user declining the trade
   # Its meaning is straightforward. It invalidates the
   # trade by setting all acceptance status to false.
-  def user_decline(user_id)
+  def user_decline(user_id, comment = nil)
     trade_lines.each { |x| x.user_from_accepted = false }
     trade_lines.each { |x| x.save }
+    if comment
+      note = trade_notes.build
+      note.comment = comment
+      note.user_id = user_id
+      note.note_type = "cancel"
+      note.save
+    end
   end
   
   # This function perfoms the user update of a trade

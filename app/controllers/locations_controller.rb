@@ -1,18 +1,40 @@
 class LocationsController < ApplicationController
   load_and_authorize_resource
-  before_action :set_location, only: [:show, :edit, :update, :destroy]
+
+  before_action :set_location, only: [:show, :edit, :update, :destroy, :location_books]
+  before_action :set_query, only: [:location_books]
 
   # GET /locations
   # GET /locations.json
   def index
-    @locations = Location.search_user(params[:user_id], params[:search])
+    @books = {}
+
+    @locations = Location.all
+
+    @locations.each do |location|
+      @books[location.id] = Book.location_search(location.id, "")
+    end
+
   end
 
   # GET /locations/1
   # GET /locations/1.json
   def show
+    @books = {}
+
+    @books[:books] = Book.location_search(@location.id, "")
+    @result = Book.calculate_hidden(@books, session[:user_id])
+
+    @conditions = Condition.all
   end
 
+  def location_books
+    @books = {}
+
+    @books[:books] = Book.location_search(@location.id, "")
+    @result = Book.calculate_hidden(@books, session[:user_id])
+  end
+  
   # GET /locations/new
   def new
     @location = Location.new
@@ -66,6 +88,10 @@ class LocationsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_location
       @location = Location.find(params[:id])
+    end
+
+    def set_query
+      @query = params[:query] || ""
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

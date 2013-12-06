@@ -10,6 +10,20 @@ class Book < ActiveRecord::Base
   # Callbacks
   after_initialize :set_defaults
 
+  def self.location_search(location, terms) 
+    all_books = Book.joins(:inventory_owns => { :user => :user_locations }).where("user_locations.location_id = ?", location).where("inventory_owns.deleted = ?", false).distinct
+    books = all_books.where("books.name LIKE ?", "%" + terms + "%")
+    return books
+  end
+
+  def needs_in_location(location) 
+    inventory_needs.where(deleted: false).joins(:user => :user_locations).where("user_locations.location_id = ?", location).size
+  end
+
+  def owns_in_location(location)
+    inventory_owns.where(deleted:false).joins(:user => :user_locations).where("user_locations.location_id = ?", location).size
+  end
+
   def self.search(terms, limit)
 
     api = GoogleApi.new

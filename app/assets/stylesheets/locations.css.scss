@@ -1,3 +1,123 @@
 // Place all the styles related to the Locations controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+#search h3 {
+	margin-bottom:20px;
+}
+
+#search h4 {
+	width: 80%;
+	margin-top: 2%;
+}
+
+#search form.book-search {
+	margin-bottom:30px;
+}
+
+#search form.book-search .text {
+	width:640px;
+	font-size: 1.2em;
+	padding: 5px 8px;
+}
+
+#search form.book-search .button {
+	padding: 6px 10px;
+	margin-left: 6px;
+	text-transform: uppercase;
+	font-size: 1.2em;
+}
+
+/************************search results *********************************/
+
+#search article {
+	clear: both;
+	overflow: hidden;
+	margin-bottom: 20px;
+	border-bottom: 1px #CCCCFF solid;
+	padding-bottom: 10px;
+}
+
+#search article .thumbnail {
+	float:left;
+	max-width:150px;
+	margin-bottom:20px;
+}
+
+
+#search article img.bookcover {
+	margin-right:15px;
+	margin-bottom:10px;
+	border: solid #949494 1px;
+	box-shadow: 2px 2px 6px -1px #919191;
+}
+
+#search article a {
+	color:#0348D6;
+}
+
+#search article .details {
+	max-width:830px;
+	display:inline-block;
+}
+
+/* add to have/want list buttons */
+
+#search .actions {
+	margin-right:15px;
+	text-align:center;
+}
+
+#search .actions .message {
+	text-align:left;
+}
+
+#search article .loading {
+	display:none;
+}
+
+#search article .add input[type="submit"],
+#search article .have_button,
+#search article .cancel_button {
+	padding: 4px 10px;
+	border:none;
+	border-radius:5px;
+	color:#fff;
+	width:100px;
+	margin-bottom:5px;
+	font-size:0.9em;
+	cursor:pointer;
+}
+
+#search article .add.have,
+#search article .cancel_button {
+	display:none;
+}
+
+#search article .add.have .select_condition {
+	margin-bottom:5px;
+}
+
+#search article .add.have input[type="submit"],
+#search article .have_button {
+	background-color:#3861CA;
+}
+
+#search article .cancel_button {
+	background-color:#bbb;
+}
+
+#search article .cancel_button:hover {
+	background-color:#888;
+}
+
+#search article .add.have input[type="submit"]:hover {
+	background-color: #294BA2;
+}
+
+#search article .add.want input[type="submit"] {
+	background-color: #6C47AD;
+}
+
+#search article .add.want input[type="submit"]:hover {
+	background-color: #5629A3;
+}

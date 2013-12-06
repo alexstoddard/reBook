@@ -35,6 +35,14 @@ ActiveRecord::Schema.define(version: 20131205041108) do
     t.datetime "updated_at"
   end
 
+  create_table "inventory_haves", force: true do |t|
+    t.integer  "book_id"
+    t.integer  "user_id"
+    t.string   "condition_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "inventory_needs", force: true do |t|
     t.integer  "book_id"
     t.integer  "user_id"
@@ -87,10 +95,10 @@ ActiveRecord::Schema.define(version: 20131205041108) do
   end
 
   create_table "trades", force: true do |t|
+    t.integer  "status",      limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "location_id"
-    t.integer  "status"
   end
 
   create_table "user_feedbacks", force: true do |t|
