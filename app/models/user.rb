@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
   validates_length_of :passhash, :in => 8..20, :on => :create
   validates :terms, :acceptance => true
   validates :user_locations, presence: true
+  validates :timezone, presence: true
 
   # Relationshipsvalidates 
   has_many :inventory_needs, dependent: :destroy
@@ -33,7 +34,7 @@ class User < ActiveRecord::Base
   after_save :send_activation
 
   def admin?
-    id == 16
+    admin == true
   end
   
   def self.initialize
