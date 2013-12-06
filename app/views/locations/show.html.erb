@@ -142,7 +142,7 @@
 
 								<input type="button" class="have_button" value="Add to Have List" />
 
-	               				<%= form_for x, :url => url_for(:controller => 'inventory_owns', :action => 'create'), :remote => true, :html => {:class => "add have"} do |f| %>
+	               				<%= form_for x, :url => url_for(:controller => 'inventory_owns', :action => 'create'), :method => :post, :remote => true, :html => {:class => "add have"} do |f| %>
 		                                <div class="select_condition">
 	                                	<%= label_tag :condition_id, "Condition:" %> <%= select_tag :condition_id, options_from_collection_for_select(@conditions, "id", "description") %>
   	                                </div>
@@ -163,7 +163,7 @@
 		                        <% end %>
 		                        <input type="button" class="cancel_button" value="Cancel" />
 
-								<%= form_for x, :url => url_for(:controller => 'inventory_needs', :action => 'create'),  :remote => true, :html => {:class => "add want"} do |f| %>
+								<%= form_for x, :url => url_for(:controller => 'inventory_needs', :action => 'create'),  :method => :post, :remote => true, :html => {:class => "add want"} do |f| %>
                   <%= f.hidden_field :googleId, :value => x.googleId %>
                   <%= f.hidden_field :id, :value => x.id %>
                   <%= f.hidden_field :name, :value => x.name %>

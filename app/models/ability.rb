@@ -54,6 +54,7 @@ class Ability
 		can :create, UserFeedback
 	  end
 	else
+    can :read, Location
 	  can :create, User
 	  can :forgot, User
 	  can :set_is_current_user, User

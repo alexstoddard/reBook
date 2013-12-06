@@ -11,13 +11,23 @@ class Trade < ActiveRecord::Base
   # Set the tradeline feedback status for a given user
   # If all tradelines for this trade have feedback, mark it as complete (status = 1)
   def set_feedback_status(user_id)
-    @tradeline = get_tradeline_only(user_id)
-    @tradeline.status = 1
-    @tradeline.save
+    Trade.transaction do
+      @tradeline = get_tradeline_only(user_id)
+      @tradeline.status = 1
+      @tradeline.save
 
-    if trade_lines.all? { |x| x.status == 1 }
-      self.status = 1
-      self.save
+      need = user_need(user_id).inventory_need
+      own = user_own(user_id).inventory_own
+      
+      need.deleted = true
+      need.save
+      own.deleted = true
+      own.save
+
+      if trade_lines.all? { |x| x.status == 1 }
+        self.status = 1
+        self.save
+      end
     end
   end
 
