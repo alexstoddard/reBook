@@ -1,10 +1,10 @@
-<% if !trade.finished?(user.id) #don't show any buttons if the trade is already finished for the user%>
+<% if !trade.trade_lines.any? { |line| line.status == 1 } #don't show any buttons if the trade is already finished for the user %>
 
 	<% if trade.active?(user.id) %>
 	  <%= render partial: 'accept_trade_button', locals: { trade: trade } %>
 	  <%= render partial: 'counter_trade_button', locals: { trade: trade } %>
 	<% end %>
-	<% if  trade.accepted?(user.id) or trade.completed? %>
+	<% if trade.accepted?(user.id) or trade.completed? %>
 	  <%= render partial: 'change_trade_button', locals: { trade: trade } %>
 	<% end %>
 	<% if trade.declined? %>
