@@ -339,3 +339,8 @@ footer {
 footer a {
 	color:#585858;
 }
+
+.tutorial {
+	margin: auto;
+	text-align: center;
+	margin-bottom: 20px;
