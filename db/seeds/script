@@ -1,0 +1,4 @@
+heroku config -r herokutest | grep POSTGRESQL
+heroku pg:reset HEROKU_POSTGRESQL_GRAY_URL -r herokutest --confirm
+heroku run rake db:migrate -r herokutest
+heroku run rails console -r herokutest
