@@ -4,7 +4,7 @@ class Ability
   def initialize(u)
 	if u != nil
 	  if u.admin?
-		can :manage, :all
+      can :manage, :all
 	  else
 		#InventoryNeed and InventoryOwn Restriction
 		can :manage, InventoryNeed

@@ -155,10 +155,10 @@ class Trade < ActiveRecord::Base
   def proposable?
     trade_lines.all? do |x|
       a = x.inventory_own.trades.none? do |y|
-        (y.accepted?(x.inventory_own.user_id) and y.id != id) or (x.inventory_own.deleted == true)
+        ((y.accepted?(x.inventory_own.user_id) or y.completed? or y.finished?(x.inventory_own.user_id)) and y.id != id) or (x.inventory_own.deleted == true)
       end
       b = x.inventory_need.trades.none? do |y|
-        (y.accepted?(x.inventory_need.user_id) and y.id != id) or (x.inventory_need.deleted == true)
+        ((y.accepted?(x.inventory_need.user_id) or y.completed? or y.finished?(x.inventory_need.user_id)) and y.id != id) or (x.inventory_need.deleted == true)
       end
       (a and b)
     end

@@ -22,8 +22,8 @@ class ApplicationController < ActionController::Base
 
   def admin?
     user = current_user
-    (not user.nil?) and user.id == 10
-  end
+    (not user.nil?) and user.admin
+ end
 
   def current_user
     user_id = session[:user_id]
