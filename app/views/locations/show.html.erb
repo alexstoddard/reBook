@@ -1,44 +1,203 @@
-<p id="notice"><%= notice %></p>
+<script type="text/javascript">
 
-<p>
-  <strong>Name:</strong>
-  <%= @location.name %>
-</p>
+  jQuery(document).ready(function($) {
 
-<p>
-  <strong>Address:</strong>
-  <%= @location.address %>
-</p>
+  	//clicked on "Add to Have List", show form to prompt for condition
+  	$('.have_button').click(function(e) {
+  		$(this).hide();
+  		$(this).siblings('.cancel_button').show(); //show cancel button
+  		$(this).siblings('form.have').show();	//show have form
+  		$(this).siblings('form.want').hide();	//hide want form
+  	});
 
-<p>
-  <strong>City:</strong>
-  <%= @location.city %>
-</p>
+  	//cancel adding to Have List
+  	$('.cancel_button').click(function(e) {
+  		$(this).hide();
+  		$(this).siblings('form.have').hide();	//hide have form
+  		$(this).siblings('.have_button').show();	//show have button
+  		$(this).siblings('form.want').show();	//show want form
+  	});
 
-<p>
-  <strong>State:</strong>
-  <%= @location.state %>
-</p>
+  	//add a book to have list
+  	//ajax post
+  	$('article form.have').submit(function() {
+  		var have_form = $(this); //current "add to have list" form
+  		var have_button = $(this).siblings('.have_button');
+  		var cancel_button = $(this).siblings('.cancel_button');
+  		var want_form = $(this).siblings('form.want'); //current "add to want list" form
+  		var loading = $(this).siblings('.loading'); //loading gif
 
-<p>
-  <strong>Zip:</strong>
-  <%= @location.zip %>
-</p>
+  		//hide buttons and show loading gif
+  		have_form.hide();
+  		cancel_button.hide();
+  		want_form.hide();
+  		loading.show();
 
-<p>
-  <strong>Image:</strong>
-  <%= @location.image %>
-</p>
+  		$.ajax({
+  			type: 'POST',
+  			url: $(this).attr('action'),
+  			data: have_form.serialize(),
+  			error: function(){
+            	//error! show all buttons again, hide loading gif, show message
+            	loading.hide();
+            	have_button.show();
+            	have_form.hide();
+            	want_form.show();
+            	loading.siblings('.message').text('Sorry! An error occured. Please try again.');
+            },
+            success: function(){
+            	//success! remove forms, hide loading gif, show message
+            	have_form.remove();
+            	have_button.remove();
+            	cancel_button.remove();
+            	want_form.remove();
+            	loading.hide();
+            	link = '<%= link_to "Have List", inventory_owns_path %>';
+            	loading.siblings('.message').html('You have successfully added this book to your ' + link + '.');
+            }
+  		});
 
-<p>
-  <strong>Icon:</strong>
-  <%= @location.icon %>
-</p>
+  		return false;
+  	});
 
-<p>
-  <strong>Description:</strong>
-  <%= @location.description %>
-</p>
+  	//adding a book to want list
+  	//ajax post
+  	$('article form.want').submit(function() {
+  		var want_form = $(this); //current "add to want list" form
+  		var have_form = $(this).siblings('form.have'); //current "add to have list" form]
+  		var have_button = $(this).siblings('.have_button');
+  		var loading = $(this).siblings('.loading');	//loading gif
+  		
+  		//hide buttons and show loading gif
+  		want_form.hide();
+  		have_button.hide();
+  		loading.show();
 
-<%= link_to 'Edit', edit_location_path(@location) %> |
-<%= link_to 'Back', locations_path %>
+  		$.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: want_form.serialize(),
+            error: function(){
+            	//error! show all buttons again, hide loading gif, show message
+            	loading.hide();
+            	have_button.show();
+            	want_form.show();
+            	loading.siblings('.message').text('Sorry! An error occured. Please try again.');
+            },
+            success: function(){
+            	//success! remove forms, hide loading gif, show message
+            	have_button.remove();
+            	have_form.remove();
+            	want_form.remove();
+            	loading.hide();
+            	link = '<%= link_to "Want List", inventory_needs_path %>';
+            	loading.siblings('.message').html('You have successfully added this book to your ' + link + '.');
+            }
+        });
+    	return false;
+  	})
+  });
+</script>
+<div id="main">
+
+  <p>
+    <%= image_tag @location.icon, :height => 20, :width => 20 %> <%= @location.name %>
+  </p>
+
+  <p>
+    <strong>Address:</strong>
+    <%= @location.address %> <%= @location.city %> <%= @location.state %> <%= @location.zip %>
+  </p>
+
+  <p>
+    <strong>Description:</strong>
+    <%= @location.description %>
+  </p>
+
+  <p>
+    <%= image_tag @location.image %>
+  </p>
+
+	<div id="search">
+	    <% if !@result.nil? %>
+	    	<% if @result[:books].length == 0 %>
+	    		<h3>Sorry, no results were found at <%= @location.name %>. Try again with a different search term.</h3>
+	    	<% else %>
+				<h3><%= pluralize(@result[:books].length, "book") %> at <%= @location.name %></h3>
+			<% end %>
+
+			<% @result[:books].each do |x| %>
+			  <article>
+			  	<div class="thumbnail">
+			  	  <%= image_tag(x.thumbnail, alt: x.name, class: "bookcover") %>
+
+			  	  <div class="actions">
+				  	  <% unless session[:user_id].nil? %>
+							<% if x.hide_own %>
+								<p>This book is already in your <%= link_to "Have List", inventory_owns_path %>.</p>
+							<% elsif x.hide_need %>
+								<p>This book is already in your <%= link_to "Want List", inventory_needs_path %>.</p>
+							<% else%>
+								<%= image_tag("ajax-loader.gif", alt: "Adding...", class: 'loading') %>
+
+								<input type="button" class="have_button" value="Add to Have List" />
+
+	               				<%= form_for x, :url => url_for(:controller => 'inventory_owns', :action => 'create'), :remote => true, :html => {:class => "add have"} do |f| %>
+		                                <div class="select_condition">
+	                                	<%= label_tag :condition_id, "Condition:" %> <%= select_tag :condition_id, options_from_collection_for_select(@conditions, "id", "description") %>
+  	                                </div>
+		                                <%= f.hidden_field :googleId, :value => x.googleId %>
+		                                <%= f.hidden_field :id, :value => x.id %>
+		                                <%= f.hidden_field :name, :value => x.name %>
+		                                <%= f.hidden_field :subject, :value => x.subject %>
+	                                  <%= f.hidden_field :author, :value => x.author %>
+	                                  <%= f.hidden_field :edition, :value => x.edition %>
+	                                  <%= f.hidden_field :price, :value => x.price %>
+	                                  <%= f.hidden_field :thumbnail, :value => x.thumbnail %>
+	                                  <%= f.hidden_field :isbn, :value => x.isbn %>
+	                                  <%= f.hidden_field :published, :value => x.published %>
+	                                  <%= f.hidden_field :description, :value => x.description %>
+
+		                                <%= hidden_field_tag :search, params[:search] %>
+		                                <%= f.submit "Add to Have List", :name => nil %>
+		                        <% end %>
+		                        <input type="button" class="cancel_button" value="Cancel" />
+
+								<%= form_for x, :url => url_for(:controller => 'inventory_needs', :action => 'create'),  :remote => true, :html => {:class => "add want"} do |f| %>
+                  <%= f.hidden_field :googleId, :value => x.googleId %>
+                  <%= f.hidden_field :id, :value => x.id %>
+                  <%= f.hidden_field :name, :value => x.name %>
+                  <%= f.hidden_field :subject, :value => x.subject %>
+                  <%= f.hidden_field :author, :value => x.author %>
+                  <%= f.hidden_field :edition, :value => x.edition %>
+                  <%= f.hidden_field :price, :value => x.price %>
+                  <%= f.hidden_field :thumbnail, :value => x.thumbnail %>
+                  <%= f.hidden_field :isbn, :value => x.isbn %>
+                  <%= f.hidden_field :published, :value => x.published %>
+                  <%= f.hidden_field :description, :value => x.description %>
+
+									<%= hidden_field_tag :search, params[:search] %>
+									<%= submit_tag "Add to Want List", :name => nil %>
+								<% end %>
+
+								<div class="message"><!-- for error/success messages --></div>
+							<% end %>
+					    <% end %>
+					</div> <!-- /.actions -->
+			  	</div>
+
+			  	<div class="details">
+				    <h2><%= x.name %></h2>
+				   	<p><strong>Author:</strong> <%= x.author %><br />
+			        <strong>ISBN:</strong> <%= x.isbn %><br />
+			        <strong>Published:</strong> <%= x.published %><br /></p>
+              <% unless x.description.nil? %>
+			        <%= x.description.html_safe %>
+              <% end %>
+			      </div>
+			  </article>
+			<% end %> 
+
+		<% end %>
+	</div>
+</div>

@@ -7,17 +7,31 @@ class LocationsController < ApplicationController
   # GET /locations
   # GET /locations.json
   def index
-    @locations = Location.search_user(params[:user_id], params[:search])
+    @books = {}
+
+    @locations = Location.all
+
+    @locations.each do |location|
+      @books[location.id] = Book.location_search(location.id, "")
+    end
+
   end
 
   # GET /locations/1
   # GET /locations/1.json
   def show
+    @result = {}
 
+    @result[:books] = Book.location_search(@location.id, "")
+
+    @conditions = Condition.all
   end
 
   def location_books
-    @books = Book.query(@location.id, @query)
+    @result = {}
+
+    @books = Book.query(@location.id, "")
+    @result[:books] = Book.calculate_hidden(@books, session[:user_id])
   end
 
   # GET /locations/new

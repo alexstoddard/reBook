@@ -43,7 +43,7 @@
     
 				    <div class="location">
 				  		<%= image_tag x.location.icon %>
-				      <h2>Schedule for <%= x.location.name %></h2>
+				      <h2>Schedule for <%= link_to x.location.name, x.location %></h2>
 				    </div>
 
 				    <% @user_location = x %>

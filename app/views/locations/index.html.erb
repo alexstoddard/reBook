@@ -1,41 +1,21 @@
-<h1>Listing locations</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Address</th>
-      <th>City</th>
-      <th>State</th>
-      <th>Zip</th>
-      <th>Image</th>
-      <th>Icon</th>
-      <th>Description</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @locations.each do |location| %>
+<div id="main">
+  <table>
+    <tbody>
+      <% @locations.each do |location| %>
       <tr>
-        <td><%= location.name %></td>
-        <td><%= location.address %></td>
+        <td><%= image_tag location.icon, :width => 20, :height => 20 %></td>
+        <td></td>
+        <td><%= link_to location.name, location %></td>
+        <td></td>
         <td><%= location.city %></td>
+        <td></td>
         <td><%= location.state %></td>
-        <td><%= location.zip %></td>
-        <td><%= location.image %></td>
-        <td><%= location.icon %></td>
-        <td><%= location.description %></td>
-        <td><%= link_to 'Show', location %></td>
-        <td><%= link_to 'Edit', edit_location_path(location) %></td>
-        <td><%= link_to 'Destroy', location, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td></td>
+        <td>People own <%= @books[location.id].count %> books at this location </td>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+      <% end %>
+    </tbody>
+  </table>
 
-<br>
-
-<%= link_to 'New Location', new_location_path %>
+  <br>
+</div>

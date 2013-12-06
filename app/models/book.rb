@@ -11,7 +11,7 @@ class Book < ActiveRecord::Base
   after_initialize :set_defaults
 
   def self.location_search(location, terms) 
-    all_books = Book.joins(:inventory_owns => { :user => :user_locations }).where("user_locations.id", location).distinct
+    all_books = Book.joins(:inventory_owns => { :user => :user_locations }).where("user_locations.location_id = ?", location).distinct
     books = all_books.where("books.name LIKE ?", "%" + terms + "%")
     return books
   end
