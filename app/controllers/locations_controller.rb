@@ -1,6 +1,8 @@
 class LocationsController < ApplicationController
   load_and_authorize_resource
-  before_action :set_location, only: [:show, :edit, :update, :destroy]
+
+  before_action :set_location, only: [:show, :edit, :update, :destroy, :location_books]
+  before_action :set_query, only: [:location_books]
 
   # GET /locations
   # GET /locations.json
@@ -11,6 +13,11 @@ class LocationsController < ApplicationController
   # GET /locations/1
   # GET /locations/1.json
   def show
+
+  end
+
+  def location_books
+    @books = Book.query(@location.id, @query)
   end
 
   # GET /locations/new
@@ -66,6 +73,10 @@ class LocationsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_location
       @location = Location.find(params[:id])
+    end
+
+    def set_query
+      @query = params[:query] || ""
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -2,6 +2,7 @@ class Location < ActiveRecord::Base
 
   # Relationships
   has_many :user_locations, dependent: :destroy
+  has_many :inventory_owns, through: :user_locations
   has_many :users, through: :user_locations
   
   def self.search_user(user_id, search)
