@@ -88,9 +88,9 @@
 				    				</p>
 
 				    				<% #check to see if current time/date is past the trade time/date %> 
-				    				<% @now = Time.strptime("5:31pm 12/05/2013", "%l:%M%P %m/%d/%Y") 
-				    				#@now = Time.now.in_time_zone(@user.timezone)
-				    				#@now = @now - 15*60 #(15 minutes from now)
+				    				<% 
+				    				@now = Time.now.in_time_zone(@user.timezone)
+				    				@now = @now - 15*60 #(15 minutes from now)
 				    				@trade_time = Time.strptime(note.meet_time, "%l:%M%P %m/%d/%Y") 
 				    				if @now > @trade_time %>
 				    					<% @complete = true %>
