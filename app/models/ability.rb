@@ -11,6 +11,7 @@ class Ability
 		can :manage, InventoryOwn
     can :manage, Location
     can :manage, UserSchedule
+    can :manage, UserLocation
 
 		#User Controller Restriction
 		can :set_is_current_user, User
