@@ -202,25 +202,34 @@
 table {
     border-collapse: collapse;
 }
+
 th, td {
     padding: 0;
 }
 
 .day {
-     padding: 5px;
-     width: 10px;
+     width: 30px;
      text-align: center;
 }
 
 .hour {
+      vertical-align: top;
       text-align: right;
       padding-right: 10px;
+      padding-top: 0px;
+}
+
+.hour-div {
+  margin-top: -6px;
+  margin-bottom: 6px;
 }
 
 .available {
+      border: solid 1px #999;
       background-color: #99CC99;
 }
 
 .unavailable {
+      border: solid 1px #999;
       background-color: #CCC;
 }

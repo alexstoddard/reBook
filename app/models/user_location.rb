@@ -20,7 +20,7 @@ class UserLocation < ActiveRecord::Base
       from = ((schedule.from/100)*60) + (schedule.from%100)
       to = ((schedule.to/100)*60) + (schedule.to%100)
 
-      (from..to).step(30) do |minute|
+      (from..(to-1)).step(30) do |minute|
         output[schedule.day][minute/30] = true
       end
     end
