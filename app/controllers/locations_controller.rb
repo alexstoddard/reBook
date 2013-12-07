@@ -1,20 +1,18 @@
 class LocationsController < ApplicationController
   load_and_authorize_resource
 
-  before_action :set_location, only: [:show, :edit, :update, :destroy, :location_books]
+  before_action :set_location, only: [:show, :edit, :update, :destroy]
   before_action :set_query, only: [:location_books]
 
   # GET /locations
   # GET /locations.json
   def index
-    @books = {}
+    @locations = Location.all.where("name LIKE ?", "%" + params[:search] + "%")
+    @user = User.find(params[:user_id])
 
-    @locations = Location.all
-
-    @locations.each do |location|
-      @books[location.id] = Book.location_search(location.id, "")
+    @locations = @locations.select do |location|
+      @user.user_locations.find_by_location_id(location.id).nil?
     end
-
   end
 
   # GET /locations/1
@@ -30,9 +28,11 @@ class LocationsController < ApplicationController
 
   def location_books
     @books = {}
+    @locations = Location.all
 
-    @books[:books] = Book.location_search(@location.id, "")
-    @result = Book.calculate_hidden(@books, session[:user_id])
+    @locations.each do |location|
+      @books[location.id] = Book.location_search(location.id, "")
+    end
   end
   
   # GET /locations/new

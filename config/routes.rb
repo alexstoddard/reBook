@@ -65,6 +65,9 @@ Rebook::Application.routes.draw do
   #book search page routes
   get '/search', to: 'books#search'
 
+  #book search page routes
+  get '/location_books', to: 'locations#location_books'
+
   #inventory routes
   post '/inventory_owns', to: 'inventory_owns#create'
   post '/inventory_needs', to: 'inventory_needs#create'
