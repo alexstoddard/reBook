@@ -701,3 +701,39 @@ form .error {
 	color:#F15656;
 	display:block	
 }
+
+/**************** Schedule ****************/
+
+table {
+    border-collapse: collapse;
+}
+th, td {
+    padding: 0;
+}
+
+.day {
+     padding: 5px;
+     width: 10px;
+     text-align: center;
+}
+
+.hour {
+      text-align: right;
+      padding-right: 10px;
+}
+
+.count-0 {
+      background-color: #CCC;
+}
+
+.count-1 {
+      background-color: #99CC99;
+}
+
+.count-2 {
+      background-color: #77AA77;
+}
+
+.count-3 {
+      background-color: #558855;
+}

@@ -1,0 +1,35 @@
+<div class="schedule">
+  <table>
+    <tr>
+      <td></td>
+      <% schedule.keys.each do |day| %>
+      <td class="day" cellpadding="5"><%= day[0,2] %></td>
+      <% end %>
+    </tr>
+    <% (0..47).each do |minute| %>
+    <tr>
+      <% if minute % 4 == 0 %>
+      <td class = "hour" rowspan="4">
+        <% hour = ((minute%24)/2) %>
+        <% if hour == 0 %>
+        <% hour = 12 %>
+        <% end %>
+        <% if minute > 23 %>
+        <% ampm = "pm" %>
+        <% else %>
+        <% ampm = "am" %>
+        <% end %>
+        <%= hour.to_s + ":00 " + ampm %>
+      </td>
+      <% end %>
+      <% schedule.keys.each do |day| %>
+      <% if schedule[day][minute] %>
+      <td class="available"></td>
+      <% else %>
+      <td class="unavailable"></td>
+      <% end %>
+      <% end %>
+    </tr>
+    <% end %>
+  </table>
+</div>

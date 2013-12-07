@@ -81,7 +81,7 @@
 										    <% end %>
 
 										    <% if trade.location %> 
-						                    	<p><strong>Trade Location:</strong> <%= trade.location.name %></p>
+						                    	<p><strong>Trade Location:</strong> <%= link_to trade.location.name, trade.location %></p>
 						                    <% end %>
 
 										    <p><%= render partial: "propose_trade_button", locals: { trade: trade } %>

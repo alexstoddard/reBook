@@ -30,6 +30,10 @@
       	  <li><strong>From:</strong> <%= y.from_standard %> <strong>To:</strong> <%= y.to_standard %> <strong>Day:</strong> <%= y.day %> (<%= link_to "Remove", user_schedule_path(y.id), :method => :delete, :remote => true %>)</li>
         <% end#each %>
       </ul>
+      <br>
+
+      <%= render partial: "users/day_planner", locals: {schedule: x.schedule_hash} %>
+
     </div>
 
   </article>

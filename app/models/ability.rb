@@ -9,7 +9,8 @@ class Ability
 		#InventoryNeed and InventoryOwn Restriction
 		can :manage, InventoryNeed
 		can :manage, InventoryOwn
-                can :manage, Location
+    can :manage, Location
+    can :manage, UserSchedule
 
 		#User Controller Restriction
 		can :set_is_current_user, User

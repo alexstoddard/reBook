@@ -196,3 +196,31 @@
 	list-style:none;
 }
 
+/*********************Schedules Table *******************************/
+/********************************************************************/
+
+table {
+    border-collapse: collapse;
+}
+th, td {
+    padding: 0;
+}
+
+.day {
+     padding: 5px;
+     width: 10px;
+     text-align: center;
+}
+
+.hour {
+      text-align: right;
+      padding-right: 10px;
+}
+
+.available {
+      background-color: #99CC99;
+}
+
+.unavailable {
+      background-color: #CCC;
+}

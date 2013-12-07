@@ -18,7 +18,7 @@
           <strong>Trade with:</strong> <%= render :partial => 'users/user', locals: { display_user: @to_tradeline.inventory_own.user } %> <br />
           Their book is in <%= @to_tradeline.inventory_own.condition.description.downcase %> condition.
           <% if trade.location %> 
-            <br /><strong>Trade Location:</strong> <%= trade.location.name %>
+            <br /><strong>Trade Location:</strong> <%= link_to trade.location.name, trade.location %>
           <% end %>
         </p>
 
@@ -36,7 +36,7 @@
             <%= render :partial => 'users/user', locals: { display_user: @from_tradeline.inventory_own.user } %> has not yet accepted this trade.
           <% end %>
           <% if trade.location %> 
-            <br /><strong>Trade Location:</strong> <%= trade.location.name %>
+            <br /><strong>Trade Location:</strong> <%= link_to trade.location.name, trade.location %>
           <% end %>
         <% end#if %>
 

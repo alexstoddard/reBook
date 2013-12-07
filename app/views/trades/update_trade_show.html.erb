@@ -62,6 +62,16 @@
       <% end %>
     <% end %>
   </div>
+  <div class="trade-schedules">
+      <% schedules = [] %>
+      <% @trade.trade_lines.each do |line| %>
+      <% user_location = line.inventory_own.user.user_locations.find_by_location_id(@trade.location_id) %>
+      <% schedules <<= user_location.schedule_hash %>
+      <% end %>
+      Schedule Suggestions:
+      <%= render partial: "users/multiday_planner", locals: {schedule: UserLocation.combine_schedules(schedules)} %>
+      <br>
+  </div>
 
   <%= form_for @trade_note, :url => url_for(:controller => 'trades', :action => 'update_trade') do |f|  %>
     <%= f.hidden_field :note_type, :value => @note_type %>

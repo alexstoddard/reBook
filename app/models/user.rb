@@ -46,7 +46,7 @@ class User < ActiveRecord::Base
       generate_token
     end
   end
-
+  
   # Need to send activation email when user changes their address
   def send_activation
     if email_changed? and enable_mailer
