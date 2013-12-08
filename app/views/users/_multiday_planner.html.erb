@@ -37,14 +37,16 @@
           else 
             min = ":30"
           end %>
+        <% date = Date.parse(day) %>
+        <% date = date > Date.today ? date : date + 7 %>
         <% if schedule[day][minute] == 0 %>
-         <td class="count-0 time-slot"></td>
+         <td data-time="<%= hour.to_s + min + ampm %>" data-date="<%= date.strftime('%m/%d/%Y') %>" class="count-0 time-slot"></td>
         <% elsif schedule[day][minute] == 1 %>
-          <td class="count-1 time-slot" title="<%= hour.to_s + min + ampm %>"></td>
+          <td data-time="<%= hour.to_s + min + ampm %>" data-date="<%= date.strftime('%m/%d/%Y') %>" class="count-1 time-slot" title="<%= hour.to_s + min + ampm %>"></td>
         <% elsif schedule[day][minute] == 2 %>
-          <td class="count-2 time-slot" title="<%= hour.to_s + min + ampm %>"></td>
+          <td data-time="<%= hour.to_s + min + ampm %>" data-date="<%= date.strftime('%m/%d/%Y') %>" class="count-2 time-slot" title="<%= hour.to_s + min + ampm %>"></td>
         <% else schedule[day][minute] == 3 %>
-          <td class="count-3 time-slot" title="<%= hour.to_s + min + ampm %>"></td>
+          <td data-time="<%= hour.to_s + min + ampm %>" data-date="<%= date.strftime('%m/%d/%Y') %>" class="count-3 time-slot" title="<%= hour.to_s + min + ampm %>"></td>
         <% end %>
       <% end %>
     </tr>

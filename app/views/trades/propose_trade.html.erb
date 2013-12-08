@@ -18,6 +18,11 @@ $(function() {
     return valid;
   });
 
+  $('td').click(function () { 
+     $('#trade_note_time_1').val($(this).data('time'));
+     $('#trade_note_time_2').val($(this).data('date'));
+  });
+
   /*jquery time and date pickers */ 
   $('#trade_note_time_1').timepicker({ 
       disableTextInput:true, 
