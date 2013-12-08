@@ -369,7 +369,7 @@
 
 #trade-details .trade .details {
 	display: inline-block;
-	width: 30%;
+	width: 32%;
 	margin-right: 1%;
 	vertical-align: top;
 }
@@ -400,6 +400,11 @@
 	border: solid #949494 1px;
 	box-shadow: 2px 2px 6px -1px #919191;
 	display:block;
+}
+
+
+#trade-details .trade .feedback p {
+	margin:0;
 }
 
 /****** message thread *********/
@@ -525,44 +530,48 @@
 	background-color: #60964C;
 }
 
-#my-trades .active-trades .feedback {
+
+/* user feedback */
+
+.feedback {
 	margin-right:10px;
 	padding:5px 10px;
 	border:1px solid #ddd;
 	display:inline-block;
 	vertical-align:top;
+	margin-bottom:8px;
 }
 
-#my-trades .active-trades .feedback p {
+.feedback p {
 	vertical-align:middle;
 	display:inline-block;
 	margin:0;
 }
 
-#my-trades .active-trades .feedback p.error {
+.feedback p.error {
 	display:block;
 	font-size: 0.8em;
 }
 
-#my-trades .active-trades form {
+.feedback form {
 	display:inline-block;
 	vertical-align:middle;
 	margin-left:10px;
 }
 
-#my-trades .active-trades .thumbs-up {
+.feedback.active-trades .thumbs-up {
 	margin-right:5px;
 }
 
-#my-trades .active-trades .thumbs-up, 
-#my-trades .active-trades .thumbs-down {
+.feedback .thumbs-up, 
+.feedback .thumbs-down {
 	opacity: 0.8;
 	cursor: pointer;
 	width:25px;
 }
 
-#my-trades .active-trades .thumbs-up:hover,
-#my-trades .active-trades .thumbs-down:hover {
+.feedback .thumbs-up:hover,
+.feedback .thumbs-down:hover {
 	opacity:1;
 }
 

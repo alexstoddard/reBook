@@ -22,7 +22,7 @@ class TradesController < ApplicationController
 #    authorize! :accept_trade_show, Trade
     @trade = Trade.find_by_id(params[:id])
     @trade_note = TradeNote.new
-    render :layout => "facebox"
+    render :layout => "fancybox"
   end
   
   def accept_trade
@@ -56,7 +56,7 @@ class TradesController < ApplicationController
 #    authorize! :decline_trade_show, Trade
     @trade = Trade.find_by_id(params[:id])
     @trade_note = TradeNote.new
-    render :layout => "facebox"
+    render :layout => "fancybox"
   end
   
   def decline_trade
@@ -69,18 +69,13 @@ class TradesController < ApplicationController
     #redirect to match_details page for the book the user wants
     redirect_to "/match_details/" + @trade.get_tradeline_from(session[:user_id]).inventory_need.id.to_s
 
-    #respond_to do |format|
-    #  if @trade.save
-    #    format.js {}
-    #  end
-    #end
   end
   
   def update_trade_show
 #    authorize! :update_trade_show, Trade
     @trade = Trade.find_by_id(params[:id])
     @trade_note = TradeNote.new
-    render :layout => "facebox"
+    render :layout => "fancybox"
   end
   
   def update_trade 
@@ -113,22 +108,23 @@ class TradesController < ApplicationController
     @trade = Trade.json_to_trade(params[:json])
     @trade_note = TradeNote.new
     @trade_note.user_id = params[:user_id]
-    render :layout => "facebox"
+    render :layout => "fancybox"
   end
   
   def trade_details
     #BETWEEN HERE 
-	#authorize! :trade_details, Trade
+    #authorize! :trade_details, Trade
     @user = current_user
     if @user.nil?
       do_login
     else
       @trade = Trade.find_by_id(params[:trade_id])
-	  #AND HERE, if id is NOT in database, then we have problem. 
-	  #If exist, but its someone else id, will appropriately block access. 
-	  if @trade == nil
-		authorize! :trade_details, Trade
-	  end
+      @user_feedback = UserFeedback.new
+  	  #AND HERE, if id is NOT in database, then we have problem. 
+  	  #If exist, but its someone else id, will appropriately block access. 
+  	  if @trade == nil
+  		  authorize! :trade_details, Trade
+  	  end
     end
   end
 

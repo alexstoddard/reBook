@@ -19,9 +19,9 @@
 #search {
 	background-color: #294BA0;
 	position: absolute;
-	top: 65px;
-	right: 90px;
-	width: 380px;
+	top: 75px;
+	right: 110px;
+	width: 330px;
 	border: solid 1px white;
 	padding: 30px;
 	box-shadow: 3px 3px 10px -2px #525252;
@@ -36,22 +36,25 @@
 	text-align:left;
 }
 
-#search form {
-	margin-bottom:35px;
+#search .form {
+	text-align:left;
+	margin-top:10px;
+	margin-bottom:30px;
 }
 
-#search input[type="text"] {
-	width: 260px;
-	font-size: 1.2em;
-	padding: 8px 10px;
+#search select {
+	font-size:1.6em;
+	vertical-align:middle;
+	width:230px;
 }
 
-#search input[type="submit"] {
-	padding: 9px 7px;
+#search button {
+	padding: 6px 7px;
 	margin-left: 6px;
 	font-size: 1.2em;
 	text-transform: uppercase;
 	background-color:#BABCD6;
+	vertical-align: middle;
 }
 
 #search input[type="submit"]:hover {

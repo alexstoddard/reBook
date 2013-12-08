@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery.facebox
 //= require jquery.timepicker.js
 //= require jquery-ui-1.10.3.custom.js
 //= require fancybox

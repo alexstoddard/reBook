@@ -1,17 +1,23 @@
+<script type="text/javascript">
+  $(function() {
+    $('#search .form button').click(function() {
+      document.location.href = $('#search .form select').val();
+    });
+  });
+</script>
+
 
 <div id="wrapperinfo">
   <div id="info">
     
     <div id="search">
     
-      <h2 class="left">Search for Books!</h2>
-    
-      <%= form_tag("/search", method: "get") do %>
-        <%= text_field_tag('search', nil, id: nil, placeholder: "Title, ISBN, Author", class: "text") %>
-        <%= submit_tag("Search", id: nil, class: "button") %>
-      <% end %>
-
-     
+      <h2 class="left">Search for Books Near You!</h2>
+      
+      <div class="form">
+        <%= select :location, :id, @locations.collect { |p| [p.name, '/locations/' + p.id.to_s] } %>
+        <button class="button">Search</button>
+      </div>
       
       <% unless session[:user_id] %>
         <h2 class="tagline">Never spend money on books again!<br />Sign up and start saving!</h2>

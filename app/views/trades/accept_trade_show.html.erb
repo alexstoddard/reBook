@@ -4,11 +4,16 @@
 	<div class="trade-details">
     <%= render :partial => 'form_trade_details' %>
     <p>
-      <strong>Proposed Meeting Time/Date: </strong> <%= @trade.trade_notes.last.meet_time %><br />
-      <strong>Proposed Meeting Location: </strong>  <%= @trade.trade_notes.last.place %>  
-      	<% if @trade.location %> 
-          (<%= @trade.location.name %>)
-        <% end %>
+      	<% @trade.trade_notes.reverse.each do |note| 
+        	if (!note.meet_time.nil? && !note.place.nil? && !note.meet_time.empty? && !note.place.empty?) %>
+		    	<strong>Proposed Meeting Time/Date: </strong> <%= note.meet_time %><br />
+		    	<strong>Proposed Meeting Location: </strong>  <%= note.place %>  
+		      	<% if @trade.location %> 
+		          (<%= @trade.location.name %>)
+		        <% end %>
+		   		<% break
+			end
+		end %>
     </p>
   </div>
 

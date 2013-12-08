@@ -26,34 +26,31 @@
           <% @from_tradeline = trade.get_tradeline_from(session[:user_id]) %>
           <strong>This is a three way trade.</strong></br>
           <% if @to_tradeline.user_from_accepted %>
-            <%= render :partial => 'users/user', locals: { display_user: @to_tradeline.inventory_own.user } %> has accepted this trade.</br>
+            <%= render :partial => 'users/user_with_ratings', locals: { display_user: @to_tradeline.inventory_own.user } %> has accepted this trade.</br>
           <% else %>
-             <%= render :partial => 'users/user', locals: { display_user: @to_tradeline.inventory_own.user } %> has not yet accepted this trade.<br />
+             <%= render :partial => 'users/user_with_ratings', locals: { display_user: @to_tradeline.inventory_own.user } %> has not yet accepted this trade.<br />
           <% end  
           if @from_tradeline.user_from_accepted %>  
-            <%= render :partial => 'users/user', locals: { display_user: @from_tradeline.inventory_own.user } %> has accepted this trade.
+            <%= render :partial => 'users/user_with_ratings', locals: { display_user: @from_tradeline.inventory_own.user } %> has accepted this trade.
           <% else %>
-            <%= render :partial => 'users/user', locals: { display_user: @from_tradeline.inventory_own.user } %> has not yet accepted this trade.
-          <% end %>
-          <% if trade.location %> 
-            <br /><strong>Trade Location:</strong> <%= link_to trade.location.name, trade.location %>
+            <%= render :partial => 'users/user_with_ratings', locals: { display_user: @from_tradeline.inventory_own.user } %> has not yet accepted this trade.
           <% end %>
         <% end#if %>
 
        
 
         <div class="message-wrapper">
-          <% @message = trade.trade_notes.last #most recent message %>
-          <h3><%= render :partial => 'users/user', locals: { display_user: @message.user } %> said:</h3>
-          <p class="message">
-            <% unless @message.meet_time.nil? %>
-              <strong>When: </strong><%= @message.meet_time %><br />
-            <% end %>
-            <% unless @message.place.nil? %>
-              <strong>Where: </strong><%= @message.place %><br />
-            <% end %>
-            <strong>Comments: </strong><%= @message.comment %>
-          </p>
+            <% trade.trade_notes.reverse.each do |note| 
+              if (!note.meet_time.nil? && !note.place.nil? && !note.meet_time.empty? && !note.place.empty?) %>
+                <h3><%= render :partial => 'users/user', locals: { display_user: note.user } %> said:</h3>
+                <p class="message">
+                  <strong>When: </strong><%= note.meet_time %><br />
+                  <strong>Where: </strong><%= note.place %><br />
+                  <strong>Comments: </strong><%= note.comment %>
+                </p>
+                <% break
+              end
+            end %>
         </div>
         <p><%= link_to "Show more details about this trade...", "/trade_details/" + trade.id.to_s, :class => "show-more" %></p>
         <%= render partial: 'trade_buttons_logic', locals: { trade: trade, user: @user } %>

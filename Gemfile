@@ -70,7 +70,6 @@ gem 'oauth2'
 gem 'bcrypt-ruby', :require =>'bcrypt'
 
 gem 'seed_dump'
-gem 'facebox-rails'
 
 gem "jquery-timepicker-rails", "~> 1.2.5.0"
 gem "fancybox-rails"

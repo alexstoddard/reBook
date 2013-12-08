@@ -1,6 +1,44 @@
 <script type="text/javascript">
   jQuery(document).ready(function($) {
-    $('a[rel*=facebox]').facebox();
+    $('a[rel*=fancybox]').fancybox({
+      hideOnOverlayClick: false,
+      showNavArrows: false
+    }); 
+
+    $('.feedback form .thumbs-up, .feedback form .thumbs-down').click(function() {
+      var form = $(this).parent('form');
+
+      if ($(this).hasClass('thumbs-up')) {
+        //thumbs up, set score to 1
+        form.find('#user_feedback_score').val(1);
+    } else {
+      //thumbs down, set score to 0
+      form.find('#user_feedback_score').val(0);
+    }
+
+      $.ajax({
+          type: 'POST',
+          url: form.attr('action'),
+          data: form.serialize(),
+          error: function(data){
+            //error! show message
+            form.parent('.feedback').append('<p class="error">Sorry! An error occured. <br />Please try again.</p>');
+          },
+          success: function(data){
+              //success! hide form
+              if (form.parent('.feedback').siblings('.feedback').length == 0) {
+                //no more feedbacks to provide
+                form.parent('.feedback').siblings('.message').html('<p>Thanks for rating your trade!</p>');
+                form.parent('.feedback').remove();
+              } else {
+                //still have to provide feedback on another user
+            form.parent('.feedback').remove();
+          }
+          }
+      });
+    });
+
+
   });
 </script>
 <div id="main">
@@ -15,7 +53,25 @@
         <h2 class="grey">This trade is pending.
 			<% elsif @trade.declined? %>
         <h2 class="red">This trade has been canceled.
-			<% else #normal->green header ****TO DO: COMPLETED VS. IN PROGRESS?? %>
+			<% else #normal->green header, completed trades (accepted by all users) %>
+        <% #find latest trade note with time and location
+        @latest_note = nil
+        @complete = false
+        @trade.trade_notes.reverse.each do |note| 
+          if (!note.meet_time.nil? && !note.place.nil? && !note.meet_time.empty? && !note.place.empty?)
+            @latest_note = note
+
+            #check to see if current time/date is past the trade time/date 
+            @now = Time.now.in_time_zone(@user.timezone)
+            @now = @now - 15*60 #(15 minutes from now)
+            @trade_time = Time.strptime(note.meet_time, "%l:%M%P %m/%d/%Y") 
+            if @now > @trade_time
+              @complete = true
+            end
+
+            break
+          end
+        end %>
         <h2>This trade has been accepted by all users.
 			<% end %>
         <% if @trade.location %> 
@@ -62,16 +118,38 @@
           <% end %>
 
           <h2 style="margin-bottom:10px;font-weight:bold">Trade Status:</h2>
-          <% if @my_trade.user_from_accepted %>
-            <p>You have accepted this trade.</p>
-          <% else %>
-            <p>You have not yet accepted this trade.</p>
-          <% end %>
-          <% @trade.get_tradelines_except(@user.id).each do |line| %>
-            <% if line.user_from_accepted %>
-              <p><%= render :partial => 'users/user', locals: { display_user: line.inventory_own.user } %> has accepted this trade.</p>
+          <% if @latest_note != nil && @complete == true #active trade that is waiting on feedback %>
+            <p>This trade has been completed.</p>
+            <p class="message">Please rate your trade experience.</p>
+
+              <% @my_tradeline = @trade.get_tradeline_only(@user.id)
+              other_tradelines = @trade.get_tradelines_except(@user.id)
+              other_tradelines.each do |tradeline| #user feedbacks %>
+                <div class="feedback">
+                  <% @other_user = tradeline.inventory_own.user %>
+                  <p>Rate <%= render :partial => 'users/user_with_ratings', locals: { display_user: @other_user } %></p>
+                  <%= form_for @user_feedback do |f|  %>
+                    <%= f.hidden_field :user_from_id, :value => @user.id %>
+                    <%= f.hidden_field :user_to_id, :value => @other_user.id %>
+                    <%= f.hidden_field :trade_id, :value => @trade.id %>
+                    <%= f.hidden_field :score, :value => 0 %>
+                    <%= image_tag("thumbs_up.png", alt: "Thumbs Up", class: 'thumbs-up') %>
+                    <%= image_tag("thumbs_down.png", alt: "Thumbs Down", class: "thumbs-down") %>
+                  <% end %>
+                </div>
+              <% end %>
+          <% else #display whether each user has accepted or not accepted the trade %>
+            <% if @my_trade.user_from_accepted %>
+              <p>You have accepted this trade.</p>
             <% else %>
-              <p><%= render :partial => 'users/user', locals: { display_user: line.inventory_own.user } %> has not yet accepted this trade.</p>
+              <p>You have not yet accepted this trade.</p>
+            <% end %>
+            <% @trade.get_tradelines_except(@user.id).each do |line| %>
+              <% if line.user_from_accepted %>
+                <p><%= render :partial => 'users/user', locals: { display_user: line.inventory_own.user } %> has accepted this trade.</p>
+              <% else %>
+                <p><%= render :partial => 'users/user', locals: { display_user: line.inventory_own.user } %> has not yet accepted this trade.</p>
+              <% end %>
             <% end %>
           <% end %>
 
@@ -93,24 +171,28 @@
                 <% if note.note_type %>
                   <% case note.note_type 
                     when "propose" %>
-                      proposed the trade and 
+                      proposed
                     <% when "accept" %>
-                      accepted the trade and 
+                      accepted
                     <% when "cancel" %>
-                      canceled the trade and 
+                      canceled
                     <% when "reject" %>
-                      rejected the trade and 
+                      rejected
                     <% when "repropose" %>
-                      re-proposed the trade and 
+                      re-proposed
                    <% when "change" %>
-                      changed the trade and 
+                      changed
                     <% when "counter" %>
-                      countered the trade and 
+                      countered
                     <% else
                   
                     end %>
                 <% end %>
-                said:
+                <% unless note.meet_time.nil? && note.place.nil? && note.comment.empty? %>
+                  the trade and said:
+                <% else %> 
+                  the trade.
+                <% end %>
                 <span><%= note.created_at.in_time_zone(@user.timezone).strftime("%d %B %Y %I:%M%P") %></span></h2>
               <p class="message">
                 <% unless note.meet_time.nil? %>
@@ -119,7 +201,9 @@
                 <% unless note.place.nil? %>
                   <strong>Suggested Meet Location: </strong> <%= note.place %><br />
                 <% end %>
-                "<%= note.comment %>"
+                <% unless note.comment.empty? %>
+                  "<%= note.comment %>"
+                <% end %>
               </p>
             </li>
           <% end %>
