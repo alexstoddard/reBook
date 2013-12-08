@@ -1,6 +1,32 @@
 <script>
   $(function() {
     $('#schedules form .datepick').timepicker({ disableTextInput:true });
+
+    $('form.add-to-schedule').submit(function() {
+
+      var data = $('input[name="from_standard"]').serialize() + '&' + $('input[name="to_standard"]').serialize() + '&' + $('input[name="user_location_id"]').serialize(),
+      action = $(this).attr('action');
+
+      $(this).find('input[type="checkbox"]:checked').each(function () {
+
+          $.ajax({
+            type: 'POST',
+            url: action,
+            data: data + '&' + $(this).serialize(),
+            error: function(data){
+              //error! show message
+              form.append('<p>Sorry! An error occured. Please try again.</p>');
+            },
+            success: function(data){
+              //success!
+            }
+        });
+      });
+
+      return false;
+
+    });
+
   });
 </script>
 
@@ -14,23 +40,37 @@
     </div>
 
     <div class="form">
-      <%= form_tag user_schedules_path, :method => :post, :remote => true do %>
+      <%= form_tag user_schedules_path, :method => :post, :remote => true, :class => "add-to-schedule" do %>
           <%= label_tag :from_standard, "From:" %> <%= text_field_tag :from_standard, nil, :class=>"datepick" %>
           <%= label_tag :to_standard, "To:" %> <%= text_field_tag :to_standard, nil, :class=>"datepick"%>
-          <%= label_tag :day, "Day of Week:" %> <%= select_tag :day, "<option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option>".html_safe %>
+          <br />
+          <%= label_tag :day, "Day of Week:" %>  
+          <input type="checkbox"  name="day" id="day_sunday" value="Sunday" /><label for="day_sunday">Sun</label>
+          <input type="checkbox"  name="day" id="day_monday" value="Monday" /> <label for="day_monday">Mon</label>
+          <input type="checkbox"  name="day" id="day_tuesday" value="Tuesday" /><label for="day_tuesday">Tue</label>
+          <input type="checkbox"  name="day" id="day_wednesday" value="Wednesday" /><label for="day_wednesday">Wed</label>
+          <input type="checkbox"  name="day" id="day_thursday" value="Thursday" /><label for="day_thursday">Thu</label>
+          <input type="checkbox"  name="day" id="day_friday" value="Friday" /><label for="day_friday">Fri</label>
+          <input type="checkbox"  name="day" id="day_saturday" value="Saturday" /><label for="day_saturday">Sat</label>
+
           <%= hidden_field_tag :user_location_id, x.id %>
-          <%= submit_tag "Add to Schedule", :name => nil %>
+          <br />
+          <%= submit_tag "Add to Schedule", :name => nil, :class => 'button' %>
       <% end %>
     </div>
 
     <% @user_location = x %>
     <div class="times">
-      <ul>
+      <table class="text">
         <% x.user_schedules.each do |y| %>
-      	  <li><strong>From:</strong> <%= y.from_standard %> <strong>To:</strong> <%= y.to_standard %> <strong>Day:</strong> <%= y.day %> (<%= link_to "Remove", user_schedule_path(y.id), :method => :delete, :remote => true %>)</li>
+      	  <tr>
+            <td><%= y.day %>:</td>
+            <td><%= y.from_standard %> - <%= y.to_standard %></td>
+            <td>(<%= link_to "Remove", user_schedule_path(y.id), :method => :delete, :remote => true %>)</td>
+          </tr>
+
         <% end#each %>
-      </ul>
-      <br>
+      </table>
 
       <%= render partial: "users/day_planner", locals: {schedule: x.schedule_hash} %>
 

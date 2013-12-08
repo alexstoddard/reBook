@@ -98,109 +98,118 @@
   	})
   });
 </script>
+
+
 <div id="main">
+  <div id="location">
 
-  <p>
-    <%= image_tag @location.icon, :height => 20, :width => 20 %> <%= @location.name %>
-  </p>
+    <div id="about">
 
-  <p>
-    <strong>Address:</strong>
-    <%= @location.address %> <%= @location.city %> <%= @location.state %> <%= @location.zip %>
-  </p>
+      <div class="picture">
+        <%= image_tag @location.image %>
+      </div>
 
-  <p>
-    <strong>Description:</strong>
-    <%= @location.description %>
-  </p>
+      <div class="details">
+        <h1><%= image_tag @location.icon, width: 50 %> <%= @location.name %></h1>
 
-  <p>
-    <%= image_tag @location.image %>
-  </p>
+        <p>
+          <strong>Address:</strong>
+          <%= @location.address %> <%= @location.city %> <%= @location.state %> <%= @location.zip %><br />
+          <strong>Description:</strong>
+          <%= @location.description %>
+        </p>
+      </div>
+      
+    </div>
 
-	<div id="search">
-	    <% if !@result.nil? %>
-	    	<% if @result[:books].length == 0 %>
-	    		<h3>Sorry, no results were found at <%= @location.name %>. Try again with a different search term.</h3>
-	    	<% else %>
-				<h3><%= pluralize(@result[:books].length, "book") %> at <%= @location.name %></h3>
-			<% end %>
 
-			<% @result[:books].each do |x| %>
-			  <article>
-			  	<div class="thumbnail">
-			  	  <%= image_tag(x.thumbnail, alt: x.name, class: "bookcover") %>
+  	<div id="search">
+  	    <% if !@result.nil? %>
+  	    	<% if @result[:books].length == 0 %>
+  	    		<h3>Sorry, no results were found at <%= @location.name %>. Try again with a different search term.</h3>
+  	    	<% else %>
+  				<h3><%= pluralize(@result[:books].length, "book") %> at <%= @location.name %></h3>
+  			<% end %>
 
-			  	  <div class="actions">
-				  	  <% unless session[:user_id].nil? %>
-							<% if x.hide_own %>
-								<p>This book is already in your <%= link_to "Have List", inventory_owns_path %>.</p>
-							<% elsif x.hide_need %>
-								<p>This book is already in your <%= link_to "Want List", inventory_needs_path %>.</p>
-							<% else%>
-								<%= image_tag("ajax-loader.gif", alt: "Adding...", class: 'loading') %>
+  			<% @result[:books].each do |x| %>
+  			  <article>
+  			  	<div class="thumbnail">
+  			  	  <%= image_tag(x.thumbnail, alt: x.name, class: "bookcover") %>
 
-								<input type="button" class="have_button" value="Add to Have List" />
+  			  	  <div class="actions">
+  				  	  <% unless session[:user_id].nil? %>
+  							<% if x.hide_own %>
+  								<p>This book is already in your <%= link_to "Have List", inventory_owns_path %>.</p>
+  							<% elsif x.hide_need %>
+  								<p>This book is already in your <%= link_to "Want List", inventory_needs_path %>.</p>
+  							<% else%>
+  								<%= image_tag("ajax-loader.gif", alt: "Adding...", class: 'loading') %>
 
-	               				<%= form_for x, :url => url_for(:controller => 'inventory_owns', :action => 'create'), :method => :post, :remote => true, :html => {:class => "add have"} do |f| %>
-		                                <div class="select_condition">
-	                                	<%= label_tag :condition_id, "Condition:" %> <%= select_tag :condition_id, options_from_collection_for_select(@conditions, "id", "description") %>
-  	                                </div>
-		                                <%= f.hidden_field :googleId, :value => x.googleId %>
-		                                <%= f.hidden_field :id, :value => x.id %>
-		                                <%= f.hidden_field :name, :value => x.name %>
-		                                <%= f.hidden_field :subject, :value => x.subject %>
-	                                  <%= f.hidden_field :author, :value => x.author %>
-	                                  <%= f.hidden_field :edition, :value => x.edition %>
-	                                  <%= f.hidden_field :price, :value => x.price %>
-	                                  <%= f.hidden_field :thumbnail, :value => x.thumbnail %>
-	                                  <%= f.hidden_field :isbn, :value => x.isbn %>
-	                                  <%= f.hidden_field :published, :value => x.published %>
-	                                  <%= f.hidden_field :description, :value => x.description %>
+  								<input type="button" class="have_button" value="Add to Have List" />
 
-		                                <%= hidden_field_tag :search, params[:search] %>
-		                                <%= f.submit "Add to Have List", :name => nil %>
-		                        <% end %>
-		                        <input type="button" class="cancel_button" value="Cancel" />
+  	               				<%= form_for x, :url => url_for(:controller => 'inventory_owns', :action => 'create'), :method => :post, :remote => true, :html => {:class => "add have"} do |f| %>
+  		                                <div class="select_condition">
+  	                                	<%= label_tag :condition_id, "Condition:" %> <%= select_tag :condition_id, options_from_collection_for_select(@conditions, "id", "description") %>
+    	                                </div>
+  		                                <%= f.hidden_field :googleId, :value => x.googleId %>
+  		                                <%= f.hidden_field :id, :value => x.id %>
+  		                                <%= f.hidden_field :name, :value => x.name %>
+  		                                <%= f.hidden_field :subject, :value => x.subject %>
+  	                                  <%= f.hidden_field :author, :value => x.author %>
+  	                                  <%= f.hidden_field :edition, :value => x.edition %>
+  	                                  <%= f.hidden_field :price, :value => x.price %>
+  	                                  <%= f.hidden_field :thumbnail, :value => x.thumbnail %>
+  	                                  <%= f.hidden_field :isbn, :value => x.isbn %>
+  	                                  <%= f.hidden_field :published, :value => x.published %>
+  	                                  <%= f.hidden_field :description, :value => x.description %>
 
-								<%= form_for x, :url => url_for(:controller => 'inventory_needs', :action => 'create'),  :method => :post, :remote => true, :html => {:class => "add want"} do |f| %>
-                  <%= f.hidden_field :googleId, :value => x.googleId %>
-                  <%= f.hidden_field :id, :value => x.id %>
-                  <%= f.hidden_field :name, :value => x.name %>
-                  <%= f.hidden_field :subject, :value => x.subject %>
-                  <%= f.hidden_field :author, :value => x.author %>
-                  <%= f.hidden_field :edition, :value => x.edition %>
-                  <%= f.hidden_field :price, :value => x.price %>
-                  <%= f.hidden_field :thumbnail, :value => x.thumbnail %>
-                  <%= f.hidden_field :isbn, :value => x.isbn %>
-                  <%= f.hidden_field :published, :value => x.published %>
-                  <%= f.hidden_field :description, :value => x.description %>
+  		                                <%= hidden_field_tag :search, params[:search] %>
+  		                                <%= f.submit "Add to Have List", :name => nil %>
+  		                        <% end %>
+  		                        <input type="button" class="cancel_button" value="Cancel" />
 
-									<%= hidden_field_tag :search, params[:search] %>
-									<%= submit_tag "Add to Want List", :name => nil %>
+  								<%= form_for x, :url => url_for(:controller => 'inventory_needs', :action => 'create'),  :method => :post, :remote => true, :html => {:class => "add want"} do |f| %>
+                    <%= f.hidden_field :googleId, :value => x.googleId %>
+                    <%= f.hidden_field :id, :value => x.id %>
+                    <%= f.hidden_field :name, :value => x.name %>
+                    <%= f.hidden_field :subject, :value => x.subject %>
+                    <%= f.hidden_field :author, :value => x.author %>
+                    <%= f.hidden_field :edition, :value => x.edition %>
+                    <%= f.hidden_field :price, :value => x.price %>
+                    <%= f.hidden_field :thumbnail, :value => x.thumbnail %>
+                    <%= f.hidden_field :isbn, :value => x.isbn %>
+                    <%= f.hidden_field :published, :value => x.published %>
+                    <%= f.hidden_field :description, :value => x.description %>
 
-								<% end %>
+  									<%= hidden_field_tag :search, params[:search] %>
+  									<%= submit_tag "Add to Want List", :name => nil %>
 
-								<div class="message"><!-- for error/success messages --></div>
-							<% end %>
-					    <% end %>
-					</div> <!-- /.actions -->
-				<%= x.needs_in_location(@location.id) %> people need this book.</br>
-				<%= x.owns_in_location(@location.id) %> people own this book.</br>
-			  	</div>
+  								<% end %>
 
-			  	<div class="details">
-				    <h2><%= x.name %></h2>
-				   	<p><strong>Author:</strong> <%= x.author %><br />
-			        <strong>ISBN:</strong> <%= x.isbn %><br />
-			        <strong>Published:</strong> <%= x.published %><br /></p>
-              <% unless x.description.nil? %>
-			        <%= x.description.html_safe %>
-              <% end %>
-			      </div>
-			  </article>
-			<% end %> 
+  								<div class="message"><!-- for error/success messages --></div>
+  							<% end %>
+  					    <% end %>
+  					</div> <!-- /.actions -->
+  				  <p class="count">
+              <%= pluralize(x.needs_in_location(@location.id), 'person') %> want this book.<br />
+  				    <%= pluralize(x.owns_in_location(@location.id), 'person') %> own this book.
+            </p>
+  			  	</div>
 
-		<% end %>
-	</div>
+  			  	<div class="details">
+  				    <h2><%= x.name %></h2>
+  				   	<p><strong>Author:</strong> <%= x.author %><br />
+  			        <strong>ISBN:</strong> <%= x.isbn %><br />
+  			        <strong>Published:</strong> <%= x.published %><br /></p>
+                <% unless x.description.nil? %>
+  			        <%= x.description.html_safe %>
+                <% end %>
+  			      </div>
+  			  </article>
+  			<% end %> 
+
+  		<% end %>
+  	</div>
+
+    </divs> <!-- /#location -->
 </div>

@@ -1,37 +1,48 @@
-<div class="schedule">
+<script type="text/javascript">
+  $(function() {
+    $('.day-planner td').tooltip({
+      tooltipClass: 'availTip'
+    });
+  });
+</script>
+
+<div class="day-planner">
   <table>
     <tr>
       <td></td>
       <% schedule.keys.each do |day| %>
-      <td class="day" cellpadding="5"><%= day[0,2] %></td>
+        <td class="day"><%= day[0,2] %></td>
       <% end %>
     </tr>
     <% (0..47).each do |minute| %>
-    <tr>
-      <% if minute % 4 == 0 %>
-      <td class = "hour" rowspan = "4">
-        <% hour = ((minute%24)/2) %>
-        <% if hour == 0 %>
-        <% hour = 12 %>
+      <tr>
+        <% hour = ((minute%24)/2)
+        if hour == 0
+          hour = 12
+        end
+        if minute > 23
+          ampm = "pm"
+        else
+          ampm = "am"
+        end %>
+        <% if minute % 4 == 0 %>
+          <td class = "hour" rowspan = "4">
+            <%= hour.to_s + ":00 " + ampm %>
+          </td>
         <% end %>
-        <% if minute > 23 %>
-        <% ampm = "pm" %>
-        <% else %>
-        <% ampm = "am" %>
+        <% schedule.keys.each do |day| %>
+          <% if schedule[day][minute]
+            if minute % 2 == 0
+              min = ":00"
+            else
+              min = ":30"
+            end %>
+            <td class="available" title="<%= hour.to_s + min + ampm %>"></td>
+          <% else %>
+            <td class="unavailable"></td>
+          <% end %>
         <% end %>
-        <div class="hour-div">
-        <%= hour.to_s + ":00 " + ampm %>
-        </div>
-      </td>
-      <% end %>
-      <% schedule.keys.each do |day| %>
-      <% if schedule[day][minute] %>
-      <td class="available" rowspan = "1"></td>
-      <% else %>
-      <td class="unavailable" rowspan = "1"></td>
-      <% end %>
-      <% end %>
-    </tr>
+      </tr>
     <% end %>
   </table>
 </div>

@@ -159,8 +159,8 @@
 }
 
 #edit-schedule #schedules article .form input[type="text"] {
-	padding:5px;
 	margin-right:10px;
+	margin-bottom:10px;
 }
 
 #edit-schedule #schedules article .form input[type="text"]:last-child {
@@ -171,67 +171,70 @@
 	width:69px;
 }
 
+#edit-schedule #schedules article .form input[type="checkbox"] {
+	margin-right:3px;
+}
+
 
 #edit-schedule #schedules article .form input[type="submit"] {
-	border: none;
-	background: #BBB;
-	padding: 7px 8px;
-	border-radius: 5px;
-	text-transform: uppercase;
-	cursor:pointer;
-	margin-left:3px;
+	padding: 4px 7px;
+	margin-top:10px;
 }
 
-#edit-schedule #schedules article .form input[type="submit"]:hover {
-	background:#ADADAD;
-}
-
-#edit-schedule #schedules article .times ul
-#show-user .schedule-info article .times ul {
-	margin-left:12px;
-}
-
-#edit-schedule #schedules article .times ul li,
-#show-user .schedule-info article .times ul li {
-	list-style:none;
+#show-user .times .text,
+#edit-schedule .times .text {
+	width:300px;
+	margin-bottom:20px;
 }
 
 /*********************Schedules Table *******************************/
 /********************************************************************/
 
-table {
+.day-planner table {
     border-collapse: collapse;
 }
 
-th, td {
+.day-planner th, td {
     padding: 0;
 }
 
-.day {
+.day-planer .day {
      vertical-align: top;
-     width: 30px;
+     width: 40px;
      text-align: center;
 }
 
-.hour {
+.day-planner .hour {
       text-align: right;
       padding-right: 10px;
-      padding-top: 0px;
+      border:none;
+      vertical-align:top;
 }
 
-.hour-div {
-  margin-top: -6px;
-  margin-bottom: 6px;
-}
-
-.available {
-      height: 3px;
+.day-planner .available {
+      height: 6px;
       border: solid 1px #999;
       background-color: #99CC99;
 }
 
-.unavailable {
-      height: 3px;
+.day-planner td.available:hover {
+	opacity:0.8;
+}
+
+.day-planner .unavailable {
+      height: 6px;
       border: solid 1px #999;
       background-color: #CCC;
+}
+
+.day-planner tr:nth-child(2n+2) td:not(.hour) {
+	border-bottom:1px solid #B8B8B8;
+}
+
+.day-planner tr:nth-child(2n+3) td {
+	border-top:none;
+}
+
+.availTip {
+	font-size:0.8em;
 }

@@ -48,13 +48,16 @@
 
 				    <% @user_location = x %>
 				    <div class="times">
-				      <ul>
-				        <% x.user_schedules.each do |y| %>
-				      	  <li><strong>From:</strong> <%= y.from_standard %> <strong>To:</strong> <%= y.to_standard %> <strong>Day:</strong> <%= y.day %></li>
-				        <% end#each %>
-				      </ul>
-              <br>
-              <%= render partial: "users/day_planner", locals: {schedule: x.schedule_hash} %>
+						<table class="text">
+							<% x.user_schedules.each do |y| %>
+								<tr>
+								   	<td><%= y.day %>:</td>
+           							<td><%= y.from_standard %> - <%= y.to_standard %></td>
+           						</tr>
+							<% end#each %>
+						</table>
+             
+             			<%= render partial: "users/day_planner", locals: {schedule: x.schedule_hash} %>
 				    </div>
 
 				  </article>

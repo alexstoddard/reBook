@@ -641,16 +641,16 @@
 /****************************************************************/
 
 .trade-form {
-	padding:15px;
-	width:500px;
+	padding:15px 25px;
+	width:670px;
+	overflow:hidden;
 }
 
 .trade-form .trade-details {
-	margin-left: 10px;
 	background: #FCFCFC;
 	padding: 10px 15px;
 	border-radius:5px;
-	margin-bottom:15px;
+	margin-bottom:25px;
 }
 
 .trade-form .trade-details h3 {
@@ -659,6 +659,10 @@
 
 .trade-form .trade-details p:last-child {
 	margin-bottom:0;
+}
+
+.trade-form .trade-schedules {
+	float:right;
 }
 
 .trade-form label {
@@ -672,15 +676,15 @@
 }
 
 .trade-form #trade_note_time_2 {
-	width:125px;
+	width:70px;
 }
 
 .trade-form #trade_note_place {
-	width:211px;
+	width:156px;
 }
 
 .trade-form #trade_note_comment {
-	width:416px;
+	width:361px;
 }
 
 /****************************************************************/
@@ -713,48 +717,67 @@ form .error {
 
 /**************** Schedule ****************/
 
-table {
+.trade-schedules h3 {
+	margin-bottom: 5px;
+	font-size: 13px;
+}
+
+.day-planner table {
     border-collapse: collapse;
 }
-th, td {
+
+.day-planner th, td {
     padding: 0;
 }
 
-.day {
+.day-planner .day {
+     vertical-align: top;
      width: 30px;
      text-align: center;
 }
 
-.hour {
+.day-planner .hour {
       text-align: right;
       padding-right: 10px;
+      border:none;
+      vertical-align:top;
 }
 
-.hour-div {
-  margin-top: -6px;
-  margin-bottom: 6px;
+.day-planner tr:nth-child(2n+2) td:not(.hour) {
+	border-bottom:1px solid #B8B8B8;
 }
 
-.count-0 {
-      height: 3px;
-      border: solid 1px #999;
+.day-planner tr:nth-child(2n+3) td {
+	border-top:none;
+}
+
+.availTip {
+	font-size:0.8em;
+}
+
+.day-planner td.time-slot {
+	height: 4px;
+    border: solid 1px #999;
+}
+
+.day-planner td.count-1:hover,
+.day-planner td.count-2:hover,
+.day-planner td.count-3:hover {
+	opacity:0.8;
+}
+
+.day-planner td.count-0 {
       background-color: #CCC;
 }
 
-.count-1 {
-      height: 3px;
-      border: solid 1px #999;
+.day-planner td.count-1 {
       background-color: #99CC99;
 }
 
-.count-2 {
-      height: 3px;
-      border: solid 1px #999;
+.day-planner td.count-2 {
       background-color: #77AA77;
 }
 
 .count-3 {
-      height: 3px;
-      border: solid 1px #999;
       background-color: #558855;
 }
