@@ -94,8 +94,7 @@
 /*********************User Schedules Edit Page **********************/
 /********************************************************************/
 
-#edit-schedule #location-form,
-#edit-schedule #results {
+#edit-schedule #location-form {
 	margin-bottom:20px;
 }
 
@@ -106,6 +105,15 @@
 #edit-schedule #location-form .button {
 	padding:4px 7px;
 	margin-left:3px;
+}
+
+#edit-schedule #results {
+	background: #eee;
+	margin-bottom:30px;
+}
+
+#edit-schedule #results .results-wrapper {
+	padding:10px;
 }
 
 #edit-schedule #results ul {
@@ -130,6 +138,9 @@
 #edit-schedule #schedules article,
 #show-user .schedule-info article {
 	margin-bottom:30px;
+	display: inline-block;
+	vertical-align: top;
+	width: 480px;
 }
 
 #edit-schedule #schedules article .location,
@@ -212,7 +223,7 @@
 }
 
 .day-planner .available {
-      height: 6px;
+      height: 5px;
       border: solid 1px #999;
       background-color: #99CC99;
 }
@@ -222,7 +233,7 @@
 }
 
 .day-planner .unavailable {
-      height: 6px;
+      height: 5px;
       border: solid 1px #999;
       background-color: #CCC;
 }
