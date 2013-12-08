@@ -19,7 +19,9 @@
         <% else %>
         <% ampm = "am" %>
         <% end %>
+        <div class="hour-div">
         <%= hour.to_s + ":00 " + ampm %>
+        </div>
       </td>
       <% end %>
       <% schedule.keys.each do |day| %>

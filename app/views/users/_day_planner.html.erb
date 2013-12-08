@@ -9,7 +9,7 @@
     <% (0..47).each do |minute| %>
     <tr>
       <% if minute % 4 == 0 %>
-      <td class = "hour" rowspan="4">
+      <td class = "hour" rowspan = "4">
         <% hour = ((minute%24)/2) %>
         <% if hour == 0 %>
         <% hour = 12 %>
@@ -19,14 +19,16 @@
         <% else %>
         <% ampm = "am" %>
         <% end %>
+        <div class="hour-div">
         <%= hour.to_s + ":00 " + ampm %>
+        </div>
       </td>
       <% end %>
       <% schedule.keys.each do |day| %>
       <% if schedule[day][minute] %>
-      <td class="available"></td>
+      <td class="available" rowspan = "1"></td>
       <% else %>
-      <td class="unavailable"></td>
+      <td class="unavailable" rowspan = "1"></td>
       <% end %>
       <% end %>
     </tr>

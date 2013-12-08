@@ -721,8 +721,7 @@ th, td {
 }
 
 .day {
-     padding: 5px;
-     width: 10px;
+     width: 30px;
      text-align: center;
 }
 
@@ -731,18 +730,31 @@ th, td {
       padding-right: 10px;
 }
 
+.hour-div {
+  margin-top: -6px;
+  margin-bottom: 6px;
+}
+
 .count-0 {
+      height: 3px;
+      border: solid 1px #999;
       background-color: #CCC;
 }
 
 .count-1 {
+      height: 3px;
+      border: solid 1px #999;
       background-color: #99CC99;
 }
 
 .count-2 {
+      height: 3px;
+      border: solid 1px #999;
       background-color: #77AA77;
 }
 
 .count-3 {
+      height: 3px;
+      border: solid 1px #999;
       background-color: #558855;
 }
