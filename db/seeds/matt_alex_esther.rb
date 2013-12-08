@@ -52,12 +52,10 @@ InventoryOwn.create!([
   { :book_id => 4, :user_id => 3, :created_at => "2013-11-18 09:33:48", :updated_at => "2013-11-18 09:33:48", :condition_id => 1 }
 ])
 
-
-
 Location.create!([
-  { :name => "UW Seattle", :address => "1410 NE Campus Parkway", :city => "Seattle", :state => "WA", :zip => "98195", :image => "http://2.bp.blogspot.com/-4a3_CkuS3OE/Ua-tnYhiPoI/AAAAAAAAAis/z1HaRbyPjwk/s1600/0x600.jpg", :icon => "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQ8YSFAa0K6irIo9xPQnco1vLmQP8jkpf0cS1NV87s3ZOtfGIXC", :description => "Textbook Trading Hub at UW Campus", :created_at => "2013-11-18 08:53:50", :updated_at => "2013-11-18 08:53:50" },
-  { :name => "UW Bothell", :address => "18115 Campus Way NE", :city => "Bothell", :state => "WA", :zip => "98011", :image => "http://www.uwb.edu/getattachment/visitors/uwbothell.jpg", :icon => "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQ8YSFAa0K6irIo9xPQnco1vLmQP8jkpf0cS1NV87s3ZOtfGIXC", :description => "Textbook Trading Hub at UW Bothell Campus", :created_at => "2013-11-18 08:53:50", :updated_at => "2013-11-18 08:53:50" },
-  { :name => "UW Tacoma", :address => "1900 Commerce St", :city => "Tacoma", :state => "WA", :zip => "98402", :image => "http://www.tacoma.uw.edu/sites/default/files/global/images/dougan_commerce.jpg", :icon => "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQ8YSFAa0K6irIo9xPQnco1vLmQP8jkpf0cS1NV87s3ZOtfGIXC", :description => "Textbook Trading Hub at UW Tacoma Campus", :created_at => "2013-11-18 08:53:50", :updated_at => "2013-11-18 08:53:50" }
+  { :id => 1, :name => "UW Seattle", :address => "1410 NE Campus Parkway", :city => "Seattle", :state => "WA", :zip => "98195", :image => "http://fyp.washington.edu/site/assets/files/1064/uwcampus.jpg", :icon => "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQ8YSFAa0K6irIo9xPQnco1vLmQP8jkpf0cS1NV87s3ZOtfGIXC", :description => "A textbook trading hub at the University of Washington's Seattle campus", :created_at => "2013-11-13 11:41:19", :updated_at => "2013-11-13 11:41:19" },
+  { :id => 2, :name => "UW Bothell", :address => "18115 Campus Way NE", :city => "Bothell", :state => "WA", :zip => "98011", :image => "http://www.uwb.edu/getattachment/visitors/uwbothell.jpg", :icon => "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQ8YSFAa0K6irIo9xPQnco1vLmQP8jkpf0cS1NV87s3ZOtfGIXC", :description => "A textbook trading hub at the University of Washington's Bothell campus", :created_at => "2013-11-13 11:41:19", :updated_at => "2013-11-13 11:41:19" },
+  { :id => 3, :name => "UW Tacoma", :address => "1900 Commerce St", :city => "Tacoma", :state => "WA", :zip => "98402", :image => "http://www.tacoma.uw.edu/sites/default/files/global/images/dougan_commerce.jpg", :icon => "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQ8YSFAa0K6irIo9xPQnco1vLmQP8jkpf0cS1NV87s3ZOtfGIXC", :description => "A textbook trading hub at the University of Washington's Tacoma campus", :created_at => "2013-11-13 11:41:19", :updated_at => "2013-11-13 11:41:19" }
 ])
 
 UserLocation.create!([

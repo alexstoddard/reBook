@@ -25,20 +25,29 @@ class UserSchedulesController < ApplicationController
   # POST /user_schedules
   # POST /user_schedules.json
   def create
+    debugger
+    days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
-    @user = User.find(session[:user_id])
-    @user_locations = UserLocation.find_all_by_user_id(session[:user_id])
-    @user_schedule = UserSchedule.new(user_schedule_params)
-    @user_schedule.to_standard = params[:to_standard] 
-    @user_schedule.from_standard = params[:from_standard] 
+    @user = current_user
+    @user_location = @user.user_locations.find(params[:user_location_id])
 
-    @user_location = UserLocation.find(@user_schedule.user_location_id)
+    UserSchedule.transaction do
+      
+      days.each do |day|
+        if params[day]
+          @user_schedule = @user_location.user_schedules.build
 
-    respond_to do |format|
-      if @user_schedule.save
-        format.js {}
+          @user_schedule.to_standard = params[:to_standard] 
+          @user_schedule.from_standard = params[:from_standard] 
+          @user_schedule.day = day
+          @user_schedule.save
+
+        end
       end
     end
+
+    respond_to :js
+
   end
 
   # PATCH/PUT /user_schedules/1
