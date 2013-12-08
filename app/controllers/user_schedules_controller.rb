@@ -25,7 +25,6 @@ class UserSchedulesController < ApplicationController
   # POST /user_schedules
   # POST /user_schedules.json
   def create
-    debugger
     days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
     @user = current_user
