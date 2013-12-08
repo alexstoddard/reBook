@@ -1,11 +1,14 @@
 <script>
   $(function() {
-    $('#schedules form .datepick').timepicker({ disableTextInput:true });
+    $('#schedules form .datepick').timepicker({ 
+      disableTextInput:true,
+      scrollDefaultTime: '8:00am' });
 
     $('form.add-to-schedule').submit(function() {
 
-      var data = $('input[name="from_standard"]').serialize() + '&' + $('input[name="to_standard"]').serialize() + '&' + $('input[name="user_location_id"]').serialize(),
-      action = $(this).attr('action');
+      var data = $(this).find('input[name="from_standard"]').serialize() + '&' + $(this).find('input[name="to_standard"]').serialize() + '&' + $(this).find('input[name="user_location_id"]').serialize(),
+      action = $(this).attr('action'),
+      form = $(this);
 
       $(this).find('input[type="checkbox"]:checked').each(function () {
 
@@ -45,13 +48,13 @@
           <%= label_tag :to_standard, "To:" %> <%= text_field_tag :to_standard, nil, :class=>"datepick"%>
           <br />
           <%= label_tag :day, "Day of Week:" %>  
-          <input type="checkbox"  name="day" id="day_sunday" value="Sunday" /><label for="day_sunday">Sun</label>
-          <input type="checkbox"  name="day" id="day_monday" value="Monday" /> <label for="day_monday">Mon</label>
-          <input type="checkbox"  name="day" id="day_tuesday" value="Tuesday" /><label for="day_tuesday">Tue</label>
-          <input type="checkbox"  name="day" id="day_wednesday" value="Wednesday" /><label for="day_wednesday">Wed</label>
-          <input type="checkbox"  name="day" id="day_thursday" value="Thursday" /><label for="day_thursday">Thu</label>
-          <input type="checkbox"  name="day" id="day_friday" value="Friday" /><label for="day_friday">Fri</label>
-          <input type="checkbox"  name="day" id="day_saturday" value="Saturday" /><label for="day_saturday">Sat</label>
+          <input type="checkbox"  name="day" id="<%=x.id %>_sunday" value="Sunday" /><label for="<%=x.id %>_sunday">Sun</label>
+          <input type="checkbox"  name="day" id="<%=x.id %>_monday" value="Monday" /> <label for="<%=x.id %>_monday">Mon</label>
+          <input type="checkbox"  name="day" id="<%=x.id %>_tuesday" value="Tuesday" /><label for="<%=x.id %>_tuesday">Tue</label>
+          <input type="checkbox"  name="day" id="<%=x.id %>_wednesday" value="Wednesday" /><label for="<%=x.id %>_wednesday">Wed</label>
+          <input type="checkbox"  name="day" id="<%=x.id %>_thursday" value="Thursday" /><label for="<%=x.id %>_thursday">Thu</label>
+          <input type="checkbox"  name="day" id="<%=x.id %>_friday" value="Friday" /><label for="<%=x.id %>_friday">Fri</label>
+          <input type="checkbox"  name="day" id="<%=x.id %>_saturday" value="Saturday" /><label for="<%=x.id %>_saturday">Sat</label>
 
           <%= hidden_field_tag :user_location_id, x.id %>
           <br />
