@@ -1,24 +1,26 @@
-<h3>Trade Details:</h3>
-  <% @my_tradeline = @trade.get_tradeline_only(session[:user_id])
-  @from_tradeline = @trade.get_tradeline_from(session[:user_id]) 
-  if @trade.trade_lines.size == 2 #two way trade %>
     <p>
-      <strong>Trade with:</strong> <%= render :partial => 'users/user', locals: { display_user: @from_tradeline.inventory_own.user } %><br />
-      <strong>Their book:</strong> <%= @from_tradeline.inventory_own.book.name %> (condition: <%= @from_tradeline.inventory_own.condition.description.downcase %>)<br />
-      <strong>Your book:</strong> <%= @my_tradeline.inventory_own.book.name %> (condition: <%= @my_tradeline.inventory_own.condition.description.downcase %>)
-      <% if @trade.location %>
-        <br /><strong>Trade Location:</strong> <%= @trade.location.name %>
-      <% end %>
+      <div class="trade-container" align="center">
+        <div class="trade-visual">
+          <% count = trade.trade_lines.size %>
+          <% current = 1 %>
+          <% trade.rotate_lines(user.id).each do |line| %>
+          <div class="step">
+            <%= image_tag line.inventory_own.book.thumbnail, height: 100, width: 70, class: "thumbnail" %><br>
+            <% if line.inventory_own.user.id == user.id %>
+            Your book<br>
+            <% else %>
+            <%= link_to line.inventory_own.user.username, line.inventory_own.user %>'s book<br>
+            <% end %>
+            (<%= line.inventory_own.condition.description %> condition)<br>
+          </div>
+          <div class="step middle">
+            <%= image_tag "arrow.png", height: 20, width: 20 %>
+          </div>
+          <% current = current + 1 %>
+          <% end %>
+          <div class="step middle">
+            You
+          </div>
+        </div>
+      </div>
     </p>
-  <% else #three way trade
-    @to_tradeline = @trade.get_tradeline_to(session[:user_id]) %>
-    <p>
-      <strong>This is a three-way trade.</strong><br />
-      <strong>Trade your book:</strong> <%= @my_tradeline.inventory_own.book.name %> (condition: <%= @my_tradeline.inventory_own.condition.description.downcase %>)<br />
-      <strong>You get <%= render :partial => 'users/user', locals: { display_user: @from_tradeline.inventory_own.user } %>'s book: </strong> <%= @from_tradeline.inventory_own.book.name %> (condition: <%= @from_tradeline.inventory_own.condition.description.downcase %>)<br />
-      <%= render :partial => 'users/user', locals: { display_user: @from_tradeline.inventory_own.user } %> gets <%= render :partial => 'users/user', locals: { display_user: @to_tradeline.inventory_own.user } %>'s book <%= @to_tradeline.inventory_own.book.name %>.
-      <% if @trade.location %>
-        <br /><strong>Trade Location:</strong> <%= @trade.location.name %>
-      <% end %>
-    </p>
-  <% end %>

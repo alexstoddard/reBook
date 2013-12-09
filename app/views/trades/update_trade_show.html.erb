@@ -55,14 +55,15 @@
     <% @note_type = "counter" %>
   <% end %>
 
-  <%= render partial: "trade_visual", locals: { trade: @trade, user: User.find(session[:user_id]) } %>
-
   <div class="trade-details">
-    <%= render :partial => 'form_trade_details' %>
+    <%= render :partial => 'form_trade_details', locals: { trade: @trade, user: User.find(session[:user_id]) }  %>
     <% #find latest trade note with time and locationn
     @trade.trade_notes.reverse.each do |note| 
       if (!note.meet_time.nil? && !note.place.nil? && !note.meet_time.empty? && !note.place.empty?) %>
         <p>
+        <% if @trade.location %>
+        <br /><strong>Trade Location:</strong> <%= link_to @trade.location.name, @trade.location %><br />
+        <% end %>
           <strong>Previously Proposed Meeting Time/Date:</strong> <%= note.meet_time %><br />
           <strong>Previously Prooposed Meeting Location:</strong> <%= note.place %> 
             <% if @trade.location %>
@@ -100,7 +101,7 @@
     </p>
     <p>
       <%= f.label :comment, "Comments:" %></br>
-      <%= f.text_area :comment, :rows => 6, :cols => 50 %>
+      <%= f.text_area :comment, :rows => 6, :cols => 50, :class => "small-comment"%>
     </p>
 
    	<%= submit_tag("Send Trade Proposal", class: "button counter-trade") %>

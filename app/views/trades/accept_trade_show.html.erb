@@ -2,10 +2,13 @@
 	<h2>Accept Trade</h2>
 
 	<div class="trade-details">
-    <%= render :partial => 'form_trade_details' %>
+    <%= render :partial => 'form_trade_details', locals: { trade: @trade, user: User.find(session[:user_id]) }%>
     <p>
       	<% @trade.trade_notes.reverse.each do |note| 
         	if (!note.meet_time.nil? && !note.place.nil? && !note.meet_time.empty? && !note.place.empty?) %>
+        <% if @trade.location %>
+        <br /><strong>Trade Location:</strong> <%= link_to @trade.location.name, @trade.location %><br />
+        <% end %>
 		    	<strong>Proposed Meeting Time/Date: </strong> <%= note.meet_time %><br />
 		    	<strong>Proposed Meeting Location: </strong>  <%= note.place %>  
 		      	<% if @trade.location %> 
@@ -24,7 +27,7 @@
 	  <p>
 
 	    <%= f.label :comment, "Comments:" %></br>
-	    <%= f.text_area :comment, :rows => 6, :cols => 50 %>
+	    <%= f.text_area :comment, :rows => 6, :cols => 200, :class => "large-comment"%>
 	  </p>
 
 	 	<%= submit_tag("Accept Trade", class: "button accept-trade") %>
