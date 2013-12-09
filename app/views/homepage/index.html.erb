@@ -15,7 +15,7 @@
       <h2 class="left">Search for Books Near You!</h2>
       
       <div class="form">
-        <%= select :location, :id, @locations.collect { |p| [p.name, '/locations/' + p.id.to_s] } %>
+        <%= select :location, :id, @locations.order(:id).collect { |p| [p.name, '/locations/' + p.id.to_s] }  %>
         <button class="button">Search</button>
       </div>
       
