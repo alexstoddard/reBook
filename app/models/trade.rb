@@ -461,7 +461,7 @@ class Trade < ActiveRecord::Base
 
                   p1 = o1.user.user_locations.collect { |l| l.location.id }
                   p2 = o2.user.user_locations.collect { |l| l.location.id }
-                  p3 = o2.user.user_locations.collect { |l| l.location.id }
+                  p3 = o3.user.user_locations.collect { |l| l.location.id }
 
                   p = p1 & p2 & p3
                   
