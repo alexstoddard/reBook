@@ -781,3 +781,25 @@ form .error {
 .count-3 {
       background-color: #558855;
 }
+
+/**************** Trade visual ****************/
+
+.trade-visual {
+   display: inline-block;
+   overflow: hidden;
+   margin-bottom: 10px;
+}
+
+.trade-visual .step {
+   float: left;
+   padding-right: 20px;
+}
+
+.trade-visual .middle {
+   margin-top: 40px;
+}
+
+.trade-visual img.thumbnail {
+	border: solid #949494 1px;
+	box-shadow: 2px 2px 6px -1px #919191;
+}

@@ -55,6 +55,8 @@
     <% @note_type = "counter" %>
   <% end %>
 
+  <%= render partial: "trade_visual", locals: { trade: @trade, user: User.find(session[:user_id]) } %>
+
   <div class="trade-details">
     <%= render :partial => 'form_trade_details' %>
     <% #find latest trade note with time and locationn

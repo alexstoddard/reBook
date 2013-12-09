@@ -39,6 +39,7 @@ $(function() {
 
 <div id="propose-trade" class="trade-form">
   <h2>Propose a Trade</h2>
+  <%= render partial: "trade_visual", locals: { trade: @trade, user: User.find(session[:user_id]) } %>
 
   <div class="trade-details">
     <%= render :partial => 'form_trade_details' %>

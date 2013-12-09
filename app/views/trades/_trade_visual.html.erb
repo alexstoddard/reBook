@@ -1,0 +1,19 @@
+<div class="trade-container" align="center">
+<div class="trade-visual">
+<% count = trade.trade_lines.size %>
+<% current = 1 %>
+<% trade.rotate_lines(user.id).each do |line| %>
+  <div class="step">
+  <%= image_tag line.inventory_own.book.thumbnail, height: 100, width: 70, class: "thumbnail" %><br>
+  <%= link_to line.inventory_own.user.username, line.inventory_own.user %>
+  </div>
+  <div class="step middle">
+  <%= image_tag "arrow.png", height: 20, width: 20 %>
+  </div>
+  <% current = current + 1 %>
+<% end %>
+   <div class="step middle">
+     You
+   </div>
+</div>
+</div>

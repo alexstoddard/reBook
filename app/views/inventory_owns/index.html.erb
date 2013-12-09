@@ -53,7 +53,7 @@
         
         <%= form_tag("/search", method: "get") do %>
           <%= text_field_tag('search', nil, id: nil, placeholder: "Title, ISBN, Author", class: "text") %>
-          <%= submit_tag("Search", id: nil, class: "button") %>
+          <%= submit_tag("Search", id: nil, name: nil, class: "button") %>
         <% end %> 
   </div>
 
@@ -65,7 +65,7 @@
         
         <%= form_tag("/search", method: "get") do %>
           <%= text_field_tag('search', nil, id: nil, placeholder: "Title, ISBN, Author", class: "text") %>
-          <%= submit_tag("Search", id: nil, class: "button") %>
+          <%= submit_tag("Search", id: nil, name: nil, class: "button") %>
         <% end %> 
   </div>
   

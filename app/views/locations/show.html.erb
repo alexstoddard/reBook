@@ -128,7 +128,7 @@
 		<p>Search for books that people have or need at <%= @location.name %></p>
 		
 		<%= form_tag(location_path(@location), method: "get", class: "book-search") do %>
-	        <%= text_field_tag('search', nil, id: nil, placeholder: "Title, ISBN, Author", class: "text") %>
+	        <%= text_field_tag('search', nil, id: nil, value: params[:search], placeholder: "Title, ISBN, Author", class: "text") %>
 	        <%= submit_tag("Search", id: nil, :name => nil, class: "button") %>
 	  <% end %>
 
