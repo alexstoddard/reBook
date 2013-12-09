@@ -199,6 +199,7 @@
 			<% end %> 
 
 		<% end %>
+        <% if @result[:books].total_entries > 0 %>
         <div class="pagination">
           <div class="page_info">
           <% if params[:search].nil? or params[:search].empty? %>
@@ -209,5 +210,6 @@
           </div>
           <%= will_paginate @result[:books], :container => false %>
         </div>
+        <% end %>
 	</div>
 </div>

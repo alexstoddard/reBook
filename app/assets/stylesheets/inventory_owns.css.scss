@@ -81,7 +81,7 @@
 	background-color: #A1C9EE;
 	margin:20px 0;
 	padding: 8px 8px 12px 8px;
-	width:800px
+	width: 100%
 }
 
 .inventory #search h2 {
@@ -94,14 +94,16 @@
 }
 
 .inventory #search input[type="text"] {
-	width: 640px;
+	width: 85%;
 	font-size: 1.2em;
 	padding: 5px 8px;
 }
 
 .inventory #search input[type="submit"] {
+  float: right;
 	padding: 6px 10px;
 	margin-left: 6px;
+	margin-right: 20px;
 	text-transform: uppercase;
 	font-size: 1.2em;
 	background-color:#537EB4;

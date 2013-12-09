@@ -222,12 +222,13 @@
 
   		<% end %>
   	</div>
-
+        <% if @result[:books].total_entries > 0 %>
         <div class="pagination">
           <div class="page_info">
           <%= Book.results_string(@result[:books], @location.name, params[:search]) %>
           </div>
           <%= will_paginate @result[:books], :container => false %>
         </div>
+        <% end %>
     </divs> <!-- /#location -->
 </div>

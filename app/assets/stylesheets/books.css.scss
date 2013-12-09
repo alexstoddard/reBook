@@ -20,12 +20,13 @@
 }
 
 #search form.book-search .text {
-	width:640px;
+	width: 87%;
 	font-size: 1.2em;
 	padding: 5px 8px;
 }
 
 #search form.book-search .button {
+  float: right;
 	padding: 6px 10px;
 	margin-left: 6px;
 	text-transform: uppercase;
