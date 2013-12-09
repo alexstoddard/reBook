@@ -37,7 +37,7 @@
           else 
             min = ":30"
           end %>
-        <% date = Date.parse(day) %>
+        <% date = Date.parse(day).in_time_zone(User.find(session[:user_id]).timezone) %>
         <% date = date > Date.today ? date : date + 7 %>
         <% if schedule[day][minute] == 0 %>
          <td data-time="<%= hour.to_s + min + ampm %>" data-date="<%= date.strftime('%m/%d/%Y') %>" class="count-0 time-slot"></td>

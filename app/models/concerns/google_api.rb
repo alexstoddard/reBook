@@ -6,10 +6,10 @@ require 'json'
 
 class GoogleApi
 
-  def search(terms, limit)
+  def search(terms, page)
     # Try 3 times and if fail, stop trying
     3.times do
-      search = prepare_search_string(terms, limit)
+      search = prepare_search_string(terms, page)
       json = connect(search)
       books = parse(json, false)
 
@@ -19,12 +19,12 @@ class GoogleApi
     end
 
     # Go to the database instead
-    books = search_database(terms, limit)
+    books = search_database(terms, page)
     return books
 
   end
 
-  def search_database(terms, limit) 
+  def search_database(terms, page) 
     response = { }
     response[:status] = :response_ok
     response[:books] = []
@@ -33,7 +33,7 @@ class GoogleApi
     terms = terms.split.map {|term| "%" + term + "%"}
     combos = columns.product terms
 
-    books = Book.where { combos.map { |tuple| __send__(tuple[0]).matches "#{tuple[1]}"}.inject(&:|)}.order(:name)
+    books = Book.where { combos.map { |tuple| __send__(tuple[0]).matches "#{tuple[1]}"}.inject(&:|)}.order(:name).paginate(page: page, per_page: 10)
 
     books.each do |result|
       book = {}
@@ -46,6 +46,8 @@ class GoogleApi
       book[:published] = result.published
       response[:books] <<= book
     end
+
+    response[:total] = books.total_entries
 
     return response
   end
@@ -73,19 +75,15 @@ class GoogleApi
 
   end
 
-  def prepare_search_string(terms, limit)
+  def prepare_search_string(terms, page)
 
     domain = Rebook::Application.config.google_domain
     path = Rebook::Application.config.google_path
     key = Rebook::Application.config.google_key
 
-    limit ||= 10
+    limit = 10
 
-    if(limit > 40)
-      limit = 40
-    end
-
-    search_string = "https://#{domain}/#{path}?q=#{terms}&key=#{key}&country=US&maxResults=#{limit}"
+    search_string = "https://#{domain}/#{path}?q=#{terms}&key=#{key}&country=US&startIndex=#{(page-1)*limit}&maxResults=#{limit}"
     search_string = search_string.gsub(" ", "%20")
 
     return search_string
@@ -108,6 +106,7 @@ class GoogleApi
     response = { }
     response[:status] = :response_ok
     response[:books] = []
+    response[:total] = 0
 
     if json == :response_failed
       response[:status] = :response_failed
@@ -123,6 +122,8 @@ class GoogleApi
       if items.nil?
         return response
       end
+
+      response[:total] = optional_get(:get_total, json) || 0
 
       items.each do |x|
         begin
@@ -172,6 +173,10 @@ class GoogleApi
     rescue
       return []
     end
+  end
+
+  def get_total(x)
+    return x["totalItems"]
   end
 
   def get_isbn(x)

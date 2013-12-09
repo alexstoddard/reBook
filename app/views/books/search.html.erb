@@ -112,11 +112,19 @@
 	    <% end %>
 
 	    <% if !@result.nil? %>
-	    	<% if @result[:books].length == 0 %>
-	    		<h3>Sorry, no results were found for "<%= params[:search] %>". Try again with a different search term.</h3>
-	    	<% else %>
-				<h3><%= pluralize(@result[:books].length, "Result") %> for "<%= params[:search] %>"</h3>
-			<% end %>
+
+        <div class="pagination">
+          <div class="page_info">
+          <% if params[:search].nil? or params[:search].empty? %>
+          <%= page_entries_info @result[:books] %>
+          <% else %>
+          <%= page_entries_info @result[:books], :model => " results matching '#{params[:search]}', book" %>
+          <% end %>
+          </div>
+          <%= will_paginate @result[:books], :container => false %>
+        </div>
+        <br/>
+        <br/>
 
 			<% @result[:books].each do |x| %>
 			  <article>
@@ -191,5 +199,15 @@
 			<% end %> 
 
 		<% end %>
+        <div class="pagination">
+          <div class="page_info">
+          <% if params[:search].nil? or params[:search].empty? %>
+          <%= page_entries_info @result[:books] %>
+          <% else %>
+          <%= page_entries_info @result[:books], :model => " results matching '#{params[:search]}', book" %>
+          <% end %>
+          </div>
+          <%= will_paginate @result[:books], :container => false %>
+        </div>
 	</div>
 </div>

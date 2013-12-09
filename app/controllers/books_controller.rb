@@ -60,10 +60,12 @@ class BooksController < ApplicationController
   # GET /search.json
 	def search
 	  authorize! :search, Book
-	  query = params[:search] || ""
 
+	  query = params[:search] || ""
+    page = params[:page] ? params[:page].to_i : 1
+    
     @conditions = Condition.all
-	  @result = Book.search(query, 40)
+	  @result = Book.search(query, page)
     @result = Book.calculate_hidden(@result, session[:user_id])
 
 	end

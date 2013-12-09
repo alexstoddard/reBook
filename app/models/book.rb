@@ -64,21 +64,26 @@ class Book < ActiveRecord::Base
     inventory_owns.where(deleted:false).joins(:user => :user_locations).where("user_locations.location_id = ?", location).size
   end
 
-  def self.search(terms, limit)
+  def self.search(terms, page)
 
     api = GoogleApi.new
-    results = api.search(terms, limit)
+    results = api.search(terms, page)
 
+    total = results[:total]
+    
     books = {}
     books[:books] = []
     books[:status] = results[:status]
-    
+        
     results[:books].each do |b|
       book = Book.new(b)
       books[:books] <<= book
     end
 
-    return books;
+    books[:books] = books[:books].paginate(page: page, per_page: 10, total_entries: total)
+
+    return books
+
   end
 
   def self.calculate_hidden(books, user_id)
@@ -121,4 +126,16 @@ class Book < ActiveRecord::Base
     self.hide_need = false
   end
 
+end
+
+class Array
+  def paginate(options = {})
+    page     = options[:page]
+    per_page = options[:per_page]
+    total    = options[:total_entries]
+
+    WillPaginate::Collection.create(page, per_page, total) do |pager|
+      pager.replace self
+    end
+  end
 end
