@@ -5,7 +5,7 @@
          <% @locations.each do |x| %>
             <li>
                <%= image_tag x.icon, :height => 40, :width => 40 %>
-               <%= x.name %> (<%= link_to "add", user_locations_path + "?location_id=" + x.id.to_s, :method => :post, :remote => true %>)
+               <%= link_to x.name, x %> (<%= link_to "add", user_locations_path + "?location_id=" + x.id.to_s, :method => :post, :remote => true %>)
             </li>
          <% end#each %>
       </ul>

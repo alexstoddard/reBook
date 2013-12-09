@@ -7,7 +7,9 @@ class LocationsController < ApplicationController
   # GET /locations
   # GET /locations.json
   def index
-    @locations = Location.all.where("name LIKE ?", "%" + params[:search] + "%")
+    search = "%" + params[:search] + "%"
+
+    @locations = Location.all.where { (name =~ search) | (description =~ search) | (city =~ search) | (state =~ search)}
     @user = User.find(params[:user_id])
 
     @locations = @locations.select do |location|
@@ -20,7 +22,7 @@ class LocationsController < ApplicationController
   def show
     @books = {}
 
-    @books[:books] = Book.location_search(@location.id, params[:search] || "")
+    @books[:books] = Book.location_search(@location.id, params[:search] || "", params[:page])
     @result = Book.calculate_hidden(@books, session[:user_id])
 
     @conditions = Condition.all

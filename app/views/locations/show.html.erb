@@ -52,8 +52,8 @@
             	cancel_button.remove();
             	want_form.remove();
             	loading.hide();
-            	link = '<%= link_to "Have List", inventory_owns_path %>';
-            	loading.siblings('.message').html('You have successfully added this book to your ' + link + '.');
+            	link = '<%= link_to "Have List", inventory_owns_path %>.<br><br>';
+            	loading.siblings('.message').html('You have successfully added this book to your ' + link);
             }
   		});
 
@@ -90,8 +90,8 @@
             	have_form.remove();
             	want_form.remove();
             	loading.hide();
-            	link = '<%= link_to "Want List", inventory_needs_path %>';
-            	loading.siblings('.message').html('You have successfully added this book to your ' + link + '.');
+            	link = '<%= link_to "Want List", inventory_needs_path %>.<br><br>';
+            	loading.siblings('.message').html('You have successfully added this book to your ' + link);
             }
         });
     	return false;
@@ -133,15 +133,15 @@
 	  <% end %>
 
   	    <% if !@result.nil? %>
-  	    	<% if @result[:books].length == 0 %>
-  	    		<h3>Sorry, no results were found at <%= @location.name %>. Try again with a different search term.</h3>
-  	    	<% else %>
-            <% if params[:search].nil? || params[:search].empty? %>
-     				<h3><%= pluralize(@result[:books].length, "book") %> at <%= @location.name %></h3>
-            <% else %>
-     				<h3><%= pluralize(@result[:books].length, "book") %> at <%= @location.name %> matching <%= params[:search] %></h3>
-            <% end %>
-  			<% end %>
+
+        <div class="pagination">
+          <div class="page_info">
+          <%= Book.results_string(@result[:books], @location.name, params[:search]) %>
+          </div>
+          <%= will_paginate @result[:books], :container => false %>
+        </div>
+        <br/>
+        <br/>
 
   			<% @result[:books].each do |x| %>
   			  <article>
@@ -223,5 +223,11 @@
   		<% end %>
   	</div>
 
+        <div class="pagination">
+          <div class="page_info">
+          <%= Book.results_string(@result[:books], @location.name, params[:search]) %>
+          </div>
+          <%= will_paginate @result[:books], :container => false %>
+        </div>
     </divs> <!-- /#location -->
 </div>

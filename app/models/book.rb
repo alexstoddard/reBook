@@ -10,7 +10,7 @@ class Book < ActiveRecord::Base
   # Callbacks
   after_initialize :set_defaults
 
-  def self.location_search(location, terms) 
+  def self.location_search(location, terms, page) 
 
     all_books = Book.joins(:inventory_owns => { :user => :user_locations }).where("user_locations.location_id = ?", location).where("inventory_owns.deleted = ?", false).distinct
 
@@ -18,9 +18,42 @@ class Book < ActiveRecord::Base
     terms = terms.split.map {|term| "%" + term + "%"}
     combos = columns.product terms
 
-    books = all_books.where { combos.map { |tuple| __send__(tuple[0]).matches "#{tuple[1]}"}.inject(&:|)}.order(:name)
+    page ||= 1
+
+    books = all_books.where { combos.map { |tuple| __send__(tuple[0]).matches "#{tuple[1]}"}.inject(&:|)}.order(:name).paginate(page: page, per_page: 10)
 
     return books
+  end
+
+  def self.results_string(books, location, terms)
+
+    location_string = " at " + location
+
+    if terms.nil? or terms.empty?
+      matching_string = ""
+    else
+      matching_string = " matching '" + terms + "'"
+    end
+
+    from = ((((books.current_page-1)*books.per_page)+1))
+    to = (from + books.per_page - 1) > books.total_entries ? books.total_entries : (from + books.per_page - 1)
+
+    from = from.to_s
+    to = to.to_s
+
+    if books.total_entries == 0
+      message = "Found no books"
+      displaying = ""
+    elsif books.total_entries == 1
+      message = "Found 1 book"
+      displaying = ""
+    elsif
+      message = "Found " + books.total_entries.to_s + " total books"
+      displaying = ", displaying results " + from + " to " + to
+    end
+
+    return message + location_string + matching_string + displaying
+
   end
 
   def needs_in_location(location) 
