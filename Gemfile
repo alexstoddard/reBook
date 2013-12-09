@@ -73,3 +73,7 @@ gem 'seed_dump'
 
 gem "jquery-timepicker-rails", "~> 1.2.5.0"
 gem "fancybox-rails"
+
+gem "squeel"
+
+gem "will_paginate"

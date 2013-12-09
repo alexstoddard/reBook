@@ -3,7 +3,7 @@ require 'bcrypt'
 class User < ActiveRecord::Base
 
   # Member fields
-  attr_accessor :location, :location_description, :old_passhash
+  attr_accessor :location, :location_description, :old_passhash, :host
   cattr_accessor :enable_mailer do
     true
   end
@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
   def send_activation
     if email_changed? and enable_mailer
       activated = false
-      UserMailer.welcome_email(self).deliver
+      UserMailer.welcome_email(self, host).deliver
     end
   end
 
@@ -115,7 +115,6 @@ class User < ActiveRecord::Base
       @user = User.new(user_params)
       @user.activated ||= false
       @user_location = @user.user_locations.build(location_params)
-      @user.save
       return @user
     end
   end

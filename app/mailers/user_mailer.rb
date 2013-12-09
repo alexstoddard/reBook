@@ -1,19 +1,19 @@
 class UserMailer < ActionMailer::Base
   default from: "authenticate@rebook.com"
   
-  def welcome_email(user)
+  def welcome_email(user, host)
     @user = user
-    @url = request.protocol + request.host_with_port + '/login?token='"#{@user.token}"
+    @url = host + '/login?token='"#{@user.token}"
 
     mail(to: @user.email, subject: 'ReBook: Validate Email')
   end
 
-  def reset_email(user)
+  def reset_email(user, host)
     @user = user
     @user.generate_token
     @user.save(:validate => false)
     
-    @url = request.protocol + request.host_with_port + '/reset?token='"#{@user.token}"
+    @url = host + '/reset?token='"#{@user.token}"
       mail(to: @user.email, subject: 'ReBook: Reset Password')
   end
   
@@ -23,9 +23,9 @@ class UserMailer < ActionMailer::Base
 	mail(to: @user.email, subject: 'ReBook: A trade has been cancelled')
   end
   
-  def trade_email(trade)
+  def trade_email(trade, host)
     @trade = trade
-    @url = request.protocol + request.host_with_port + '/trade_details/'"#{@trade.id}"
+    @url = host + '/trade_details/'"#{@trade.id}"
       @trade.trade_lines[1..-1].each do |x|
         email_trade_to_users(x.inventory_own.user.email).deliver
       end

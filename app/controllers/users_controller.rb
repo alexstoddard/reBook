@@ -36,9 +36,9 @@ class UsersController < ApplicationController
     @user ||= User.find_by_email(params[:username])
     
     unless @user.nil?
-      UserMailer.reset_email(@user).deliver
+      UserMailer.reset_email(@user, request.protocol + request.host_with_port).deliver
+      flash[:success] = "An email has been sent to your account, check it to reset your password."
       redirect_to root_path
-      flash[:notice] = "An email has been sent to your account, check it to reset your password."
     else
       flash[:reset_error] = params[:username] + " does not match an account in our system."
       redirect_to forgot_path
@@ -109,7 +109,12 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     authorize! :create, User
-    @user = User.create_with_location(user_params, @location_params)
+
+    User.transaction do
+      @user = User.create_with_location(user_params, @location_params)
+      @user.host = request.protocol + request.host_with_port
+      @user.save
+    end
 
     respond_to do |format|
       if @user.errors.size == 0
@@ -129,6 +134,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1.json
   def update
     authorize! :update, User
+    
     @authenticated_user = User.authenticate(@user.username, @update_user.old_passhash)
 
     if not @authenticated_user.nil? and @authenticated_user.id == @user.id
@@ -152,6 +158,8 @@ class UsersController < ApplicationController
         @user.timezone = @update_user.timezone
       end
       
+      @user.host = request.protocol + request.host_with_port
+
       respond_to do |format|
         if @user.save
           if activate

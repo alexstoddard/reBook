@@ -11,8 +11,15 @@ class Book < ActiveRecord::Base
   after_initialize :set_defaults
 
   def self.location_search(location, terms) 
+
     all_books = Book.joins(:inventory_owns => { :user => :user_locations }).where("user_locations.location_id = ?", location).where("inventory_owns.deleted = ?", false).distinct
-    books = all_books.where("books.name LIKE ?", "%" + terms + "%")
+
+    columns = [:description, :name, :isbn, :author, :published]
+    terms = terms.split.map {|term| "%" + term + "%"}
+    combos = columns.product terms
+
+    books = all_books.where { combos.map { |tuple| __send__(tuple[0]).matches "#{tuple[1]}"}.inject(&:|)}.order(:name)
+
     return books
   end
 

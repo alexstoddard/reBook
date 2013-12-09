@@ -20,7 +20,7 @@ class LocationsController < ApplicationController
   def show
     @books = {}
 
-    @books[:books] = Book.location_search(@location.id, "")
+    @books[:books] = Book.location_search(@location.id, params[:search] || "")
     @result = Book.calculate_hidden(@books, session[:user_id])
 
     @conditions = Condition.all

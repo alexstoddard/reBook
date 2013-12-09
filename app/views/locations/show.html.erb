@@ -124,11 +124,23 @@
 
 
   	<div id="search">
+		<h1>Search for books</h1>
+		<p>Search for books that people have or need at <%= @location.name %></p>
+		
+		<%= form_tag(location_path(@location), method: "get", class: "book-search") do %>
+	        <%= text_field_tag('search', nil, id: nil, placeholder: "Title, ISBN, Author", class: "text") %>
+	        <%= submit_tag("Search", id: nil, :name => nil, class: "button") %>
+	  <% end %>
+
   	    <% if !@result.nil? %>
   	    	<% if @result[:books].length == 0 %>
   	    		<h3>Sorry, no results were found at <%= @location.name %>. Try again with a different search term.</h3>
   	    	<% else %>
-  				<h3><%= pluralize(@result[:books].length, "book") %> at <%= @location.name %></h3>
+            <% if params[:search].nil? || params[:search].empty? %>
+     				<h3><%= pluralize(@result[:books].length, "book") %> at <%= @location.name %></h3>
+            <% else %>
+     				<h3><%= pluralize(@result[:books].length, "book") %> at <%= @location.name %> matching <%= params[:search] %></h3>
+            <% end %>
   			<% end %>
 
   			<% @result[:books].each do |x| %>

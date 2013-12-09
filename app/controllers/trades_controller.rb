@@ -206,7 +206,7 @@ class TradesController < ApplicationController
 
     respond_to do |format|
       if success
-        UserMailer.trade_email(@trade).deliver
+        UserMailer.trade_email(@trade, request.protocol + request.host_with_port).deliver
         format.html { 
           redirect_to '/trade_details/'"#{@trade.id}"
           flash[:success] = 'Trade was successfully created.' 

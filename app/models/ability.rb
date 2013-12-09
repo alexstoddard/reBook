@@ -48,6 +48,10 @@ class Ability
 		can :update, Trade
 		can :destroy, Trade
 		can :set_trade, Trade
+	  can :forgot, User
+    can :forgot_do, User
+    can :reset, User
+    can :reset_do, User
 		
 		#Book Controller Restriction. 
 		can :search, Book
@@ -59,6 +63,9 @@ class Ability
     can :read, Location
 	  can :create, User
 	  can :forgot, User
+    can :forgot_do, User
+    can :reset, User
+    can :reset_do, User
 	  can :set_is_current_user, User
 	  can :new, User
 	  can :update, User

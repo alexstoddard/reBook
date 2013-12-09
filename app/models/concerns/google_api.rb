@@ -29,8 +29,12 @@ class GoogleApi
     response[:status] = :response_ok
     response[:books] = []
     
-    books = Book.where("name LIKE ?", terms)
-    
+    columns = [:description, :name, :isbn, :author, :published]
+    terms = terms.split.map {|term| "%" + term + "%"}
+    combos = columns.product terms
+
+    books = Book.where { combos.map { |tuple| __send__(tuple[0]).matches "#{tuple[1]}"}.inject(&:|)}.order(:name)
+
     books.each do |result|
       book = {}
       book[:name] = result.name
